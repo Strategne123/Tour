@@ -15,6 +15,8 @@ public class Zones : MonoBehaviour
     [SerializeField] private List<Quaternion> looks = new List<Quaternion>();
     [SerializeField] private Material material;
     [SerializeField] private Transform sphere;
+    private float ipd;
+    private VrsViewer vrsViewer;
 
 
     private static Zones self;
@@ -26,6 +28,8 @@ public class Zones : MonoBehaviour
             self = this;
         }
         Set(0);
+        vrsViewer = GameObject.FindObjectOfType<VrsViewer>();
+        InitIPD();
     }
 
     public static void Set(int num)
@@ -53,6 +57,34 @@ public class Zones : MonoBehaviour
                 }
             }
         }
+    }
+
+    private void InitIPD()
+    {
+        if (PlayerPrefs.HasKey("IPD"))
+        {
+            ipd = PlayerPrefs.GetFloat("IPD");
+        }
+        else
+        {
+            ipd = 58;
+        }
+        ChangeIPD(0);
+    }
+
+    public void ChangeIPD(int value)
+    {
+        ipd = PlayerPrefs.GetFloat("IPD");
+        if(ipd ==0)
+        {
+            ipd = 58;
+        }
+        if ((ipd + value > 70) || (ipd + value <= 50))
+            return;
+        ipd += value;
+        PlayerPrefs.SetFloat("IPD",ipd);
+        var dist = ipd / 1000.0f;
+        vrsViewer.SetIpd(dist);
     }
 
     public void Quit()
