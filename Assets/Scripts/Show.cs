@@ -7,7 +7,10 @@ public class Show : MonoBehaviour, IInteract
 
     private void Start()
     {
-        video = objectToShow.GetComponent<MediaPlayer>();
+        if (video == null)
+        {
+            video = objectToShow.GetComponent<MediaPlayer>();
+        }
     }
     public void Interact()
     {
