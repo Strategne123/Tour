@@ -1,12 +1,5 @@
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Video;
-using Vrs.Internal;
-
 
 public class Zones : MonoBehaviour
 {
@@ -16,23 +9,16 @@ public class Zones : MonoBehaviour
     [SerializeField] private Material material;
     [SerializeField] private Transform sphere;
 
-
-    private static Zones self;
-
     private void Start()
     {
-        if(self == null)
-        {
-            self = this;
-        }
         Set(0);
     }
 
-    public static void Set(int num)
+    public void Set(int num)
     {
-        self.material.mainTexture = self.sprites[num].texture;
-        self.sphere.rotation = self.looks[num];
-        self.ActivateField(num);
+        material.mainTexture = sprites[num].texture;
+        sphere.rotation = looks[num];
+        ActivateField(num);
     }
 
     private void ActivateField(int num)

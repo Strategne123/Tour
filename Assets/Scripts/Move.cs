@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Move : MonoBehaviour, IInteract
 {
     [SerializeField] private int toZone;
+    [SerializeField] private Zones zone;
 
     public void Interact()
     {
         print("To Zone " + toZone);
-        Zones.Set(toZone-1);
+        zone.Set(toZone-1);
     }
 }
