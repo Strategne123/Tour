@@ -10,7 +10,7 @@ public class IPDAdjuster : MonoBehaviour
     public TextMeshProUGUI ipdText;
     public float adjustmentAmount = 1f; 
     public float eyeMoveAmount = 1.0f; 
-    private float currentIPD = 60.0f;
+    private float currentIPD = 58.0f;
     private float duration = 0.5f; 
     private float minIPD = 55.0f; 
     private float maxIPD = 72.0f;
@@ -43,7 +43,7 @@ public class IPDAdjuster : MonoBehaviour
         targetLeftEyePos += new Vector2(-eyeAdjustment, 0);
         targetRightEyePos += new Vector2(eyeAdjustment, 0);
 
-        float totalAdjustment = (currentIPD - 60.0f) * eyeMoveAmount;
+        float totalAdjustment = (currentIPD - 58.0f) * eyeMoveAmount;
         targetLineSize = new Vector2(initialLineSize.x + totalAdjustment * 2, initialLineSize.y);
     }
 
@@ -84,7 +84,7 @@ public class IPDAdjuster : MonoBehaviour
             MoveEyesAndLine(eyeAdjustment);
         }
 
-        ipdText.text = $"{currentIPD:F1} ìì";
+        ipdText.text = $"{currentIPD:F1} ï¿½ï¿½";
     }
 
     public void IncreaseIPD()

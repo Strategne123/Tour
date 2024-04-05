@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Vrs.Internal;
 
 public class MenuActivator : MonoBehaviour
 {
@@ -13,9 +14,11 @@ public class MenuActivator : MonoBehaviour
 	private bool isDelayPassed = false;
 
 	private bool buttonPressed = false;
+	private float ipd;
 
 	private void Start()
 	{
+		InitIPD();
 		fillImage.fillAmount = 0;
 		fillImageParent = fillImage.transform.parent.gameObject;
 		fillImageParent.SetActive(false);
@@ -83,8 +86,41 @@ public class MenuActivator : MonoBehaviour
 	public void CloseMenu()
 	{
 		menu.transform.SetParent(transform);
-		menu.transform.localPosition = Vector3.zero;
-		menu.transform.localRotation = Quaternion.identity;
+		menu.transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
 		menu.SetActive(false);
 	}
+
+	public void QuitGame()
+	{
+		Application.Quit();
+	}
+
+	private void InitIPD()
+	{
+		if (PlayerPrefs.HasKey("IPD"))
+		{
+			ipd = PlayerPrefs.GetFloat("IPD");
+		}
+		else
+		{
+			ipd = 58;
+		}
+		ChangeIPD(0);
+	}
+
+	public void ChangeIPD(int value)
+	{
+		ipd = PlayerPrefs.GetFloat("IPD");
+		if (ipd == 0)
+		{
+			ipd = 58;
+		}
+		if ((ipd + value > 70) || (ipd + value <= 50))
+			return;
+		ipd += value;
+		PlayerPrefs.SetFloat("IPD", ipd);
+		var dist = ipd / 1000.0f;
+		VrsViewer.Instance.SetIpd(dist);
+	}
+
 }
