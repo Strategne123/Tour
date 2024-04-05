@@ -1896,7 +1896,7 @@ MonoBehaviour:
   questionText: 
   questionTextUI: {fileID: 0}
   answers: []
-  timeToAppear: 25
+  timeToAppear: 21
 --- !u!4 &1040594775
 Transform:
   m_ObjectHideFlags: 0
