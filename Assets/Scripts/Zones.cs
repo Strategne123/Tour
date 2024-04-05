@@ -34,7 +34,8 @@ public class Zones : MonoBehaviour
 #endif
 
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
-        mediaPlayer.OpenMedia(new MediaPath(videoFolderPath, MediaPathType.AbsolutePathOrURL));
+        mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
+        nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
         //mediaPlayer.Control.Seek(startTime);
         mediaPlayer.Play();
     }
@@ -43,6 +44,7 @@ public class Zones : MonoBehaviour
     private void PauseVideo()
     {
         mediaPlayer.Pause();
+        stages[currentStageIndex].gameObject.SetActive(true);
         stages[currentStageIndex].ShowQuestion(currentQuestionIndex);
     }
 
@@ -55,6 +57,7 @@ public class Zones : MonoBehaviour
 
     public void ChooseAnswer(Answer answer)
     {
+        print("Выбран ответ"+answer.gameObject.name);
         answer.ResponseProcess(this);
     }
 
@@ -101,7 +104,7 @@ public class Zones : MonoBehaviour
         {
             PauseVideo();
         }
-        if(mediaPlayer.Control.GetCurrentTime()==mediaPlayer.Info.GetDuration())
+        if(mediaPlayer.Control.GetCurrentTime()==mediaPlayer.Info.GetDuration() && mediaPlayer.Info.GetDuration() > 0)
         {
             NextStage();
         }
