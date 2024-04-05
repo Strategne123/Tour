@@ -123,6 +123,50 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+<<<<<<< Updated upstream
+=======
+--- !u!21 &17848137
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Figma/FigmaImageShader
+  m_Shader: {fileID: 4800000, guid: c903fcb47e0c78c408366a3cc2fff291, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - SHAPE_RECTANGLE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _StrokeWidth: 0
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CornerRadius: {r: 45, g: 45, b: 45, a: 45}
+    - _FillColor: {r: 0.1375, g: 0.1375, b: 0.1375, a: 1}
+    - _StrokeColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+>>>>>>> Stashed changes
 --- !u!1 &93849479
 GameObject:
   m_ObjectHideFlags: 0
@@ -336,6 +380,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
+<<<<<<< Updated upstream
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -343,6 +388,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+=======
+  m_Color:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  m_RaycastTarget: 1
+  m_RaycastTargetCache: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  <useLegacyMeshGeneration>k__BackingField: 0
+  m_Maskable: 1
+  m_IsMaskingGraphic: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_CallsDirty: 1
+>>>>>>> Stashed changes
   m_Sprite: {fileID: 21300000, guid: 6a9361ff61e23ba4b9ec6b2cd7131e53, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -351,11 +413,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+<<<<<<< Updated upstream
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
   m_Shape: 0
   m_StrokeColor: {r: 1, g: 1, b: 1, a: 1}
   m_FillColor: {r: 1, g: 1, b: 1, a: 1}
+=======
+  m_AlphaHitTestMinimumThreshold: 0
+  m_Tracked: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+  m_CachedReferencePixelsPerUnit: 100
+  m_Shape: 0
+  m_StrokeColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  m_FillColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+>>>>>>> Stashed changes
   m_StrokeWidth: 0
   m_CornerRadius: {x: 0, y: 0, z: 0, w: 0}
   m_StrokePosition: 0
@@ -366,6 +447,7 @@ MonoBehaviour:
   m_ImageTransform: []
   m_ImageScaleFactor: 1
   m_FillGradient:
+<<<<<<< Updated upstream
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
@@ -375,6 +457,48 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
+=======
+    key0:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    key1:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    key2:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key3:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key4:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key5:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key6:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key7:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+>>>>>>> Stashed changes
     ctime0: 0
     ctime1: 65535
     ctime2: 0
@@ -398,6 +522,11 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 1, y: 0}
+<<<<<<< Updated upstream
+=======
+  m_DynamicMaterial: {fileID: 1964459017}
+  m_ConfirmedAdditionalCanvasChannels: 0
+>>>>>>> Stashed changes
 --- !u!222 &455753815
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -627,6 +756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
+<<<<<<< Updated upstream
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -634,6 +764,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+=======
+  m_Color:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  m_RaycastTarget: 1
+  m_RaycastTargetCache: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  <useLegacyMeshGeneration>k__BackingField: 0
+  m_Maskable: 1
+  m_IsMaskingGraphic: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_CallsDirty: 1
+>>>>>>> Stashed changes
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -642,11 +789,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+<<<<<<< Updated upstream
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
   m_Shape: 0
   m_StrokeColor: {r: 1, g: 1, b: 1, a: 1}
   m_FillColor: {r: 0.1375, g: 0.1375, b: 0.1375, a: 1}
+=======
+  m_AlphaHitTestMinimumThreshold: 0
+  m_Tracked: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+  m_CachedReferencePixelsPerUnit: 100
+  m_Shape: 0
+  m_StrokeColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  m_FillColor:
+    r: 0.1375
+    g: 0.1375
+    b: 0.1375
+    a: 1
+>>>>>>> Stashed changes
   m_StrokeWidth: 0
   m_CornerRadius: {x: 45, y: 45, z: 45, w: 45}
   m_StrokePosition: 0
@@ -657,6 +823,7 @@ MonoBehaviour:
   m_ImageTransform: []
   m_ImageScaleFactor: 1
   m_FillGradient:
+<<<<<<< Updated upstream
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
@@ -666,6 +833,48 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
+=======
+    key0:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    key1:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    key2:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key3:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key4:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key5:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key6:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key7:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+>>>>>>> Stashed changes
     ctime0: 0
     ctime1: 65535
     ctime2: 0
@@ -689,6 +898,11 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 1, y: 0}
+<<<<<<< Updated upstream
+=======
+  m_DynamicMaterial: {fileID: 17848137}
+  m_ConfirmedAdditionalCanvasChannels: 0
+>>>>>>> Stashed changes
 --- !u!222 &480648912
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1303,6 +1517,70 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+<<<<<<< Updated upstream
+=======
+--- !u!21 &734004665
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Figma/FigmaImageShader
+  m_Shader: {fileID: 4800000, guid: c903fcb47e0c78c408366a3cc2fff291, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - SHAPE_RECTANGLE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _StrokeWidth: 0
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CornerRadius: {r: 13, g: 13, b: 13, a: 13}
+    - _FillColor: {r: 0.19693425, g: 0.19693425, b: 0.19693425, a: 1}
+    - _StrokeColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+--- !u!1 &808747203
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6892956003890051085, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
+  m_PrefabInstance: {fileID: 934230358}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 883542186}
+  - component: {fileID: 883542189}
+  - component: {fileID: 883542188}
+  - component: {fileID: 883542187}
+  - component: {fileID: 883542182}
+  m_Layer: 0
+  m_Name: TransitionFadeToBlack
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+>>>>>>> Stashed changes
 --- !u!1 &864419306
 GameObject:
   m_ObjectHideFlags: 0
@@ -1414,22 +1692,114 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
+<<<<<<< Updated upstream
 --- !u!114 &883542182 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6892956003890051072, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
   m_PrefabInstance: {fileID: 934230358}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
+=======
+--- !u!114 &883542182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6892956003890051072, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
+  m_PrefabInstance: {fileID: 934230358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808747203}
+>>>>>>> Stashed changes
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 52bf4d995684410cb5acc4e8f1e00ba8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
 --- !u!224 &883542186 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6892956003890051086, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
   m_PrefabInstance: {fileID: 934230358}
   m_PrefabAsset: {fileID: 0}
+=======
+  m_TransitionEffectAnimator: {fileID: 883542187}
+--- !u!224 &883542186
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6892956003890051086, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
+  m_PrefabInstance: {fileID: 934230358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808747203}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1731783916}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!95 &883542187
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6892956003890051073, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
+  m_PrefabInstance: {fileID: 934230358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808747203}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 2e6cbc62b872ba740898c1c46e2a9384, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &883542188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6892956003890051084, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
+  m_PrefabInstance: {fileID: 934230358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808747203}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &883542189
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 6892956003890051087, guid: d7963c2a080cd9942831d2d3823dfb97, type: 3}
+  m_PrefabInstance: {fileID: 934230358}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 808747203}
+  m_CullTransparentMesh: 1
+>>>>>>> Stashed changes
 --- !u!1 &928902937
 GameObject:
   m_ObjectHideFlags: 0
@@ -1483,6 +1853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
+<<<<<<< Updated upstream
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -1490,6 +1861,23 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
+=======
+  m_Color:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  m_RaycastTarget: 1
+  m_RaycastTargetCache: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  <useLegacyMeshGeneration>k__BackingField: 0
+  m_Maskable: 1
+  m_IsMaskingGraphic: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_CallsDirty: 1
+>>>>>>> Stashed changes
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -1498,11 +1886,30 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+<<<<<<< Updated upstream
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
   m_Shape: 0
   m_StrokeColor: {r: 1, g: 1, b: 1, a: 1}
   m_FillColor: {r: 0.19693425, g: 0.19693425, b: 0.19693425, a: 1}
+=======
+  m_AlphaHitTestMinimumThreshold: 0
+  m_Tracked: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+  m_CachedReferencePixelsPerUnit: 100
+  m_Shape: 0
+  m_StrokeColor:
+    r: 1
+    g: 1
+    b: 1
+    a: 1
+  m_FillColor:
+    r: 0.19693425
+    g: 0.19693425
+    b: 0.19693425
+    a: 1
+>>>>>>> Stashed changes
   m_StrokeWidth: 0
   m_CornerRadius: {x: 13, y: 13, z: 13, w: 13}
   m_StrokePosition: 0
@@ -1513,6 +1920,7 @@ MonoBehaviour:
   m_ImageTransform: []
   m_ImageScaleFactor: 1
   m_FillGradient:
+<<<<<<< Updated upstream
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
@@ -1522,6 +1930,48 @@ MonoBehaviour:
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
+=======
+    key0:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    key1:
+      r: 1
+      g: 1
+      b: 1
+      a: 1
+    key2:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key3:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key4:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key5:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key6:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+    key7:
+      r: 0
+      g: 0
+      b: 0
+      a: 0
+>>>>>>> Stashed changes
     ctime0: 0
     ctime1: 65535
     ctime2: 0
@@ -1545,6 +1995,11 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 1, y: 0}
   - {x: 1, y: 0}
+<<<<<<< Updated upstream
+=======
+  m_DynamicMaterial: {fileID: 734004665}
+  m_ConfirmedAdditionalCanvasChannels: 0
+>>>>>>> Stashed changes
 --- !u!222 &928902940
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1888,7 +2343,19 @@ MonoBehaviour:
   eyeLine: {fileID: 539417021}
   ipdText: {fileID: 1827202842}
   adjustmentAmount: 1
+<<<<<<< Updated upstream
   eyeMoveAmount: 5
+=======
+  eyeMoveAmount: 3
+  currentIPD: 60
+  duration: 0.5
+  minIPD: 55
+  maxIPD: 72
+  targetLeftEyePos: {x: 0, y: 0}
+  targetRightEyePos: {x: 0, y: 0}
+  targetLineSize: {x: 0, y: 0}
+  initialLineSize: {x: 0, y: 0}
+>>>>>>> Stashed changes
 --- !u!4 &1220351166
 Transform:
   m_ObjectHideFlags: 0
@@ -2655,6 +3122,10 @@ MonoBehaviour:
   OnScreenChanged:
     m_PersistentCalls:
       m_Calls: []
+<<<<<<< Updated upstream
+=======
+    m_CallsDirty: 1
+>>>>>>> Stashed changes
   m_ScreenParentTransform: {fileID: 2055353072}
   m_TransitionEffect: {fileID: 883542182}
   m_CurrentScreenInstance: {fileID: 0}
@@ -3142,6 +3613,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1928683488}
   m_CullTransparentMesh: 1
+<<<<<<< Updated upstream
+=======
+--- !u!21 &1964459017
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Figma/FigmaImageShader
+  m_Shader: {fileID: 4800000, guid: c903fcb47e0c78c408366a3cc2fff291, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords:
+  - SHAPE_RECTANGLE
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _ColorMask: 15
+    - _Stencil: 0
+    - _StencilComp: 8
+    - _StencilOp: 0
+    - _StencilReadMask: 255
+    - _StencilWriteMask: 255
+    - _StrokeWidth: 0
+    - _UseUIAlphaClip: 0
+    m_Colors:
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _CornerRadius: {r: 0, g: 0, b: 0, a: 0}
+    - _FillColor: {r: 1, g: 1, b: 1, a: 1}
+    - _StrokeColor: {r: 1, g: 1, b: 1, a: 1}
+  m_BuildTextureStacks: []
+>>>>>>> Stashed changes
 --- !u!1 &2055353071
 GameObject:
   m_ObjectHideFlags: 0
