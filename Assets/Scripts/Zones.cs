@@ -70,16 +70,23 @@ public class Zones : MonoBehaviour
 
     public void NextQuestion()
     {
-        if (currentQuestionIndex < stages[currentStageIndex].QuestionCount() - 1)
+        try
         {
-            currentQuestionIndex++;
-            nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-            ReturnVideo();
+            if (currentQuestionIndex < stages[currentStageIndex].QuestionCount() - 1)
+            {
+                currentQuestionIndex++;
+                nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+
+            }
+            else
+            {
+                currentQuestionIndex = 0;
+                //NextStage();
+            }
         }
-        else
-        {
-            NextStage();
-        }
+        catch { }
+        stages[currentStageIndex].gameObject.SetActive(false);
+        ReturnVideo();
     }
 
 
