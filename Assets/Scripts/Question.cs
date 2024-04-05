@@ -9,7 +9,7 @@ public class Question : MonoBehaviour
     [SerializeField] private TMP_Text questionTextUI;
     [SerializeField] private List<Answer> answers = new List<Answer>();
 
-    public float timeToAppear { get; private set; }
+    public float timeToAppear;
 }
 
 
