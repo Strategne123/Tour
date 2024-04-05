@@ -15,12 +15,8 @@ public class Zones : MonoBehaviour
     private int wrongAnswers = 0;
     private int allAnswers = 0;
     private float nextQuestionTime = 100;
+    private string videoFolderPath; 
 
-#if UNITY_EDITOR
-    private string videoFolderPath = Application.absoluteURL;
-#else
-    private string videoFolderPath = "storage/emulated/0/TigerVideos/";]
-#endif
 
     private void Start()
     {
@@ -31,6 +27,12 @@ public class Zones : MonoBehaviour
 
     private void PlayVideo()
     {
+#if UNITY_EDITOR
+        videoFolderPath = Application.dataPath+"/";
+#else
+        videoFolderPath = "storage/emulated/0/TigerVideos/";
+#endif
+
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
         mediaPlayer.OpenMedia(new MediaPath(videoFolderPath, MediaPathType.AbsolutePathOrURL));
         //mediaPlayer.Control.Seek(startTime);
