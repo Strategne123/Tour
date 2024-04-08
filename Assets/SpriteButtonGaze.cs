@@ -16,6 +16,21 @@ namespace Vrs.Internal
         private Coroutine changeTextVisibilityCoroutine;
         private Coroutine changeBackgroundVisibilityCoroutine;
 
+        void Start()
+        {
+            SetInitialTransparency();
+        }
+
+        private void SetInitialTransparency()
+        {
+            Color textColor = textMesh.color;
+            textColor.a = 0f;
+            textMesh.color = textColor;
+
+            Color backgroundColor = background.color;
+            backgroundColor.a = 0f;
+            background.color = backgroundColor;
+        }
         public void SetGazedAt(bool gazedAt)
         {
             if (mGazeAt != gazedAt)
