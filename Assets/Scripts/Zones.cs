@@ -30,7 +30,7 @@ public class Zones : MonoBehaviour
     private void PlayVideo()
     {
 #if UNITY_EDITOR
-        videoFolderPath = Application.dataPath+"/";
+        videoFolderPath = Application.dataPath+"/TigerVideos/";
 #else
         videoFolderPath = "storage/emulated/0/TigerVideos/";
 #endif
