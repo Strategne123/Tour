@@ -15,7 +15,8 @@ public class Zones : MonoBehaviour
     private int wrongAnswers = 0;
     private int allAnswers = 0;
     private float nextQuestionTime = 100;
-    private string videoFolderPath; 
+    private string videoFolderPath;
+    private bool isLastAnswer = false;
 
 
     private void Start()
@@ -36,6 +37,9 @@ public class Zones : MonoBehaviour
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
         mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
         nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+        var newQuaternion = mediaPlayer.transform.localRotation;
+        newQuaternion.y = stages[currentStageIndex].GetStartAngle();
+        mediaPlayer.transform.localRotation = newQuaternion;
         //mediaPlayer.Control.Seek(startTime);
         mediaPlayer.Play();
     }
@@ -70,21 +74,16 @@ public class Zones : MonoBehaviour
 
     public void NextQuestion()
     {
-        try
+        if (currentQuestionIndex < stages[currentStageIndex].QuestionCount() - 1)
         {
-            if (currentQuestionIndex < stages[currentStageIndex].QuestionCount() - 1)
-            {
-                currentQuestionIndex++;
-                nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+            currentQuestionIndex++;
+            nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
 
-            }
-            else
-            {
-                currentQuestionIndex = 0;
-                //NextStage();
-            }
         }
-        catch { }
+        else
+        {
+            isLastAnswer = true;
+        }
         stages[currentStageIndex].gameObject.SetActive(false);
         ReturnVideo();
     }
@@ -96,6 +95,7 @@ public class Zones : MonoBehaviour
         {
             currentStageIndex++;
             currentQuestionIndex = 0;
+            isLastAnswer = false;
             PlayVideo();
         }
         else
@@ -107,7 +107,7 @@ public class Zones : MonoBehaviour
 
     void Update()
     {
-        if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime)
+        if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer)
         {
             PauseVideo();
         }
