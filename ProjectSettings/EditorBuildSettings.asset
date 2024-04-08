@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Scene1.unity
-    guid: 88fcd2c6400402e41ad91aac0d3925d1
+    path: Assets/Scenes/Tiger.unity
+    guid: 59d1a2473d5bdca4ab3c62e81ec9080d
   m_configObjects: {}

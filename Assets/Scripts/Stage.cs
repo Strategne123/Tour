@@ -18,9 +18,9 @@ public class Stage : MonoBehaviour
         questions[numberQuestion].gameObject.SetActive(true);
     }
 
-    public void HideQuestion(ref int numberQuestion)
+    public void HideQuestion(int numberQuestion)
     {
-        questions[numberQuestion++].gameObject.SetActive(true);
+        questions[numberQuestion].gameObject.SetActive(false);
     }
 
     public float GetNextQuestionTime(int numberQuestion)
@@ -31,5 +31,10 @@ public class Stage : MonoBehaviour
     public float GetStartAngle()
     {
         return startAngle;
+    }
+
+    public int GetQuestionsCount()
+    {
+        return questions.Count;
     }
 }

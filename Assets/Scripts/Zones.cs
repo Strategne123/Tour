@@ -13,16 +13,17 @@ public class Zones : MonoBehaviour
     private int currentStageIndex;
     private int currentQuestionIndex;
     private int wrongAnswers = 0;
-    private int allAnswers = 0;
+    private int allAnswers = 0,currentAnswers = 0;
     private float nextQuestionTime = 100;
     private string videoFolderPath;
     private bool isLastAnswer = false;
-
+    private bool haveDoneMistake = false;
 
     private void Start()
     {
         currentStageIndex = 0;
         currentQuestionIndex = 0;
+        
         PlayVideo();
     }
 
@@ -41,6 +42,7 @@ public class Zones : MonoBehaviour
         newQuaternion.y = stages[currentStageIndex].GetStartAngle();
         mediaPlayer.transform.localRotation = newQuaternion;
         //mediaPlayer.Control.Seek(startTime);
+        CountAnswers();
         mediaPlayer.Play();
     }
 
@@ -52,9 +54,21 @@ public class Zones : MonoBehaviour
         stages[currentStageIndex].ShowQuestion(currentQuestionIndex);
     }
 
+    private void CountAnswers()
+    {
+        if (allAnswers == 0)
+        {
+            foreach (var stage in stages)
+            {
+                allAnswers += stage.GetQuestionsCount();
+            }
+        }
+        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + allAnswers;
+    }
 
     private void ReturnVideo()
     {
+        CountAnswers();
         mediaPlayer.Play();
     }
 
@@ -68,7 +82,17 @@ public class Zones : MonoBehaviour
 
     public void MakeMistake()
     {
-        wrongAnswers++;
+        if (!haveDoneMistake)
+        {
+            wrongAnswers++;
+            wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
+            haveDoneMistake = true;
+        }
+    }
+
+    public void TrueAnswer()
+    {
+        currentAnswers++;
     }
 
 
@@ -76,6 +100,7 @@ public class Zones : MonoBehaviour
     {
         if (currentQuestionIndex < stages[currentStageIndex].QuestionCount() - 1)
         {
+            stages[currentStageIndex].HideQuestion(currentQuestionIndex);
             currentQuestionIndex++;
             nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
 
@@ -85,6 +110,7 @@ public class Zones : MonoBehaviour
             isLastAnswer = true;
         }
         stages[currentStageIndex].gameObject.SetActive(false);
+        haveDoneMistake = false;
         ReturnVideo();
     }
 
@@ -95,6 +121,7 @@ public class Zones : MonoBehaviour
         {
             currentStageIndex++;
             currentQuestionIndex = 0;
+            haveDoneMistake = false;
             isLastAnswer = false;
             PlayVideo();
         }
@@ -105,7 +132,7 @@ public class Zones : MonoBehaviour
     }
 
 
-    void Update()
+    private void Update()
     {
         if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer)
         {
@@ -115,6 +142,11 @@ public class Zones : MonoBehaviour
         {
             NextStage();
         }
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
 
