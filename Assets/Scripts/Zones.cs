@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using RenderHeads.Media.AVProVideo;
+using Vrs.Internal;
+using System;
 
 public class Zones : MonoBehaviour
 {
@@ -34,16 +36,21 @@ public class Zones : MonoBehaviour
 #else
         videoFolderPath = "storage/emulated/0/TigerVideos/";
 #endif
-
-        var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
-        mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
-        nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-        var newQuaternion = mediaPlayer.transform.localRotation;
-        newQuaternion.y = stages[currentStageIndex].GetStartAngle();
-        mediaPlayer.transform.localRotation = newQuaternion;
-        //mediaPlayer.Control.Seek(startTime);
-        CountAnswers();
-        mediaPlayer.Play();
+        try
+        {
+            var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
+            mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
+            nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+            var newQuaternion = mediaPlayer.transform.localRotation;
+            newQuaternion.y = stages[currentStageIndex].GetStartAngle();
+            mediaPlayer.transform.localRotation = newQuaternion;
+            CountAnswers();
+            mediaPlayer.Play();
+        }
+        catch (Exception ex)
+        {
+            FPScounter.Print(ex.ToString());
+        }
     }
 
 
@@ -119,6 +126,7 @@ public class Zones : MonoBehaviour
     {
         if (currentStageIndex < stages.Count - 1)
         {
+            mediaPlayer.CloseMedia();
             currentStageIndex++;
             currentQuestionIndex = 0;
             haveDoneMistake = false;
@@ -134,13 +142,20 @@ public class Zones : MonoBehaviour
 
     private void Update()
     {
-        if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer)
+        try
         {
-            PauseVideo();
+            if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer)
+            {
+                PauseVideo();
+            }
+            if (mediaPlayer.Control.IsFinished())
+            {
+                NextStage();
+            }
         }
-        if(mediaPlayer.Control.GetCurrentTime()==mediaPlayer.Info.GetDuration() && mediaPlayer.Info.GetDuration() > 0)
+        catch(Exception e)
         {
-            NextStage();
+            FPScounter.Print(e.ToString());
         }
     }
 
@@ -148,5 +163,6 @@ public class Zones : MonoBehaviour
     {
         Application.Quit();
     }
+    
 }
 
