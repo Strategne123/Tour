@@ -20,7 +20,7 @@ public class Answer : MonoBehaviour
             zone.MakeMistake();
             return;
         }
-
+        zone.TrueAnswer();
         if (answerType == AnswerType.ContinueVideo)
         {
             zone.NextQuestion();
