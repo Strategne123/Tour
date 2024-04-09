@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -17,6 +18,8 @@ public class Zones : MonoBehaviour
     private float nextQuestionTime = 100;
     private string videoFolderPath;
     private bool isLastAnswer = false;
+
+    public Action<AnswerType, bool> OnChoosedAnswer;
 
 
     private void Start()
@@ -62,6 +65,7 @@ public class Zones : MonoBehaviour
     public void ChooseAnswer(Answer answer)
     {
         print("Выбран ответ"+answer.gameObject.name);
+        OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect);
         answer.ResponseProcess(this);
     }
 

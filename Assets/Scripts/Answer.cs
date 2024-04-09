@@ -9,7 +9,7 @@ public enum AnswerType
 public class Answer : MonoBehaviour
 {
     [SerializeField] private GameObject answerObject;
-    [SerializeField] private AnswerType answerType;
+    [SerializeField] public AnswerType answerType;
 
     public bool isCorrect;
 
