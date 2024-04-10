@@ -11,6 +11,7 @@ public class Answer : MonoBehaviour
     [SerializeField] private GameObject answerObject;
     [SerializeField] private AnswerType answerType;
 
+    [HideInInspector] public Question parentQuestion;
     public bool isCorrect;
 
     public void ResponseProcess(Zones zone)
@@ -21,6 +22,11 @@ public class Answer : MonoBehaviour
             return;
         }
         zone.TrueAnswer();
+        parentQuestion.correctAnswers--;
+        if (parentQuestion.correctAnswers > 0)
+        {
+            return;
+        }
         if (answerType == AnswerType.ContinueVideo)
         {
             zone.NextQuestion();
