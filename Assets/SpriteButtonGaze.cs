@@ -20,6 +20,7 @@ namespace Vrs.Internal
 		{
 			textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
 			SetInitialTransparency();
+			SetGazedAt(true); // временно
 		}
 
 		private void SetInitialTransparency()
@@ -118,12 +119,12 @@ namespace Vrs.Internal
 
 		public void OnGazeEnter()
 		{
-			SetGazedAt(true);
+			//SetGazedAt(true); // временно
 		}
 
 		public void OnGazeExit()
 		{
-			SetGazedAt(false);
+			//SetGazedAt(false); // временно
 		}
 
 		public void OnGazeTrigger() { }
