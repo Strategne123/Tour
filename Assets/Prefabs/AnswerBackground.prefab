@@ -28,14 +28,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1091985050406645421}
-  m_LocalRotation: {x: 0.000000039581206, y: 0.00000013411044, z: -0.054688774, w: -0.99850345}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.67975867, y: -1.0866852, z: -0.98991907}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6551349993149541523}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: -91, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1971053207 &3521730521727647984
 SpriteShapeRenderer:
   m_ObjectHideFlags: 0
@@ -92,8 +92,8 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
-    m_Center: {x: 0.6784156, y: 0.08697933, z: 0}
-    m_Extent: {x: 0.72707325, y: 0.39565697, z: 0}
+    m_Center: {x: 0.6784171, y: 0.08697063, z: 0}
+    m_Extent: {x: 0.7270795, y: 0.39570242, z: 0}
 --- !u!114 &8869260502495198608
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -366,7 +366,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.039999068, y: -0.039999083}
+  m_SizeDelta: {x: -0.1, y: -0.039999083}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6551349994118749837
 CanvasRenderer:
@@ -424,7 +424,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 0.5
+  m_fontSize: 0.3
   m_fontSizeBase: 50
   m_fontWeight: 400
   m_enableAutoSizing: 1
