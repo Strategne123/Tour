@@ -24,7 +24,7 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        currentStageIndex = 11;
+        currentStageIndex = 0;
         currentQuestionIndex = 0;
         
         PlayVideo();
