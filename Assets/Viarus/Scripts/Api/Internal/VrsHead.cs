@@ -54,7 +54,7 @@ namespace Vrs.Internal
         
         public void SetTrackPosition(bool b)
         {
-            Debug.Log("VrsHead.SetTrackPosition." + b);
+            //Debug.Log("VrsHead.SetTrackPosition." + b);
             trackPosition = b;
         }
 
