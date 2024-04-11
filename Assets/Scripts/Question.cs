@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -13,9 +14,10 @@ public class Question : MonoBehaviour
 
     public float timeToAppear;
 
-    private void Start()
+    private void Awake()
     {
-        
+        answers.Clear();
+        answers = GetComponentsInChildren<Answer>().ToList<Answer>();
         questionTextUI.text = questionText;
         foreach (var answer in answers)
         {

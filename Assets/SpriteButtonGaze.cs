@@ -3,11 +3,12 @@ using UnityEngine;
 using UnityEngine.U2D;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace Vrs.Internal
 {
 	public class SpriteButtonGaze : MonoBehaviour, IVrsGazeResponder
-	{
+    {
 		[SerializeField] private Image answerBackground;
 		private TextMeshProUGUI textMesh;
 
@@ -130,5 +131,6 @@ namespace Vrs.Internal
 		public void OnGazeTrigger() { }
 
 		public void OnUpdateIntersectionPosition(Vector3 position) { }
-	}
+
+    }
 }
