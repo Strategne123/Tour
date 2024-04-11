@@ -16,6 +16,17 @@ public class Stage : MonoBehaviour
         gameObject.SetActive(false);
     }
 
+    private void Start()
+    {
+        if(questions.Count > 1)
+        {
+            for(int i = 1; i < questions.Count; i++)
+            {
+                questions[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
     public int QuestionCount()
     {
         return questions.Count;

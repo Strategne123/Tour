@@ -4,6 +4,7 @@ using TMPro;
 using RenderHeads.Media.AVProVideo;
 using Vrs.Internal;
 using System;
+using Mono.Cecil.Cil;
 
 public class Zones : MonoBehaviour
 {
@@ -23,7 +24,7 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        currentStageIndex = 0;
+        currentStageIndex = 11;
         currentQuestionIndex = 0;
         
         PlayVideo();
@@ -32,25 +33,18 @@ public class Zones : MonoBehaviour
     private void PlayVideo()
     {
 #if UNITY_EDITOR
-        videoFolderPath = Application.dataPath+"/TigerVideos/";
+        videoFolderPath = Application.dataPath + "/TigerVideos/";
 #else
-        videoFolderPath = "storage/emulated/0/TigerVideos/";
+videoFolderPath = "storage/emulated/0/TigerVideos/";
 #endif
-        try
-        {
-            var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
-            mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
-            nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-            var newQuaternion = mediaPlayer.transform.localRotation;
-            newQuaternion.y = stages[currentStageIndex].GetStartAngle();
-            mediaPlayer.transform.localRotation = newQuaternion;
-            CountAnswers();
-            mediaPlayer.Play();
-        }
-        catch (Exception ex)
-        {
-            FPScounter.Print(ex.ToString());
-        }
+
+        var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
+        mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
+        nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+        Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
+        mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
+        CountAnswers();
+        mediaPlayer.Play();
     }
 
 
@@ -127,6 +121,7 @@ public class Zones : MonoBehaviour
         if (currentStageIndex < stages.Count - 1)
         {
             mediaPlayer.CloseMedia();
+            stages[currentStageIndex].gameObject.SetActive(false);
             currentStageIndex++;
             currentQuestionIndex = 0;
             haveDoneMistake = false;
