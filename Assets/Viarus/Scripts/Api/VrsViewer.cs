@@ -51,7 +51,7 @@ namespace Vrs.Internal
         
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            Debug.Log("OnSceneLoaded->" + scene.name + " , Triggered=" + Triggered);
+            //Debug.Log("OnSceneLoaded->" + scene.name + " , Triggered=" + Triggered);
             SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
@@ -64,7 +64,7 @@ namespace Vrs.Internal
                 USE_DTR = false;
                 if (instance == null && !Application.isPlaying)
                 {
-                    Debug.Log("Create VrsViewer Instance !");
+                   // Debug.Log("Create VrsViewer Instance !");
                     instance = FindObjectOfType<VrsViewer>();
                 }
 #endif
@@ -95,7 +95,7 @@ namespace Vrs.Internal
         {
             if (instance == null && FindObjectOfType<VrsViewer>() == null)
             {
-                Debug.Log("Creating VrsViewerMain object");
+                ///Debug.Log("Creating VrsViewerMain object");
                 var go = new GameObject("VrsViewerMain", typeof(VrsViewer));
                 go.transform.localPosition = Vector3.zero;
                 
@@ -232,7 +232,7 @@ namespace Vrs.Internal
             if (mVrsReticle != null)
             {
                 mVrsReticle.HeadShow();
-                Debug.Log("ShowHeadControl");
+               // Debug.Log("ShowHeadControl");
             }
         }
 
@@ -245,7 +245,7 @@ namespace Vrs.Internal
             if (mVrsReticle != null)
             {
                 mVrsReticle.HeadDismiss();
-                Debug.Log("HideHeadControl");
+               // Debug.Log("HideHeadControl");
             }
         }
 
@@ -659,7 +659,7 @@ namespace Vrs.Internal
             }
 
             Resources.UnloadUnusedAssets();
-            Debug.Log("RealeaseEyeStereoScreens");
+            //Debug.Log("RealeaseEyeStereoScreens");
         }
 
         
@@ -745,7 +745,7 @@ namespace Vrs.Internal
         
         void Awake()
         {
-            Debug.Log("VrsViewer Awake");
+            //Debug.Log("VrsViewer Awake");
             SettingsAssetConfig asset;
 #if UNITY_EDITOR
             asset = VrsSDKApi.Instance.GetSettingsAssetConfig();
@@ -760,8 +760,8 @@ namespace Vrs.Internal
             InitialRecenter = true;
             vrsInput = new ViarusInput();
             IsWinPlatform = false;
-            Debug.Log("SettingsAssetConfig:" + asset.mSixDofMode + "--" + asset.mSleepTimeoutMode + "--" +
-                      asset.mHeadControl + "--" + asset.mTextureQuality + "--" + asset.mTextureMSAA);
+            /*Debug.Log("SettingsAssetConfig:" + asset.mSixDofMode + "--" + asset.mSleepTimeoutMode + "--" +
+                      asset.mHeadControl + "--" + asset.mTextureQuality + "--" + asset.mTextureMSAA);*/
 #if UNITY_STANDALONE_WIN || ANDROID_REMOTE_NRR
             IsWinPlatform = true;
 #endif
@@ -776,7 +776,7 @@ namespace Vrs.Internal
                     QualitySettings.antiAliasing = 0;
                     Application.runInBackground = false;
                     Input.gyro.enabled = false;
-                    Debug.Log("SleepTimeout:" + SleepMode.ToString());
+                    //Debug.Log("SleepTimeout:" + SleepMode.ToString());
                     if (SleepMode == SleepTimeoutMode.NEVER_SLEEP)
                     {
                         
@@ -791,7 +791,7 @@ namespace Vrs.Internal
 
             if (instance != this)
             {
-                Debug.LogError("There must be only one VrsViewer object in a scene.");
+                //Debug.LogError("There must be only one VrsViewer object in a scene.");
                 DestroyImmediate(this);
                 return;
             }
@@ -806,8 +806,8 @@ namespace Vrs.Internal
                 AddPrePostRenderStages();
             }
 
-            Debug.Log("Is Windows Platform : " + IsWinPlatform + ", ScreenInfo : " + Screen.width + "*" +
-                      Screen.height + ", AntiAliasing : " + QualitySettings.antiAliasing);
+            /*Debug.Log("Is Windows Platform : " + IsWinPlatform + ", ScreenInfo : " + Screen.width + "*" +
+                      Screen.height + ", AntiAliasing : " + QualitySettings.antiAliasing);*/
 #if UNITY_ANDROID
             
             int targetFrameRate = Application.platform == RuntimePlatform.Android
@@ -836,7 +836,7 @@ namespace Vrs.Internal
                     Application.targetFrameRate = Application.platform == RuntimePlatform.Android
                         ? (int) VrsGlobal.refreshRate
                         : -1;
-                    Debug.Log("offaxisDistortionEnabled : Setting frame rate to " + Application.targetFrameRate);
+                    //Debug.Log("offaxisDistortionEnabled : Setting frame rate to " + Application.targetFrameRate);
                 }
             }
             else
@@ -913,12 +913,12 @@ namespace Vrs.Internal
                 param.renderHeight = _textureHeight;
                 param.bitRate = 30;
                 VrsInstantNativeApi.Inited = VrsInstantNativeApi.Init(param);
-                Debug.Log("VrsInstantNativeApi.Init.Called.");
+                //Debug.Log("VrsInstantNativeApi.Init.Called.");
 
                 VrsInstantNativeApi.GetVersionInfo(ref VrsInstantNativeApi.nativeApiVersion,
                     ref VrsInstantNativeApi.driverVersion);
-                Debug.Log("VrsInstantNativeApi.Version.Api." + VrsInstantNativeApi.nativeApiVersion + ",Driver." +
-                          VrsInstantNativeApi.driverVersion);
+                /*Debug.Log("VrsInstantNativeApi.Version.Api." + VrsInstantNativeApi.nativeApiVersion + ",Driver." +
+                          VrsInstantNativeApi.driverVersion);*/
 
                 if (VrsInstantNativeApi.nativeApiVersion >= 2000)
                 {
@@ -926,7 +926,7 @@ namespace Vrs.Internal
                     if (VrsInstantNativeApi.driverVersion >= 2002)
                     {
                         UInt32 rateData = VrsInstantNativeApi.GetRefreshRate();
-                        Debug.Log("-------------rateData--------" + rateData);
+                        //Debug.Log("-------------rateData--------" + rateData);
                         if (rateData >= 60)
                         {
                             Application.targetFrameRate = (int) rateData;
@@ -944,12 +944,12 @@ namespace Vrs.Internal
                 {
                     
                     VrsInstantNativeApi.SetFrameTexture(eyeStereoScreens[0].GetNativeTexturePtr());
-                    Debug.Log("VrsInstantNativeApi.SetFrameTexture." + eyeStereoScreens[0].GetNativeTexturePtr());
+                    //Debug.Log("VrsInstantNativeApi.SetFrameTexture." + eyeStereoScreens[0].GetNativeTexturePtr());
                 }
 #endif
 
-                Debug.Log("VrsInstantNativeApi.Init. Size " + param.renderWidth + "*" + param.renderHeight + ", Bit " +
-                          param.bitRate + ", Inited " + VrsInstantNativeApi.Inited);
+                /*Debug.Log("VrsInstantNativeApi.Init. Size " + param.renderWidth + "*" + param.renderHeight + ", Bit " +
+                          param.bitRate + ", Inited " + VrsInstantNativeApi.Inited);*/
             }
             else
             {
@@ -1073,10 +1073,10 @@ namespace Vrs.Internal
                 
                 VrsControllerHelper.InitController((int) cfg.controllerType);
                 device.profileChanged = true;
-                Debug.Log("OnViarusConfigCallback Config : Ipd " + cfg.ipd + ", Near " + cfg.near +
+                /*Debug.Log("OnViarusConfigCallback Config : Ipd " + cfg.ipd + ", Near " + cfg.near +
                           ", FrustumLeft(LRBT) " + cfg.eyeFrustumParams[0] + ", " + cfg.eyeFrustumParams[1] + ","
                           + cfg.eyeFrustumParams[2] + ", " + cfg.eyeFrustumParams[3] + ", ControllerType " +
-                          cfg.controllerType);
+                          cfg.controllerType);*/
 
                 TrackerPosition = true;
                 {
@@ -1176,7 +1176,7 @@ namespace Vrs.Internal
                 var go = new GameObject("PreRender", typeof(VrsPreRender));
                 go.SendMessage("Reset");
                 go.transform.parent = transform;
-                Debug.Log("Add VrsPreRender");
+                //Debug.Log("Add VrsPreRender");
             }
 
             var postRender = FindObjectOfType<VrsPostRender>();
@@ -1185,7 +1185,7 @@ namespace Vrs.Internal
                 var go = new GameObject("PostRender", typeof(VrsPostRender));
                 go.SendMessage("Reset");
                 go.transform.parent = transform;
-                Debug.Log("Add VrsPostRender");
+                //Debug.Log("Add VrsPostRender");
             }
         }
 
@@ -1314,7 +1314,7 @@ namespace Vrs.Internal
                                                        Input.GetKeyUp(KeyCode.UpArrow)
                                                        || Input.GetKeyUp(KeyCode.Escape)))
                 {
-                    Debug.Log("KeyUp===>" + Event.current.keyCode.ToString());
+                    //Debug.Log("KeyUp===>" + Event.current.keyCode.ToString());
                 }
             }
             catch { }
@@ -1340,7 +1340,7 @@ namespace Vrs.Internal
             for (int i = 0; i < Camera.allCameras.Length; i++)
             {
                 Camera camera = Camera.allCameras[i];
-                Debug.Log("Check Camera : " + camera.name);
+                //Debug.Log("Check Camera : " + camera.name);
                 if (
                     (camera.tag == "MainCamera")
                     && camera.targetTexture == null &&
@@ -1373,7 +1373,7 @@ namespace Vrs.Internal
         void OnDisable()
         {
             device.OnPause(true);
-            Debug.Log("VrsViewer->OnDisable");
+            //Debug.Log("VrsViewer->OnDisable");
             StopCoroutine("EndOfFrame");
         }
 
@@ -1412,13 +1412,13 @@ namespace Vrs.Internal
 
         void OnApplicationPause(bool pause)
         {
-            Debug.Log("VrsViewer->OnApplicationPause," + pause + ", hasEnterXRMode=" + VrsSDKApi.Instance.IsInXRMode);
+            //Debug.Log("VrsViewer->OnApplicationPause," + pause + ", hasEnterXRMode=" + VrsSDKApi.Instance.IsInXRMode);
             SetPause(pause);
         }
 
         void OnApplicationFocus(bool focus)
         {
-            Debug.Log("VrsViewer->OnApplicationFocus," + focus);
+            //Debug.Log("VrsViewer->OnApplicationFocus," + focus);
             device.OnFocus(focus);
         }
 
@@ -1437,7 +1437,7 @@ namespace Vrs.Internal
                 VrsOverrideSettings.OnApplicationQuitEvent();
             }
 
-            Debug.Log("VrsViewer->OnApplicationQuit");
+            //Debug.Log("VrsViewer->OnApplicationQuit");
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 			if(IsAndroidKillProcess) 
@@ -1482,7 +1482,7 @@ namespace Vrs.Internal
                 instance = null;
             }
 
-            Debug.Log("VrsViewer->OnDestroy");
+            //Debug.Log("VrsViewer->OnDestroy");
         }
 
         
@@ -1512,7 +1512,7 @@ namespace Vrs.Internal
 
         void OnKeyDown(string keyCode)
         {
-            Debug.Log("OnKeyDown=" + keyCode);
+            //Debug.Log("OnKeyDown=" + keyCode);
             if (keyCode == VrsGlobal.KeyEvent_KEYCODE_ALT_LEFT)
             {
                 if (vrsInput != null)
@@ -1531,7 +1531,7 @@ namespace Vrs.Internal
 
         void OnKeyUp(string keyCode)
         {
-            Debug.Log("OnKeyUp=" + keyCode);
+            //Debug.Log("OnKeyUp=" + keyCode);
             if (keyCode == VrsGlobal.KeyEvent_KEYCODE_ALT_LEFT)
             {
                 if (vrsInput != null)
@@ -1550,12 +1550,12 @@ namespace Vrs.Internal
 
         void OnActivityPause()
         {
-            Debug.Log("OnActivityPause");
+            //Debug.Log("OnActivityPause");
         }
 
         void OnActivityResume()
         {
-            Debug.Log("OnActivityResume");
+            //Debug.Log("OnActivityResume");
         }
 
         
@@ -1634,8 +1634,8 @@ namespace Vrs.Internal
             if (USE_DTR && (!VrsSDKApi.Instance.IsInXRMode && frameCount < 3))
             {
                 frameCount++;
-                Debug.Log("EndOfFrame->hasEnterRMode " + "" + VrsSDKApi.Instance.IsInXRMode + " or frameCount " +
-                          frameCount);
+                //Debug.Log("EndOfFrame->hasEnterRMode " + "" + VrsSDKApi.Instance.IsInXRMode + " or frameCount " +
+                         // frameCount);
                 
                 GL.Clear(false, true, Color.black);
             }
@@ -1649,7 +1649,7 @@ namespace Vrs.Internal
                         device.SetTimeWarpEnable(false);
                     }
 
-                    if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("EndOfFrame.TimeWarp[" + frameCount + "]");
+                    //if (VrsGlobal.DEBUG_LOG_ENABLED) //Debug.Log("EndOfFrame.TimeWarp[" + frameCount + "]");
                     
                 }
 
@@ -1923,7 +1923,7 @@ namespace Vrs.Internal
                 defaultIpd = GetIpd();
             }
 
-            Debug.Log(" Ipd : D." + defaultIpd + "/N." + ipd);
+            //Debug.Log(" Ipd : D." + defaultIpd + "/N." + ipd);
             VrsGlobal.dftProfileParams[0] = ipd; 
             userIpd = ipd;
             device.SetIpd(ipd);

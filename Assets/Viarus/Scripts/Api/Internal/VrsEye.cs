@@ -104,7 +104,7 @@ namespace Vrs.Internal
             if (VrsGlobal.hasInfinityARSDK) return;
             
             Matrix4x4 proj = VrsViewer.Instance.Projection(eye);
-            Debug.Log("VrsEye->UpdateCameraProjection," + eye.ToString() + "/" + proj.ToString());
+            //Debug.Log("VrsEye->UpdateCameraProjection," + eye.ToString() + "/" + proj.ToString());
             bool useDFT = VrsViewer.USE_DTR && !VrsGlobal.supportDtr;
             
             if (!VrsViewer.Instance.IsWinPlatform && (Application.isEditor || useDFT))
@@ -117,7 +117,7 @@ namespace Vrs.Internal
                 float near = (VrsGlobal.fovNear >= 0 && VrsGlobal.fovNear < nearClipPlane) ? VrsGlobal.fovNear : nearClipPlane;
                 float far = (VrsGlobal.fovFar >= 0 && VrsGlobal.fovFar > farClipPlane) ? VrsGlobal.fovFar : farClipPlane;
                 
-                Debug.Log(eye.ToString() + ", " + cam.rect.ToString());
+                //Debug.Log(eye.ToString() + ", " + cam.rect.ToString());
                 VrsCameraUtils.FixProjection(cam.rect, near, far, ref proj);
             }
 
@@ -137,8 +137,8 @@ namespace Vrs.Internal
             {
                 transform.localRotation = vrsDevice.GetEyeLocalRotation(eye);
                 transform.localPosition = vrsDevice.GetEyeLocalPosition(eye);
-                Debug.Log(eye + ". Local Rotation : " + transform.localRotation.eulerAngles.ToString());
-                Debug.Log(eye + ". Local Position : " + transform.localPosition.x + "," + transform.localPosition.y + "," + transform.localPosition.z);
+                //Debug.Log(eye + ". Local Rotation : " + transform.localRotation.eulerAngles.ToString());
+                //Debug.Log(eye + ". Local Position : " + transform.localPosition.x + "," + transform.localPosition.y + "," + transform.localPosition.z);
             }
         }
 
@@ -205,7 +205,7 @@ namespace Vrs.Internal
 
         void OnPreCull()
         {
-            if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log(eye+".VrsEye.OnPreCull." + cam.rect.ToString());
+            //if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log(eye+".VrsEye.OnPreCull." + cam.rect.ToString());
             if (VrsGlobal.isVR9Platform)
             {
                 cam.targetTexture = null;
@@ -223,7 +223,7 @@ namespace Vrs.Internal
                 SetupStereo();
 
                 int eyeType = eye == VrsViewer.Eye.Left ? 0 : 1;
-                if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPreCull.eye[" + eyeType + "]");
+                //if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPreCull.eye[" + eyeType + "]");
 
                 if (VrsViewer.Instance.OpenEffectRender && VrsViewer.Instance.GetStereoScreen(eyeType) != null)
                 {
@@ -317,7 +317,7 @@ namespace Vrs.Internal
             cam.aspect = 1.0f;
 #endif
 
-            Debug.Log(eye.ToString() + "," + cam.transform.localPosition.x);
+            //Debug.Log(eye.ToString() + "," + cam.transform.localPosition.x);
 
         }
 #if UNITY_STANDALONE_WIN || ANDROID_REMOTE_NRR
