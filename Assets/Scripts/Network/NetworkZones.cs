@@ -25,7 +25,7 @@ public class NetworkZones : NetworkBehaviour
             _zones.MakeMistake();
             return;
         }
-
+        _zones.TrueAnswer();
         if (answerType == AnswerType.ContinueVideo)
         {
             _zones.NextQuestion();

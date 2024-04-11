@@ -11,4 +11,13 @@ public class NetworkSphere : NetworkBehaviour
         base.OnStartLocalPlayer();
         _viarusCamera.SetActive(true);
     }
+
+    public override void OnStartClient()
+    {
+        base.OnStartClient();
+        if (!isOwned)
+        {
+            Destroy(gameObject);
+        }
+    }
 }
