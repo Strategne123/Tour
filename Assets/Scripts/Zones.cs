@@ -4,7 +4,6 @@ using TMPro;
 using RenderHeads.Media.AVProVideo;
 using Vrs.Internal;
 using System;
-using Mono.Cecil.Cil;
 
 public class Zones : MonoBehaviour
 {
@@ -13,6 +12,7 @@ public class Zones : MonoBehaviour
     [SerializeField] private TMP_Text allQuestionsText;
     [SerializeField] private TMP_Text wrongAnswersText;
     [SerializeField] private TMP_Text mainQuestion;
+    [SerializeField] private GameObject modePanel;
 
     private int currentStageIndex;
     private int currentQuestionIndex;
@@ -22,13 +22,30 @@ public class Zones : MonoBehaviour
     private string videoFolderPath;
     private bool isLastAnswer = false;
 
+    [HideInInspector] public Mode currentMode;
+
     private void Start()
     {
         currentStageIndex = 0;
         currentQuestionIndex = 0;
-        
-        PlayVideo();
         mainQuestion.text = "";
+    }
+
+    private void OpenModePanel()
+    {
+        modePanel.SetActive(true);
+        if (mediaPlayer.Control.IsPlaying())
+        {
+            mediaPlayer.Pause();
+        }
+    }
+
+    public void SelectMode(int selectedMode)
+    {
+        currentMode = (Mode)selectedMode;
+        modePanel.SetActive(false);
+        PlayVideo();
+
     }
 
     private void PlayVideo()
@@ -53,7 +70,14 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
     {
         mediaPlayer.Pause();
         stages[currentStageIndex].gameObject.SetActive(true);
-        stages[currentStageIndex].ShowQuestion(currentQuestionIndex);
+        if (currentMode == Mode.Study)
+        {
+            stages[currentStageIndex].ShowAnswer(currentQuestionIndex);
+        }
+        else
+        {
+            stages[currentStageIndex].ShowQuestion(currentQuestionIndex);
+        }
     }
 
     private void CountAnswers()
@@ -156,6 +180,8 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
     
     public void Restart()
     {
+        isLastAnswer = false;
+        mediaPlayer.Pause();
         stages[currentStageIndex].HideQuestion(currentQuestionIndex);
         currentAnswers = 0;
         currentQuestionIndex = 0;
@@ -167,8 +193,15 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         {
             stage.gameObject.SetActive(false);
         }
-        PlayVideo();
+        OpenModePanel();
         mainQuestion.text = "";
     }
+}
+
+public enum Mode
+{
+    Study,
+    Test,
+    Exam
 }
 

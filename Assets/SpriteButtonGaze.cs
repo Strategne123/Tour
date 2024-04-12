@@ -7,130 +7,154 @@ using UnityEngine.EventSystems;
 
 namespace Vrs.Internal
 {
-    public class SpriteButtonGaze : MonoBehaviour, IVrsGazeResponder
+	public class SpriteButtonGaze : MonoBehaviour, IVrsGazeResponder
     {
-        [SerializeField] private Image answerBackground;
-        private TextMeshProUGUI textMesh;
+		[SerializeField] private Image answerBackground;
+		[SerializeField] private Zones zone;
+		private TextMeshProUGUI textMesh;
 
-        private bool mGazeAt = false;
-        private Coroutine changeColorCoroutine;
-        private Coroutine changeTextVisibilityCoroutine;
-        private Coroutine changeBackgroundVisibilityCoroutine;
+		private bool mGazeAt = false;
+		private Coroutine changeColorCoroutine;
+		private Coroutine changeTextVisibilityCoroutine;
+		private Coroutine changeBackgroundVisibilityCoroutine;
 
-        void Start()
-        {
-            textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
-            SetInitialTransparency();
-            SetGazedAt(true); // временно
-        }
-
-        private void SetInitialTransparency()
-        {
-            Color textColor = textMesh.color;
-            textColor.a = 1f;
-            textMesh.color = textColor;
-
-            Color backgroundColor = answerBackground.color;
-            backgroundColor.a = 1f;
-            answerBackground.color = backgroundColor;
-        }
-
-        public void SetGazedAt(bool gazedAt)
-        {
-            if (mGazeAt != gazedAt)
-            {
-                mGazeAt = gazedAt;
-                if (changeColorCoroutine != null)
-                {
-                    StopCoroutine(changeColorCoroutine);
-                }
-                if (changeTextVisibilityCoroutine != null)
-                {
-                    StopCoroutine(changeTextVisibilityCoroutine);
-                }
-                if (changeBackgroundVisibilityCoroutine != null)
-                {
-                    StopCoroutine(changeBackgroundVisibilityCoroutine);
-                }
-
-                Color targetColor = gazedAt ? new Color(0, 1, 0, 0.33f) : new Color(0, 0, 0, 0);
-                changeColorCoroutine = StartCoroutine(ChangeColorGradually(targetColor));
-                float targetAlphaText = 1.0f;
-                changeTextVisibilityCoroutine = StartCoroutine(ChangeTextVisibilityGradually(targetAlphaText));
-                float targetAlphaBackground = gazedAt ? answerBackground.color.a : 0f;
-                changeBackgroundVisibilityCoroutine = StartCoroutine(ChangeBackgroundVisibilityGradually(targetAlphaBackground, gazedAt));
+        private void OnEnable()
+		{
+			textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
+			SetInitialTransparency();
+			if (zone.currentMode == Mode.Exam)
+			{
+                Color targetColor = new Color(0, 0, 0, 0);
+                GetComponent<UnityEngine.U2D.SpriteShapeRenderer>().color = targetColor;
+                Color startColor = textMesh.color;
+                targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+                textMesh.color = targetColor;
+                Color originalColor = answerBackground.color;
+                targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
+                answerBackground.color=targetColor;
+			}
+			else
+			{
+                Color targetColor = new Color(0, 1, 0, 0.33f);
+                GetComponent<UnityEngine.U2D.SpriteShapeRenderer>().color = targetColor;
+                Color startColor = textMesh.color;
+                targetColor = new Color(startColor.r, startColor.g, startColor.b, 1.0f);
+                textMesh.color = targetColor;
+                Color originalColor = answerBackground.color;
+                targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.78f);
+                answerBackground.color = targetColor;
             }
-        }
+		}
 
-        private IEnumerator ChangeColorGradually(Color targetColor)
-        {
-            float duration = 0.33f;
-            float elapsedTime = 0;
-            SpriteShapeRenderer renderer = GetComponent<UnityEngine.U2D.SpriteShapeRenderer>();
-            Color startColor = renderer.color;
+		private void SetInitialTransparency()
+		{
+			Color textColor = textMesh.color;
+			textColor.a = 0f;
+			textMesh.color = textColor;
 
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                renderer.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
-                yield return null;
-            }
+			Color backgroundColor = answerBackground.color;
+			backgroundColor.a = 0f;
+			answerBackground.color = backgroundColor;
+		}
+		public void SetGazedAt(bool gazedAt)
+		{
+			if (mGazeAt != gazedAt)
+			{
+				mGazeAt = gazedAt;
+				if (changeColorCoroutine != null)
+				{
+					StopCoroutine(changeColorCoroutine);
+				}
+				if (changeTextVisibilityCoroutine != null)
+				{
+					StopCoroutine(changeTextVisibilityCoroutine);
+				}
+				if (changeBackgroundVisibilityCoroutine != null)
+				{
+					StopCoroutine(changeBackgroundVisibilityCoroutine);
+				}
 
-            renderer.color = targetColor;
-        }
+				Color targetColor = gazedAt ? new Color(0, 1, 0, 0.33f) : new Color(0, 0, 0, 0);
+				changeColorCoroutine = StartCoroutine(ChangeColorGradually(targetColor));
+				float targetAlphaText = gazedAt ? 1.0f : 0f;
+				changeTextVisibilityCoroutine = StartCoroutine(ChangeTextVisibilityGradually(targetAlphaText));
+				float targetAlphaBackground = gazedAt ? answerBackground.color.a : 0f;
+				changeBackgroundVisibilityCoroutine = StartCoroutine(ChangeBackgroundVisibilityGradually(targetAlphaBackground, gazedAt));
+			}
+		}
 
-        private IEnumerator ChangeTextVisibilityGradually(float targetAlpha)
-        {
-            float duration = 0.33f;
-            float elapsedTime = 0;
-            Color startColor = textMesh.color;
-            Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
+		private IEnumerator ChangeColorGradually(Color targetColor)
+		{
+			float duration = 0.33f;
+			float elapsedTime = 0;
+			SpriteShapeRenderer renderer = GetComponent<UnityEngine.U2D.SpriteShapeRenderer>();
+			Color startColor = renderer.color;
 
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                textMesh.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
-                yield return null;
-            }
+			while (elapsedTime < duration)
+			{
+				elapsedTime += Time.deltaTime;
+				renderer.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
+				yield return null;
+			}
 
-            textMesh.color = targetColor;
-        }
+			renderer.color = targetColor;
+		}
 
-        private IEnumerator ChangeBackgroundVisibilityGradually(float targetAlpha, bool gazedAt)
-        {
-            float duration = 0.33f;
-            float elapsedTime = 0;
-            Color originalColor = answerBackground.color;
-            Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, gazedAt ? 0.78f : 0f);
+		private IEnumerator ChangeTextVisibilityGradually(float targetAlpha)
+		{
+			float duration = 0.33f;
+			float elapsedTime = 0;
+			Color startColor = textMesh.color;
+			Color targetColor = new Color(startColor.r, startColor.g, startColor.b, targetAlpha);
 
-            while (elapsedTime < duration)
-            {
-                elapsedTime += Time.deltaTime;
-                answerBackground.color = Color.Lerp(originalColor, targetColor, elapsedTime / duration);
-                yield return null;
-            }
+			while (elapsedTime < duration)
+			{
+				elapsedTime += Time.deltaTime;
+				textMesh.color = Color.Lerp(startColor, targetColor, elapsedTime / duration);
+				yield return null;
+			}
 
-            answerBackground.color = targetColor;
-        }
+			textMesh.color = targetColor;
+		}
 
-        public bool isGazedAt()
-        {
-            return mGazeAt;
-        }
+		private IEnumerator ChangeBackgroundVisibilityGradually(float targetAlpha, bool gazedAt)
+		{
+			float duration = 0.33f;
+			float elapsedTime = 0;
+			Color originalColor = answerBackground.color;
+			Color targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, gazedAt ? 0.78f : 0f);
 
-        public void OnGazeEnter()
-        {
-            // SetGazedAt(true); // временно
-        }
+			while (elapsedTime < duration)
+			{
+				elapsedTime += Time.deltaTime;
+				answerBackground.color = Color.Lerp(originalColor, targetColor, elapsedTime / duration);
+				yield return null;
+			}
 
-        public void OnGazeExit()
-        {
-            // SetGazedAt(false); // временно
-        }
+			answerBackground.color = targetColor;
+		}
 
-        public void OnGazeTrigger() { }
 
-        public void OnUpdateIntersectionPosition(Vector3 position) { }
+		public bool isGazedAt()
+		{
+			return mGazeAt;
+		}
+
+		public void OnGazeEnter()
+		{
+			if(zone.currentMode==Mode.Exam)
+				SetGazedAt(true); 
+		}
+
+		public void OnGazeExit()
+		{
+            if (zone.currentMode == Mode.Exam)
+                SetGazedAt(false); 
+		}
+
+		public void OnGazeTrigger() { }
+
+		public void OnUpdateIntersectionPosition(Vector3 position) { }
 
     }
 }

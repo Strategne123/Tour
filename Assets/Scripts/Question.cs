@@ -29,9 +29,17 @@ public class Question : MonoBehaviour
         }
     }
 
-    public void SetQuestionText()
+    public void SetQuestionText(bool isStudy)
     {
         questionTextUI.text = questionText;
+        foreach (var answer in answers)
+        {
+            answer.gameObject.SetActive(true);
+            if(isStudy && !answer.isCorrect)
+            {
+                answer.gameObject.SetActive(false);
+            }
+        }
     }
 
     
