@@ -35,7 +35,13 @@ public class Stage : MonoBehaviour
     public void ShowQuestion(int numberQuestion)
     {
         questions[numberQuestion].gameObject.SetActive(true);
-        questions[numberQuestion].SetQuestionText();
+        questions[numberQuestion].SetQuestionText(false);
+    }
+
+    public void ShowAnswer(int numberQuestion)
+    {
+        questions[numberQuestion].gameObject.SetActive(true);
+        questions[numberQuestion].SetQuestionText(true);
     }
 
     public void HideQuestion(int numberQuestion)
