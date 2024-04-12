@@ -164,6 +164,8 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
     {
         Application.Quit();
     }
-    
+
+    public Question GetCurrentQuestion() => stages[currentStageIndex].GetQuestionAt(currentQuestionIndex);
+
 }
 

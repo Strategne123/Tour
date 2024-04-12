@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
 using TMPro;
@@ -17,11 +18,13 @@ namespace Vrs.Internal
 		private Coroutine changeTextVisibilityCoroutine;
 		private Coroutine changeBackgroundVisibilityCoroutine;
 
+		public Action OnGazeEntered, OnGazeExited;
+
 		void Start()
 		{
 			textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
 			SetInitialTransparency();
-			SetGazedAt(true); // временно
+			//SetGazedAt(true); // временно
 		}
 
 		private void SetInitialTransparency()
@@ -120,12 +123,14 @@ namespace Vrs.Internal
 
 		public void OnGazeEnter()
 		{
-			//SetGazedAt(true); // временно
+			OnGazeEntered?.Invoke();
+			SetGazedAt(true); // временно
 		}
 
 		public void OnGazeExit()
 		{
-			//SetGazedAt(false); // временно
+			OnGazeExited?.Invoke();
+			SetGazedAt(false); // временно
 		}
 
 		public void OnGazeTrigger() { }

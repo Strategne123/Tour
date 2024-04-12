@@ -56,4 +56,6 @@ public class Stage : MonoBehaviour
     {
         return questions.Count;
     }
+
+    public Question GetQuestionAt(int index) => questions[index];
 }

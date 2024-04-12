@@ -26,6 +26,11 @@ public class NetworkZones : NetworkBehaviour
             return;
         }
         _zones.TrueAnswer();
+        _zones.GetCurrentQuestion().correctAnswers--;
+        if (_zones.GetCurrentQuestion().correctAnswers > 0)
+        {
+            return;
+        }
         if (answerType == AnswerType.ContinueVideo)
         {
             _zones.NextQuestion();
