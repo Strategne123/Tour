@@ -19,16 +19,20 @@ public class Answer : MonoBehaviour
         if (!isCorrect)
         {
             zone.MakeMistake();
+            gameObject.SetActive(false);
             return;
         }
         zone.TrueAnswer();
         parentQuestion.correctAnswers--;
         if (parentQuestion.correctAnswers > 0)
         {
+            gameObject.SetActive(false);
             return;
         }
+        parentQuestion.questionTextUI.text = "";
         if (answerType == AnswerType.ContinueVideo)
         {
+            
             zone.NextQuestion();
         }
         else

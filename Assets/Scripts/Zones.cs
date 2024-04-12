@@ -13,6 +13,7 @@ public class Zones : MonoBehaviour
     [SerializeField] private List<Stage> stages = new List<Stage>();
     [SerializeField] private TMP_Text allQuestionsText;
     [SerializeField] private TMP_Text wrongAnswersText;
+    [SerializeField] private TMP_Text mainQuestion;
 
     private int currentStageIndex;
     private int currentQuestionIndex;
@@ -27,12 +28,14 @@ public class Zones : MonoBehaviour
     private bool haveDoneMistake = false;
 
 
+
     private void Start()
     {
         currentStageIndex = 0;
         currentQuestionIndex = 0;
         
         PlayVideo();
+        mainQuestion.text = "";
     }
 
     private void PlayVideo()
@@ -89,12 +92,8 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
 
     public void MakeMistake()
     {
-        if (!haveDoneMistake)
-        {
             wrongAnswers++;
             wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
-            haveDoneMistake = true;
-        }
     }
 
     public void TrueAnswer()
@@ -117,7 +116,6 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
             isLastAnswer = true;
         }
         stages[currentStageIndex].gameObject.SetActive(false);
-        haveDoneMistake = false;
         ReturnVideo();
     }
 
@@ -130,7 +128,6 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
             stages[currentStageIndex].gameObject.SetActive(false);
             currentStageIndex++;
             currentQuestionIndex = 0;
-            haveDoneMistake = false;
             isLastAnswer = false;
             PlayVideo();
         }
@@ -165,7 +162,25 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         Application.Quit();
     }
 
+
     public Question GetCurrentQuestion() => stages[currentStageIndex].GetQuestionAt(currentQuestionIndex);
 
+    
+    public void Restart()
+    {
+        stages[currentStageIndex].HideQuestion(currentQuestionIndex);
+        currentAnswers = 0;
+        currentQuestionIndex = 0;
+        currentStageIndex = 0;
+        wrongAnswers = 0;
+        wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
+        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + allAnswers;
+        foreach(var stage in stages)
+        {
+            stage.gameObject.SetActive(false);
+        }
+        PlayVideo();
+        mainQuestion.text = "";
+    }
 }
 
