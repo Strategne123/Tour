@@ -26,12 +26,12 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        currentStageIndex = 0;
+        currentStageIndex = 2;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
     }
 
-    private void OpenModePanel()
+    public void OpenModePanel()
     {
         modePanel.SetActive(true);
         if (mediaPlayer.Control.IsPlaying())
