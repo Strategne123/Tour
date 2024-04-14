@@ -20,13 +20,13 @@ public class Zones : MonoBehaviour
     private int allAnswers = 0,currentAnswers = 0;
     private float nextQuestionTime = 100;
     private string videoFolderPath;
-    private bool isLastAnswer = false;
+    private bool isLastAnswer = false, isStarted = false;
 
     [HideInInspector] public Mode currentMode;
 
     private void Start()
     {
-        currentStageIndex = 2;
+        currentStageIndex = 0;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
     }
@@ -44,7 +44,31 @@ public class Zones : MonoBehaviour
     {
         currentMode = (Mode)selectedMode;
         modePanel.SetActive(false);
-        PlayVideo();
+        if (mediaPlayer.Control.GetCurrentTime() < nextQuestionTime && !isLastAnswer)
+        {
+            if (!isStarted)
+            {
+                isStarted = true;
+                PlayVideo();
+            }
+            else
+            {
+                mediaPlayer.Play();
+            }
+        }
+        else if (!isStarted)
+        {
+            isStarted = true;
+            PlayVideo();
+        }
+        else if(!isLastAnswer)
+        {
+            PauseVideo();
+        }
+        else
+        {
+            mediaPlayer.Play();
+        }
 
     }
 
@@ -69,6 +93,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
     private void PauseVideo()
     {
         mediaPlayer.Pause();
+        stages[currentStageIndex].HideQuestion(currentQuestionIndex);
         stages[currentStageIndex].gameObject.SetActive(true);
         if (currentMode == Mode.Study)
         {
@@ -193,6 +218,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         {
             stage.gameObject.SetActive(false);
         }
+        isStarted = false;
         OpenModePanel();
         mainQuestion.text = "";
     }

@@ -18,9 +18,19 @@ namespace Vrs.Internal
 		private Coroutine changeTextVisibilityCoroutine;
 		private Coroutine changeBackgroundVisibilityCoroutine;
 
-        private void OnEnable()
+		private void OnEnable()
 		{
-			textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
+			Init();
+		}
+
+        private void OnDisable()
+        {
+			Init();
+        }
+
+		private void Init()
+		{ 
+        textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
 			SetInitialTransparency();
 			if (zone.currentMode == Mode.Exam)
 			{
