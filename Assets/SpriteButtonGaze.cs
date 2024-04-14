@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.U2D;
 using TMPro;
@@ -18,7 +19,9 @@ namespace Vrs.Internal
 		private Coroutine changeTextVisibilityCoroutine;
 		private Coroutine changeBackgroundVisibilityCoroutine;
 
-        private void OnEnable()
+		public Action OnGazeEntered, OnGazeExited;
+
+		private void OnEnable()
 		{
 			textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
 			SetInitialTransparency();
@@ -142,14 +145,20 @@ namespace Vrs.Internal
 
 		public void OnGazeEnter()
 		{
-			if(zone.currentMode==Mode.Exam)
+			if (zone.currentMode == Mode.Exam)
+			{
+				OnGazeEntered?.Invoke();
 				SetGazedAt(true); 
+			}
 		}
 
 		public void OnGazeExit()
 		{
-            if (zone.currentMode == Mode.Exam)
-                SetGazedAt(false); 
+			if (zone.currentMode == Mode.Exam)
+			{
+				OnGazeExited?.Invoke();
+				SetGazedAt(false); 
+			}
 		}
 
 		public void OnGazeTrigger() { }

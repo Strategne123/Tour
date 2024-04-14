@@ -48,10 +48,10 @@ public class Zones : MonoBehaviour
 
     public void SelectMode(int selectedMode)
     {
+        print("select mode "+selectedMode);
         currentMode = (Mode)selectedMode;
         modePanel.SetActive(false);
         PlayVideo();
-
     }
 
     private void PlayVideo()

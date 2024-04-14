@@ -17,6 +17,11 @@ public class NetworkZones : NetworkBehaviour
         _zones.OnChoosedAnswer -= ChooseAnswer;
     }
 
+    private void Start()
+    {
+        _zones.SelectMode(NetworkGameMode.Instance.GameMode);
+    }
+
     [Command]
     private void ChooseAnswer(AnswerType answerType, bool isCorrect)
     {
