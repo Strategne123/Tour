@@ -21,7 +21,7 @@ public class Zones : MonoBehaviour
     private int allAnswers = 0,currentAnswers = 0;
     private float nextQuestionTime = 100;
     private string videoFolderPath;
-    private bool isLastAnswer = false;
+    private bool isLastAnswer = false, isStarted = false;
 
     public Action<AnswerType, bool> OnChoosedAnswer;
 
@@ -37,7 +37,7 @@ public class Zones : MonoBehaviour
         mainQuestion.text = "";
     }
 
-    private void OpenModePanel()
+    public void OpenModePanel()
     {
         modePanel.SetActive(true);
         if (mediaPlayer.Control.IsPlaying())
@@ -48,10 +48,34 @@ public class Zones : MonoBehaviour
 
     public void SelectMode(int selectedMode)
     {
-        print("select mode "+selectedMode);
         currentMode = (Mode)selectedMode;
         modePanel.SetActive(false);
-        PlayVideo();
+        if (mediaPlayer.Control.GetCurrentTime() < nextQuestionTime && !isLastAnswer)
+        {
+            if (!isStarted)
+            {
+                isStarted = true;
+                PlayVideo();
+            }
+            else
+            {
+                mediaPlayer.Play();
+            }
+        }
+        else if (!isStarted)
+        {
+            isStarted = true;
+            PlayVideo();
+        }
+        else if(!isLastAnswer)
+        {
+            PauseVideo();
+        }
+        else
+        {
+            mediaPlayer.Play();
+        }
+
     }
 
     private void PlayVideo()
@@ -75,6 +99,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
     private void PauseVideo()
     {
         mediaPlayer.Pause();
+        stages[currentStageIndex].HideQuestion(currentQuestionIndex);
         stages[currentStageIndex].gameObject.SetActive(true);
         if (currentMode == Mode.Study)
         {
@@ -204,6 +229,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         {
             stage.gameObject.SetActive(false);
         }
+        isStarted = false;
         OpenModePanel();
         mainQuestion.text = "";
     }
