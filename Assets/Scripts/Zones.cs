@@ -23,7 +23,7 @@ public class Zones : MonoBehaviour
     private string videoFolderPath;
     private bool isLastAnswer = false, isStarted = false;
 
-    public Action<AnswerType, bool> OnChoosedAnswer;
+    public Action<AnswerType, bool, int> OnChoosedAnswer;
 
     private bool haveDoneMistake = false;
 
@@ -133,7 +133,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
     public void ChooseAnswer(Answer answer)
     {
         print("Выбран ответ"+answer.gameObject.name);
-        OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect);
+        OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect, answer.parentQuestion.GetIndexByAnswer(answer));
         answer.ResponseProcess(this);
     }
 

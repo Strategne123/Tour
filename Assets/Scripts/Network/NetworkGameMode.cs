@@ -7,6 +7,8 @@ public class NetworkGameMode : Singleton<NetworkGameMode>
 {
     [HideInInspector] public int GameMode;
 
+    public Action<int> OnGameModeChanged;
+
     private void Start()
     {
         NetworkClient.RegisterHandler<GamemodeMessage>(SetGameMode);
@@ -16,5 +18,6 @@ public class NetworkGameMode : Singleton<NetworkGameMode>
     public void SetGameMode(GamemodeMessage msg)
     {
         GameMode = msg.gameMode;
+        OnGameModeChanged?.Invoke(GameMode);
     }
 }

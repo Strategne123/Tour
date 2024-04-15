@@ -22,7 +22,6 @@ public class Answer : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
-        zone.TrueAnswer();
         parentQuestion.correctAnswers--;
         if (parentQuestion.correctAnswers > 0)
         {
@@ -30,6 +29,7 @@ public class Answer : MonoBehaviour
             return;
         }
         parentQuestion.questionTextUI.text = "";
+        zone.TrueAnswer();
         if (answerType == AnswerType.ContinueVideo)
         {
             
