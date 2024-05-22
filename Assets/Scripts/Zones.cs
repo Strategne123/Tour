@@ -4,7 +4,6 @@ using UnityEngine;
 using TMPro;
 using RenderHeads.Media.AVProVideo;
 using Vrs.Internal;
-using System;
 
 public class Zones : MonoBehaviour
 {
@@ -13,7 +12,10 @@ public class Zones : MonoBehaviour
     [SerializeField] private TMP_Text allQuestionsText;
     [SerializeField] private TMP_Text wrongAnswersText;
     [SerializeField] private TMP_Text mainQuestion;
-    [SerializeField] private GameObject modePanel;
+    //[SerializeField] private GameObject modePanel;
+    [SerializeField] private Mode mode;
+    [SerializeField] private List<GameObject> correctLayers = new List<GameObject>();
+    [SerializeField] private List<GameObject> parentLayers = new List<GameObject>();
 
     private int currentStageIndex;
     private int currentQuestionIndex;
@@ -22,6 +24,11 @@ public class Zones : MonoBehaviour
     private float nextQuestionTime = 100;
     private string videoFolderPath;
     private bool isLastAnswer = false, isStarted = false;
+    private int checkedAnswer = -1;
+    private List<SpecialSequence> specialSequences = new List<SpecialSequence>();
+    private int currentSequence = 0;
+
+    
 
     public Action<AnswerType, bool, int> OnChoosedAnswer;
 
@@ -35,21 +42,49 @@ public class Zones : MonoBehaviour
         currentStageIndex = 0;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
+        SelectMode((int)mode);
+        SequencesDetection();
     }
 
-    public void OpenModePanel()
+    private void SequencesDetection()
+    {
+        bool flag = false;
+        for (var i=0; i<stages.Count;i++)
+        {
+            if (stages[i].HasLinkedQuestion() != flag)
+            {
+                flag = !flag;
+                if(flag)
+                {
+                    specialSequences.Add(new SpecialSequence(i));
+                }
+                else
+                {
+                    var nextEl = i != stages.Count - 1 ? i + 1 : -1;
+                    specialSequences[specialSequences.Count - 1].EndIndex = nextEl;
+                }
+            }
+            else if (stages[i].HasLinkedQuestion())
+            {
+                specialSequences[specialSequences.Count - 1].Count++;
+            }
+
+        }
+    }
+
+    /*public void OpenModePanel()
     {
         modePanel.SetActive(true);
         if (mediaPlayer.Control.IsPlaying())
         {
             mediaPlayer.Pause();
         }
-    }
+    }*/
 
     public void SelectMode(int selectedMode)
     {
         currentMode = (Mode)selectedMode;
-        modePanel.SetActive(false);
+        //modePanel.SetActive(false);
         if (mediaPlayer.Control.GetCurrentTime() < nextQuestionTime && !isLastAnswer)
         {
             if (!isStarted)
@@ -81,9 +116,9 @@ public class Zones : MonoBehaviour
     private void PlayVideo()
     {
 #if UNITY_EDITOR
-        videoFolderPath = Application.dataPath + "/TigerVideos/";
+        videoFolderPath = Application.dataPath + "/MedVideos/";
 #else
-videoFolderPath = "storage/emulated/0/TigerVideos/";
+videoFolderPath = "storage/emulated/0/MedVideos/";
 #endif
 
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
@@ -108,6 +143,10 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         else
         {
             stages[currentStageIndex].ShowQuestion(currentQuestionIndex);
+        }
+        if(correctLayers.Count > 0)
+        {
+            parentLayers[currentSequence].SetActive(true);
         }
     }
 
@@ -144,9 +183,13 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
             wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
     }
 
-    public void TrueAnswer()
+    public void TrueAnswer(int answerNumber = -1)
     {
         currentAnswers++;
+        if(answerNumber >=0)
+        {
+            checkedAnswer = answerNumber;
+        }
     }
 
 
@@ -155,6 +198,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         if (currentQuestionIndex < stages[currentStageIndex].QuestionCount() - 1)
         {
             stages[currentStageIndex].HideQuestion(currentQuestionIndex);
+            TransferCorrectLayers();
             currentQuestionIndex++;
             nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
 
@@ -170,11 +214,13 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
 
     public void NextStage()
     {
-        if (currentStageIndex < stages.Count - 1)
+        if (currentStageIndex < stages.Count - 1 || IsQuestionHasLinked())
         {
             mediaPlayer.CloseMedia();
+            TransferCorrectLayers();
             stages[currentStageIndex].gameObject.SetActive(false);
-            currentStageIndex++;
+            //currentStageIndex++;
+            SelectNextIndex();
             currentQuestionIndex = 0;
             isLastAnswer = false;
             PlayVideo();
@@ -184,6 +230,57 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
             Debug.Log("Выход в меню");
         }
     }
+
+    private void SelectNextIndex()
+    {
+        if(!IsQuestionHasLinked())
+        {
+            currentStageIndex++;
+        }
+        else
+        {
+            DisableCorrectAnswers();
+            specialSequences[currentSequence].Count--;
+            if (specialSequences[currentSequence].Count < 0)
+            {
+                currentStageIndex = specialSequences[currentSequence++].EndIndex;
+            }
+            else
+            {
+                currentStageIndex = checkedAnswer+1;
+            }
+        }
+    }
+
+    private bool IsQuestionHasLinked()
+    {
+        return stages[currentStageIndex].GetQuestionAt(currentQuestionIndex).HasLinked;
+    }
+
+    private void TransferCorrectLayers()
+    {
+        if (IsQuestionHasLinked())
+        {
+            correctLayers[checkedAnswer].SetActive(true);
+            parentLayers[currentSequence].SetActive(false);
+        }
+        else
+        {
+            for(var i=0; i < parentLayers[currentSequence].transform.childCount; i++)
+            {
+                parentLayers[currentSequence].transform.GetChild(i).gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void DisableCorrectAnswers()
+    {
+        for (var i = specialSequences[currentSequence].StartIndex; i < specialSequences[currentSequence].EndIndex; i++)
+        {
+            stages[i].HideAnswer(checkedAnswer);
+        }
+    }
+
 
 
     private void Update()
@@ -230,7 +327,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
             stage.gameObject.SetActive(false);
         }
         isStarted = false;
-        OpenModePanel();
+        //OpenModePanel();
         mainQuestion.text = "";
     }
 }
@@ -240,5 +337,18 @@ public enum Mode
     Study,
     Test,
     Exam
+}
+
+public class SpecialSequence
+{
+    public int StartIndex = 0;
+    public int EndIndex = 0;
+    public int Count = 0;
+
+    public SpecialSequence(int start)
+    {
+        StartIndex = start;
+        EndIndex = start + 1;
+    }
 }
 

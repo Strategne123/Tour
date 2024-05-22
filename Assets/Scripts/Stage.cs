@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class Stage : MonoBehaviour
@@ -49,6 +48,11 @@ public class Stage : MonoBehaviour
         questions[numberQuestion].gameObject.SetActive(false);
     }
 
+    public void HideAnswer(int numberAnswer)
+    {
+        questions[0].HideAnswer(numberAnswer);
+    }
+
     public float GetNextQuestionTime(int numberQuestion)
     {
         return questions[numberQuestion].timeToAppear;
@@ -62,6 +66,11 @@ public class Stage : MonoBehaviour
     public int GetQuestionsCount()
     {
         return questions.Count;
+    }
+
+    public bool HasLinkedQuestion()
+    {
+        return questions[0].HasLinked;
     }
 
     public Question GetQuestionAt(int index) => questions[index];

@@ -9,8 +9,10 @@ public class Question : MonoBehaviour
     [SerializeField] private string questionText;
     public TMP_Text questionTextUI;
     [SerializeField] private List<Answer> answers = new List<Answer>();
+    [SerializeField] private bool isLinked = false;
 
     [HideInInspector] public int correctAnswers = 0;
+
 
     public float timeToAppear;
 
@@ -24,7 +26,7 @@ public class Question : MonoBehaviour
             answer.parentQuestion = this;
             if(answer.isCorrect)
             {
-                correctAnswers++;
+                correctAnswers++; 
             }
         }
     }
@@ -34,10 +36,22 @@ public class Question : MonoBehaviour
         questionTextUI.text = questionText;
         foreach (var answer in answers)
         {
-            answer.gameObject.SetActive(true);
+            //answer.gameObject.SetActive(true);
             if(isStudy && !answer.isCorrect)
             {
                 answer.gameObject.SetActive(false);
+            }
+        }
+    }
+
+    public void HideAnswer(int answerIndex)
+    {
+        foreach (var answer in answers)
+        {
+            if(answer.correctNum==answerIndex)
+            {
+                answer.gameObject.SetActive(false);
+                return;
             }
         }
     }
@@ -46,7 +60,7 @@ public class Question : MonoBehaviour
 
     public Answer GetAnswerByIndex(int index) => answers[index];
 
-
+    public bool HasLinked { get { return isLinked; } private set { } }
 }
 
 
