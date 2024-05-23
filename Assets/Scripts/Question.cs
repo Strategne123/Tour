@@ -11,16 +11,16 @@ public class Question : MonoBehaviour
     [SerializeField] private List<Answer> answers = new List<Answer>();
     [SerializeField] private bool isLinked = false;
 
-    [HideInInspector] public int correctAnswers = 0;
+    [HideInInspector] public int correctAnswers;
 
 
     public float timeToAppear;
 
-    private void Awake()
+    private void Start()
     {
         answers.Clear();
+        correctAnswers = 0;
         answers = GetComponentsInChildren<Answer>().ToList<Answer>();
-        
         foreach (var answer in answers)
         {
             answer.parentQuestion = this;

@@ -39,7 +39,7 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        currentStageIndex = 0;
+        currentStageIndex = 11;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
         SelectMode((int)mode);
@@ -144,9 +144,13 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
         {
             stages[currentStageIndex].ShowQuestion(currentQuestionIndex);
         }
-        if(correctLayers.Count > 0)
+        if(correctLayers.Count > 0 && currentSequence < correctLayers.Count)
         {
-            parentLayers[currentSequence].SetActive(true);
+            try
+            {
+                parentLayers[currentSequence].SetActive(true);
+            }
+            catch { }
         }
     }
 
@@ -171,7 +175,6 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
 
     public void ChooseAnswer(Answer answer)
     {
-        print("Выбран ответ"+answer.gameObject.name);
         OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect, answer.parentQuestion.GetIndexByAnswer(answer));
         answer.ResponseProcess(this);
     }
@@ -201,7 +204,6 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
             TransferCorrectLayers();
             currentQuestionIndex++;
             nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-
         }
         else
         {
@@ -243,7 +245,7 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
             specialSequences[currentSequence].Count--;
             if (specialSequences[currentSequence].Count < 0)
             {
-                currentStageIndex = specialSequences[currentSequence++].EndIndex;
+                currentStageIndex = specialSequences[currentSequence++].EndIndex-1;
             }
             else
             {
@@ -259,23 +261,27 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
 
     private void TransferCorrectLayers()
     {
-        if (IsQuestionHasLinked())
+        try
         {
-            correctLayers[checkedAnswer].SetActive(true);
-            parentLayers[currentSequence].SetActive(false);
-        }
-        else
-        {
-            for(var i=0; i < parentLayers[currentSequence].transform.childCount; i++)
+            if (IsQuestionHasLinked())
             {
-                parentLayers[currentSequence].transform.GetChild(i).gameObject.SetActive(false);
+                correctLayers[checkedAnswer].SetActive(true);
+                parentLayers[currentSequence].SetActive(false);
+            }
+            else
+            {
+                for (var i = 0; i < parentLayers[currentSequence].transform.childCount; i++)
+                {
+                    parentLayers[currentSequence].transform.GetChild(i).gameObject.SetActive(false);
+                }
             }
         }
+        catch { }
     }
 
     private void DisableCorrectAnswers()
     {
-        for (var i = specialSequences[currentSequence].StartIndex; i < specialSequences[currentSequence].EndIndex; i++)
+        for (var i = specialSequences[currentSequence].StartIndex; i < specialSequences[currentSequence].EndIndex-1; i++)
         {
             stages[i].HideAnswer(checkedAnswer);
         }
@@ -289,6 +295,14 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
         {
             if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer)
             {
+                if(currentSequence<specialSequences.Count && IsQuestionHasLinked())
+                {
+                    if (specialSequences[currentSequence].Count<=0)
+                    {
+                        NextStage();
+                        return;
+                    }
+                }
                 PauseVideo();
             }
             if (mediaPlayer.Control.IsFinished())
