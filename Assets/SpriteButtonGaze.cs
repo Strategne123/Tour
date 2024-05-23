@@ -8,7 +8,7 @@ using UnityEngine.EventSystems;
 
 namespace Vrs.Internal
 {
-	public class SpriteButtonGaze : MonoBehaviour, IVrsGazeResponder
+	public class SpriteButtonGaze : MonoBehaviour, IVrsGazeResponder, IPointerClickHandler
     {
 		[SerializeField] private Image answerBackground;
 		[SerializeField] private Zones zone;
@@ -35,15 +35,20 @@ namespace Vrs.Internal
 
 		private void Init()
 		{ 
-        textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
+			answerBackground = transform.parent.GetComponentInChildren<Image>();
+			textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
 			SetInitialTransparency();
 			if (zone.currentMode == Mode.Exam)
 			{
                 Color targetColor = new Color(0, 0, 0, 0);
                 GetComponent<UnityEngine.U2D.SpriteShapeRenderer>().color = targetColor;
-                Color startColor = textMesh.color;
-                targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
-                textMesh.color = targetColor;
+				try
+				{
+					Color startColor = textMesh.color;
+					targetColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
+					textMesh.color = targetColor;
+				}
+				catch { }
                 Color originalColor = answerBackground.color;
                 targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0f);
                 answerBackground.color=targetColor;
@@ -63,9 +68,13 @@ namespace Vrs.Internal
 
 		private void SetInitialTransparency()
 		{
-			Color textColor = textMesh.color;
-			textColor.a = 0f;
-			textMesh.color = textColor;
+			try
+			{
+				Color textColor = textMesh.color;
+				textColor.a = 0f;
+				textMesh.color = textColor;
+			}
+			catch { }
 
 			Color backgroundColor = answerBackground.color;
 			backgroundColor.a = 0f;
@@ -173,9 +182,14 @@ namespace Vrs.Internal
 			}
 		}
 
-		public void OnGazeTrigger() { }
+
+        public void OnGazeTrigger() { }
 
 		public void OnUpdateIntersectionPosition(Vector3 position) { }
 
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            zone.ChooseAnswer(transform.parent.parent.GetComponent<Answer>());
+        }
     }
 }

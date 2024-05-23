@@ -39,7 +39,7 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        currentStageIndex = 11;
+        currentStageIndex = 0;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
         SelectMode((int)mode);
@@ -335,7 +335,7 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
         currentStageIndex = 0;
         wrongAnswers = 0;
         wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
-        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + allAnswers;
+        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + (allAnswers-2);
         foreach(var stage in stages)
         {
             stage.gameObject.SetActive(false);
