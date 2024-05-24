@@ -39,11 +39,21 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        currentStageIndex = 0;
-        currentQuestionIndex = 0;
-        mainQuestion.text = "";
-        SelectMode((int)mode);
-        SequencesDetection();
+        FPScounter.Print("000000000000000000000000000");
+        try
+        {
+            currentStageIndex = 0;
+            currentQuestionIndex = 0;
+            currentMode = Mode.Exam;
+            mainQuestion.text = "";
+            //SelectMode((int)mode);
+            SequencesDetection();
+            PlayVideo();
+        }
+        catch (Exception e)
+        {
+            FPScounter.Print(e.ToString());
+        }
     }
 
     private void SequencesDetection()
@@ -115,19 +125,26 @@ public class Zones : MonoBehaviour
 
     private void PlayVideo()
     {
+        try
+        {
 #if UNITY_EDITOR
-        videoFolderPath = Application.dataPath + "/MedVideos/";
+            videoFolderPath = Application.dataPath + "/MedVideos/";
 #else
 videoFolderPath = "storage/emulated/0/MedVideos/";
 #endif
-
-        var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
-        mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
-        nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-        Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
-        mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
-        CountAnswers();
-        mediaPlayer.Play();
+            var videoPath = videoFolderPath/*"Video/" */+ stages[currentStageIndex].videoCaption;
+            FPScounter.Print(videoPath);
+            mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
+            nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+            Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
+            mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
+            CountAnswers();
+            mediaPlayer.Play();
+        }
+        catch(Exception e) 
+        {
+            FPScounter.Print(e.ToString());
+        }
     }
 
 
@@ -163,7 +180,7 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
                 allAnswers += stage.GetQuestionsCount();
             }
         }
-        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + allAnswers;
+        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + (allAnswers-2);
     }
 
     private void ReturnVideo()
@@ -343,6 +360,7 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
         isStarted = false;
         //OpenModePanel();
         mainQuestion.text = "";
+        PlayVideo();
     }
 }
 

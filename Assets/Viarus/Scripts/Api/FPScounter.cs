@@ -27,7 +27,7 @@ namespace Vrs.Internal
 
         TextMesh textMesh;
         
-        void Start()
+        void Awake()
         {
             self = this;
             textMesh = GetComponent<TextMesh>();
@@ -69,7 +69,7 @@ namespace Vrs.Internal
 
         public static void Print(string s)
         {
-            self.textMesh.text += s;
+            //self.textMesh.text += s;
         }
     }
 }

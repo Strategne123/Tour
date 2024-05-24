@@ -26021,12 +26021,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1373416767012380109, guid: 070cff05ef3d5ed43893b421c6716c1a, type: 3}
+      propertyPath: _mediaSource
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373416767012380109, guid: 070cff05ef3d5ed43893b421c6716c1a, type: 3}
       propertyPath: _mediaReference
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 1373416767012380109, guid: 070cff05ef3d5ed43893b421c6716c1a, type: 3}
       propertyPath: _autoPlayOnStart
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1373416767012380109, guid: 070cff05ef3d5ed43893b421c6716c1a, type: 3}
+      propertyPath: _mediaPath._path
+      value: Video/0.mp4
       objectReference: {fileID: 0}
     - target: {fileID: 6356624719188768433, guid: 070cff05ef3d5ed43893b421c6716c1a, type: 3}
       propertyPath: m_RootOrder
@@ -51493,7 +51501,7 @@ SpriteShapeRenderer:
   - {fileID: 21300000, guid: 608e61deb05c54660bebf5a4dd2ee02d, type: 3}
   m_LocalAABB:
     m_Center: {x: 0, y: 0, z: 0}
-    m_Extent: {x: 0.5253907, y: 0.32500002, z: 0}
+    m_Extent: {x: 0.5257393, y: 0.32545114, z: 0}
 --- !u!1 &1591502756
 GameObject:
   m_ObjectHideFlags: 0

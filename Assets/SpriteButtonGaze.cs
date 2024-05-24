@@ -57,9 +57,13 @@ namespace Vrs.Internal
 			{
                 Color targetColor = new Color(0, 1, 0, 0.33f);
                 GetComponent<UnityEngine.U2D.SpriteShapeRenderer>().color = targetColor;
-                Color startColor = textMesh.color;
-                targetColor = new Color(startColor.r, startColor.g, startColor.b, 1.0f);
-                textMesh.color = targetColor;
+				try
+				{
+					Color startColor = textMesh.color;
+					targetColor = new Color(startColor.r, startColor.g, startColor.b, 1.0f);
+					textMesh.color = targetColor;
+				}
+				catch { }
                 Color originalColor = answerBackground.color;
                 targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.78f);
                 answerBackground.color = targetColor;

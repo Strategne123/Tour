@@ -1,6 +1,8 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Vrs.Internal;
 
 public class Stage : MonoBehaviour
 {
@@ -10,19 +12,31 @@ public class Stage : MonoBehaviour
 
     private void Awake()
     {
+        try { 
         questions.Clear();
         questions = GetComponentsInChildren<Question>().ToList<Question>();
         gameObject.SetActive(false);
+        }
+        catch (Exception e)
+        {
+            FPScounter.Print(e.ToString());
+        }
     }
 
     private void Start()
     {
+        try { 
         if(questions.Count > 1)
         {
             for(int i = 1; i < questions.Count; i++)
             {
                 questions[i].gameObject.SetActive(false);
             }
+        }
+        }
+        catch (Exception e)
+        {
+            FPScounter.Print(e.ToString());
         }
     }
 
