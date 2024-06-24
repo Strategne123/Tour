@@ -39,7 +39,6 @@ public class Zones : MonoBehaviour
 
     private void Start()
     {
-        FPScounter.Print("000000000000000000000000000");
         try
         {
             currentStageIndex = 0;
@@ -180,7 +179,7 @@ videoFolderPath = "storage/emulated/0/MedVideos/";
                 allAnswers += stage.GetQuestionsCount();
             }
         }
-        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + (allAnswers-2);
+        allQuestionsText.text = "Ответов: " + currentAnswers + "/" + (allAnswers);
     }
 
     private void ReturnVideo()
