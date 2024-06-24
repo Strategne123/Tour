@@ -46,6 +46,7 @@ ExportedObj/
 *.mdb
 *.opendb
 *.VC.db
+*.mp4.meta
 
 # Unity3D generated meta files
 *.pidb.meta
@@ -60,6 +61,7 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+*.mp4
 
 # Crashlytics generated file
 crashlytics-build.properties
