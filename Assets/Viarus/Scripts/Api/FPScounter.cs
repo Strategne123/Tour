@@ -23,13 +23,11 @@ namespace Vrs.Internal
         private int frames = 0;
         private float timeLeft;
         public static float fpsDeltaTime;
-        private static FPScounter self;
 
         TextMesh textMesh;
         
         void Start()
         {
-            self = this;
             textMesh = GetComponent<TextMesh>();
         }
 
@@ -65,11 +63,6 @@ namespace Vrs.Internal
                 accum = .0f;
                 frames = 0;
             }
-        }
-
-        public static void Print(string s)
-        {
-            self.textMesh.text += s;
         }
     }
 }

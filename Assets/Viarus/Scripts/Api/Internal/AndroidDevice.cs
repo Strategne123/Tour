@@ -14,6 +14,7 @@
 #if UNITY_ANDROID
 
 using UnityEngine;
+using System.Globalization;
 
 
 namespace Vrs.Internal
@@ -75,7 +76,7 @@ namespace Vrs.Internal
             long pointer = 0;
             CallStaticMethod(ref initParams, viarusVR, "initNibiruVRServiceForUnity", androidActivity);
             
-            //Debug.Log("initParams is " + initParams + ",hmdType is " + hmdType);
+            Debug.Log("initParams is " + initParams + ",hmdType is " + hmdType);
             string[] data = initParams.Split('_');
             pointer = long.Parse(data[0]);
             VrsGlobal.supportDtr = (int.Parse(data[1]) == 1 ? true : false);
@@ -95,18 +96,18 @@ namespace Vrs.Internal
             int meshSizeX = -1;
             if (data.Length >= 6)
             {
-                meshSizeX = (int)float.Parse(data[5]);
+                meshSizeX = (int)float.Parse(data[5], NumberStyles.Any, CultureInfo.InvariantCulture);
             }
 
             int meshSizeY = -1;
             if (data.Length >= 7)
             {
-                meshSizeY = (int)float.Parse(data[6]);
+                meshSizeY = (int)float.Parse(data[6], NumberStyles.Any, CultureInfo.InvariantCulture);
             }
 
             if (data.Length >= 8)
             {
-                float fps = float.Parse(data[7]);
+                float fps = float.Parse(data[7], NumberStyles.Any, CultureInfo.InvariantCulture);
                 
                 VrsGlobal.refreshRate = Mathf.Max(60, fps > 0 ? fps : 0);
             }
@@ -142,17 +143,17 @@ namespace Vrs.Internal
                 AndroidLog("Support Unity MultiThreadedRendering Need V2 Version >=414, Currently Is " + VrsGlobal.soVersion + " !!!");
             }
 
-            /*Debug.Log("AndDev->Service : [pointer]=" + pointer + ", [dtrSpt] =" + VrsGlobal.supportDtr + ", [DistEnabled]=" +
+            Debug.Log("AndDev->Service : [pointer]=" + pointer + ", [dtrSpt] =" + VrsGlobal.supportDtr + ", [DistEnabled]=" +
             VrsGlobal.distortionEnabled + ", [useNvrSo]=" + VrsGlobal.useNvrSo + ", [code]=" + channelCode + ", [jar]=" + VrsGlobal.jarVersion + ", [so]=" + VrsGlobal.soVersion
             + ", [platform id]=" + VrsGlobal.platformID + ", [pl]=" + VrsGlobal.platPerformanceLevel + ",[offaxisDist]=" + VrsGlobal.offaxisDistortionEnabled + ",[mesh]=" + meshSizeX +
-            "*" + meshSizeY + ",[fps]=" + VrsGlobal.refreshRate + "," + channelCode);*/
+            "*" + meshSizeY + ",[fps]=" + VrsGlobal.refreshRate + "," + channelCode);
 
             
             string cardboardParams = "";
             CallStaticMethod<string>(ref cardboardParams, viarusVR, "getNibiruVRConfigFull");
             if (cardboardParams.Length > 0)
             {
-                //Debug.Log("cardboardParams is " + cardboardParams);
+                Debug.Log("cardboardParams is " + cardboardParams);
                 string[] profileData = cardboardParams.Split('_');
                 for (int i = 0; i < VrsGlobal.dftProfileParams.Length; i++)
                 {
@@ -160,12 +161,12 @@ namespace Vrs.Internal
 
                     if (profileData[i] == null || profileData[i].Length == 0) continue;
 
-                    VrsGlobal.dftProfileParams[i] = float.Parse(profileData[i]);
+                    VrsGlobal.dftProfileParams[i] = float.Parse(profileData[i], NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
             }
             else
             {
-                //Debug.Log("Vrs->AndroidDevice->getViaeusVRConfigFull Failed ! ");
+                Debug.Log("Vrs->AndroidDevice->getViaeusVRConfigFull Failed ! ");
             }
 
             
@@ -213,7 +214,7 @@ namespace Vrs.Internal
                     }
                 }
 
-                //Debug.Log("Offaxis Offset : " + VrsGlobal.offaxisOffset[0] + "," + VrsGlobal.offaxisOffset[1] + "," + VrsGlobal.offaxisOffset[2] + "," + VrsGlobal.offaxisOffset[3]);
+                Debug.Log("Offaxis Offset : " + VrsGlobal.offaxisOffset[0] + "," + VrsGlobal.offaxisOffset[1] + "," + VrsGlobal.offaxisOffset[2] + "," + VrsGlobal.offaxisOffset[3]);
             }
 
             
@@ -248,10 +249,7 @@ namespace Vrs.Internal
             }
         }
 
-        [System.Obsolete]
-#pragma warning disable CS0809 // Устаревший член переопределяет неустаревший член
         public override void OnApplicationPause(bool pause)
-#pragma warning restore CS0809 // Устаревший член переопределяет неустаревший член
         {
             base.OnApplicationPause(pause);
             
@@ -275,9 +273,7 @@ namespace Vrs.Internal
 
         public override void OnApplicationQuit()
         {
-#pragma warning disable CS0612 // Тип или член устарел
             base.OnApplicationQuit();
-#pragma warning restore CS0612 // Тип или член устарел
         }
 
         void runOnUiThread()
@@ -395,7 +391,7 @@ namespace Vrs.Internal
         {
             string result = "3";
             CallStaticMethod<string>(ref result, viarusVR, "getSystemProperty", "nxr.ctrl.primaryhand", "3");
-            //Debug.Log("primaryhand_" + result);
+            Debug.Log("primaryhand_" + result);
             int type = int.Parse(result);
             
             if (type == 0)

@@ -80,7 +80,6 @@ namespace Vrs.Internal
 
         public Camera cam { get; private set; }
 
-        [System.Obsolete]
         void Awake()
         {
             VrsViewer.Create();
@@ -92,7 +91,7 @@ namespace Vrs.Internal
 
         void OnProfileChanged()
         {
-            //Debug.Log("OnProfileChanged");
+            Debug.Log("OnProfileChanged");
             VrsEye[] eyes = VrsViewer.Instance.eyes;
             foreach (VrsEye eye in eyes)
             {
@@ -103,10 +102,11 @@ namespace Vrs.Internal
             }
         }
 
-        [System.Obsolete]
+        
+        
         public void AddStereoRig()
         {
-            //Debug.Log("AddStereoRig.CreateEye");
+            Debug.Log("AddStereoRig.CreateEye");
             CreateEye(VrsViewer.Eye.Left);
             CreateEye(VrsViewer.Eye.Right);
 
@@ -119,7 +119,7 @@ namespace Vrs.Internal
             Head.SetTrackPosition(VrsViewer.Instance.TrackerPosition);
         }
 
-        [System.Obsolete]
+        
         private void CreateEye(VrsViewer.Eye eye)
         {
             string nm = name + (eye == VrsViewer.Eye.Left ? " Left" : " Right");
@@ -153,10 +153,9 @@ namespace Vrs.Internal
             mVrsEye.OnPostRenderListener += OnPostRenderListener;
             mVrsEye.OnPreRenderListener += OnPreRenderListener;
             VrsViewer.Instance.eyes[eye == VrsViewer.Eye.Left ? 0 : 1] = mVrsEye;
-            //Debug.Log("CreateEye:" + nm + (eyes == null));
+            Debug.Log("CreateEye:" + nm + (eyes == null));
         }
 
-        [System.Obsolete]
         void OnPreRenderListener(int cacheTextureId, VrsViewer.Eye eyeType)
         {
             if (VrsGlobal.isVR9Platform) return;
@@ -165,18 +164,17 @@ namespace Vrs.Internal
                 
                 ViarusRenderEventType eventType = eyeType == VrsViewer.Eye.Left ? ViarusRenderEventType.LeftEyeBeginFrame : ViarusRenderEventType.RightEyeBeginFrame;
                 VrsPluginEvent.IssueWithData(eventType, cacheTextureId);
-                //if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPreRender.eye[" + eyeType + "]");
+                if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPreRender.eye[" + eyeType + "]");
             }
         }
 
-        [System.Obsolete]
         void OnPostRenderListener(int cacheTextureId, VrsViewer.Eye eyeType)
         {
             if (VrsGlobal.isVR9Platform)
             {
                 if (eyeType == VrsViewer.Eye.Right && Application.isMobilePlatform)
                 {
-                    //if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRenderListener.PrepareFrame.Right");
+                    if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRenderListener.PrepareFrame.Right");
                     VrsPluginEvent.Issue(ViarusRenderEventType.PrepareFrame);
                 }
                 return;
@@ -189,7 +187,7 @@ namespace Vrs.Internal
                 
                 
                 VrsPluginEvent.IssueWithData(eventType, cacheTextureId);
-                //if(VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRender.eye[" + eyeType + "]");
+                if(VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRender.eye[" + eyeType + "]");
             }
 
             if (VrsViewer.USE_DTR && eyeType == VrsViewer.Eye.Right)

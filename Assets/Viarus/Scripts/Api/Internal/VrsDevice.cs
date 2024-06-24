@@ -194,8 +194,6 @@ namespace Vrs.Internal
            
         }
 
-        [Obsolete]
-#pragma warning disable CS0809 // Устаревший член переопределяет неустаревший член
         public override void EnterARMode() {
             Debug.Log("VrsDevice->EnterARMode");
             VrsPluginEvent.Issue(ViarusRenderEventType.BeginVR);
@@ -203,12 +201,8 @@ namespace Vrs.Internal
             
             UpdateScreenData();
         }
-#pragma warning restore CS0809 // Устаревший член переопределяет неустаревший член
 
-        [Obsolete]
-#pragma warning disable CS0809 // Устаревший член переопределяет неустаревший член
         public override void OnApplicationPause(bool pause)
-#pragma warning restore CS0809 // Устаревший член переопределяет неустаревший член
         {
             Debug.Log("VrsDevice->OnApplicationPause." + pause);
             base.OnApplicationPause(pause);
@@ -243,11 +237,7 @@ namespace Vrs.Internal
         }
 
         private bool applicationQuited = false;
-
-        [Obsolete]
-#pragma warning disable CS0809 // Устаревший член переопределяет неустаревший член
         public override void OnApplicationQuit()
-#pragma warning restore CS0809 // Устаревший член переопределяет неустаревший член
         {
             if (VrsViewer.USE_DTR && !applicationQuited)
             {  

@@ -96,19 +96,17 @@ namespace Vrs.Internal
         void OnEnable()
         {
             GazeInputModule.gazePointer = this;
-            //Debug.Log("VrsReticle OnEnable");
+            Debug.Log("VrsReticle OnEnable");
         }
 
         void OnDisable()
         {
             Debug.Log("VrsReticle OnDisable");
-#pragma warning disable CS0252 // Возможно, использовано непреднамеренное сравнение ссылок: для левой стороны требуется приведение
             if (GazeInputModule.gazePointer == this)
             {
                 GazeInputModule.gazePointer = null;
                 showReticle = false;
             }
-#pragma warning restore CS0252 // Возможно, использовано непреднамеренное сравнение ссылок: для левой стороны требуется приведение
             if (headControl != null)
             {
                 Destroy(headControl);
@@ -365,7 +363,7 @@ namespace Vrs.Internal
                 headControl.GetComponent<ViarusHMDControl>().Show();
             }
             headControl.transform.localRotation = Quaternion.identity;
-            //Debug.Log("HeadShow");
+            Debug.Log("HeadShow");
         }
 
         public void HeadDismiss()
@@ -374,7 +372,7 @@ namespace Vrs.Internal
             {
                 
                 headControl.GetComponent<ViarusHMDControl>().Hide();
-                //Debug.Log("HeadDismiss");
+                Debug.Log("HeadDismiss");
             }
         }
 

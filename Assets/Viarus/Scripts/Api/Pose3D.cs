@@ -97,7 +97,7 @@ namespace Vrs.Internal
     public class MutablePose3D : Pose3D
     {
         
-        public void Set(Vector3 position, Quaternion orientation)
+        public new void Set(Vector3 position, Quaternion orientation)
         {
             base.Set(position, orientation, false);
         }

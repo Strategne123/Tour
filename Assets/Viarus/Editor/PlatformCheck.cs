@@ -8,10 +8,10 @@ public class ViarusPlatFormCheck
 	{
 		if (SystemInfo.operatingSystem.StartsWith("Windows"))
 		{
-			//Debug.Log("На Windows");
+			Debug.Log("На Windows");
 			
 #if UNITY_ANDROID
-			//Debug.Log("На Android");
+			Debug.Log("На Android");
 #else
             Debug.Log("Other Platform");
             if (EditorUtility.DisplayDialog("Переключить платформу", "Выбранная платформа не Android\nПереключить платформу?", "Да", "Нет"))

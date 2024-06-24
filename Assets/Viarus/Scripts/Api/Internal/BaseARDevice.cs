@@ -42,7 +42,7 @@ namespace Vrs.Internal
 
         public abstract void SetSplitScreenModeEnabled(bool enabled);
 
-        public virtual void AndroidLog(string msg) { /*Debug.Log(msg);*/ }
+        public virtual void AndroidLog(string msg) { Debug.Log(msg); }
 
         public virtual void SetSystemParameters(string key, string value) { }
 
@@ -101,7 +101,7 @@ namespace Vrs.Internal
 
             }
            
-           //Debug.Log("antiAliasing."+QualitySettings.antiAliasing + "," + (int)VrsViewer.Instance.TextureMSAA);
+            Debug.Log("antiAliasing."+QualitySettings.antiAliasing + "," + (int)VrsViewer.Instance.TextureMSAA);
             var rt = new RenderTexture(width, height, 24, RenderTextureFormat.Default);
             rt.anisoLevel = 0;
             int antiAliasing = Mathf.Max(QualitySettings.antiAliasing, (int)VrsViewer.Instance.TextureMSAA);
@@ -133,7 +133,7 @@ namespace Vrs.Internal
 
         public virtual void StartCapture(string filePath, int seconds)
         {
-           // Debug.Log("StartCapture_" + filePath + "_" + seconds);
+            Debug.Log("StartCapture_" + filePath + "_" + seconds);
         }
 
         public virtual void StopCapture()
@@ -316,7 +316,7 @@ namespace Vrs.Internal
 
         public void ComputeEyesForWin(VrsViewer.Eye eyeType, float near, float far, float left, float top, float right, float bottom)
         {
-            //Debug.Log("ComputeEyesForWin:" + eyeType + " | near=" + near + ",far=" + far + ",left=" + left + ",right=" + right + ",bottom=" + bottom + ",top=" + top);
+            Debug.Log("ComputeEyesForWin:" + eyeType + " | near=" + near + ",far=" + far + ",left=" + left + ",right=" + right + ",bottom=" + bottom + ",top=" + top);
             if (eyeType == VrsViewer.Eye.Left)
             {
                 leftEyeUndistortedProjection = MakeProjection(left, top, right, bottom, near, far);
@@ -343,8 +343,8 @@ namespace Vrs.Internal
             Profile.GetLeftEyeNoLensTanAngles(rect);
             leftEyeUndistortedProjection = MakeProjection(rect[0], rect[1], rect[2], rect[3], near, far);
 
-            /*Debug.Log("ComputeEyesFromProfile." + near + "->" + far + "," + rect[0] + "," + rect[1]
-                + "," + rect[2] + "," + rect[3]);*/
+            Debug.Log("ComputeEyesFromProfile." + near + "->" + far + "," + rect[0] + "," + rect[1]
+                + "," + rect[2] + "," + rect[3]);
 
             leftEyeUndistortedViewport = Profile.GetLeftEyeVisibleScreenRect(rect);
             leftEyeDistortedViewport = leftEyeUndistortedViewport;
@@ -368,7 +368,7 @@ namespace Vrs.Internal
             float height = Screen.height * Mathf.Max(leftEyeUndistortedViewport.height,
                                                      rightEyeUndistortedViewport.height);
             recommendedTextureSize = new Vector2(width, height);
-            //Debug.Log("recommendedTextureSize: " + width + "," + height);
+            Debug.Log("recommendedTextureSize: " + width + "," + height);
         }
 
         public static Matrix4x4 MakeProjection(float l, float t, float r, float b, float n, float f)

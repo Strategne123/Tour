@@ -201,7 +201,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
         }
         catch(Exception e)
         {
-            FPScounter.Print(e.ToString());
+            //FPScounter.Print(e.ToString());
         }
     }
 
