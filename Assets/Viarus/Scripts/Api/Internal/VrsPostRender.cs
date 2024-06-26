@@ -14,7 +14,7 @@
 
 using UnityEngine;
 using System.Collections.Generic;
-
+using System.Globalization;
 
 
 
@@ -253,7 +253,7 @@ namespace Vrs.Internal
                 float[] uvInfo = new float[values.Length];
                 for (int i = 0; i < values.Length; i++)
                 {
-                    uvInfo[i] = float.Parse(values[i]);
+                    uvInfo[i] = float.Parse(values[i], NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
                 configDict.Add(keyAndValue[0], uvInfo);
             }

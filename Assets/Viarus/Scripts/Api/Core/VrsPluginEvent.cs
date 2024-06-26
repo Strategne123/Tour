@@ -47,20 +47,13 @@ namespace Vrs.Internal
     
     public static class VrsPluginEvent
     {
-        
-        
-        
+        [Obsolete]
         public static void Issue(ViarusRenderEventType eventType)
         {
             GL.IssuePluginEvent(EncodeType((int)eventType));
         }
 
-        
-        
-        
-        
-        
-        
+        [Obsolete]
         public static void IssueWithData(ViarusRenderEventType eventType, int eventData)
         {
             

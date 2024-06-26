@@ -234,7 +234,7 @@ namespace Vrs.Internal
 
     public enum FrameRate
     {
-        FPS_60 = 60,
+        FPS_60 = 270,
         FPS_72 = 72,
         FPS_75 = 75,
         FPS_90 = 90

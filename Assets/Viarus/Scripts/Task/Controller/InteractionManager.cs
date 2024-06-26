@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml;
+using System.Globalization;
 using UnityEngine;
 
 namespace ViarusTask
@@ -158,16 +159,16 @@ namespace ViarusTask
                         nactionTipConfig.info = tipConfigArray[2];
                         nactionTipConfig.picPath = modelPath + "/" + nactionTipConfig.lan + "/" + nactionKey.picName;
                         nactionTipConfig.position = new float[3];
-                        nactionTipConfig.position[0] = float.Parse(tipConfigArray[3]);
-                        nactionTipConfig.position[1] = float.Parse(tipConfigArray[4]);
-                        nactionTipConfig.position[2] = float.Parse(tipConfigArray[5]);
+                        nactionTipConfig.position[0] = float.Parse(tipConfigArray[3], NumberStyles.Any, CultureInfo.InvariantCulture);
+                        nactionTipConfig.position[1] = float.Parse(tipConfigArray[4], NumberStyles.Any, CultureInfo.InvariantCulture);
+                        nactionTipConfig.position[2] = float.Parse(tipConfigArray[5], NumberStyles.Any, CultureInfo.InvariantCulture);
                         nactionTipConfig.rotation = new float[3];
-                        nactionTipConfig.rotation[0] = float.Parse(tipConfigArray[6]);
-                        nactionTipConfig.rotation[1] = float.Parse(tipConfigArray[7]);
-                        nactionTipConfig.rotation[2] = float.Parse(tipConfigArray[8]);
+                        nactionTipConfig.rotation[0] = float.Parse(tipConfigArray[6], NumberStyles.Any, CultureInfo.InvariantCulture);
+                        nactionTipConfig.rotation[1] = float.Parse(tipConfigArray[7], NumberStyles.Any, CultureInfo.InvariantCulture);
+                        nactionTipConfig.rotation[2] = float.Parse(tipConfigArray[8], NumberStyles.Any, CultureInfo.InvariantCulture);
                         nactionTipConfig.size = new float[2];
-                        nactionTipConfig.size[0] = float.Parse(tipConfigArray[9]);
-                        nactionTipConfig.size[1] = float.Parse(tipConfigArray[10]);
+                        nactionTipConfig.size[0] = float.Parse(tipConfigArray[9], NumberStyles.Any, CultureInfo.InvariantCulture);
+                        nactionTipConfig.size[1] = float.Parse(tipConfigArray[10], NumberStyles.Any, CultureInfo.InvariantCulture);
                         nactionKey.tipList.Add(nactionTipConfig);
                     }
 
@@ -283,58 +284,58 @@ namespace ViarusTask
                 XmlNodeList dataNodeList = unityNode.ChildNodes[0].ChildNodes;
                 mControllerConfig.modelPosition = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[1].ChildNodes;
                 mControllerConfig.modelRotation = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[2].ChildNodes;
                 mControllerConfig.modelScale = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[3].ChildNodes;
                 mControllerConfig.batteryPosition = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[4].ChildNodes;
                 mControllerConfig.batteryRotation = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[5].ChildNodes;
                 mControllerConfig.batteryScale = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[6].ChildNodes;
                 mControllerConfig.rayStartPosition = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
                 dataNodeList = unityNode.ChildNodes[0].ChildNodes;
                 mControllerConfig.rayEndPosition = new float[3]
                 {
-                    float.Parse(dataNodeList[0].InnerText),
-                    float.Parse(dataNodeList[1].InnerText),
-                    float.Parse(dataNodeList[2].InnerText)
+                    float.Parse(dataNodeList[0].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[1].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture),
+                    float.Parse(dataNodeList[2].InnerText, NumberStyles.Any, CultureInfo.InvariantCulture)
                 };
             }
             else
@@ -361,50 +362,52 @@ namespace ViarusTask
 
                 IsTriggerReloadCtrlConfig = false;
 
-                
-
                 string[] dataArray = source.Split(',');
-                mControllerConfig.modelPath = dataArray[0];
+
+                int i = 0;
+
+                mControllerConfig.modelPath = dataArray[i++];
+
 
                 mControllerConfig.modelPosition = new float[3];
-                mControllerConfig.modelPosition[0] = float.Parse(dataArray[1]);
-                mControllerConfig.modelPosition[1] = float.Parse(dataArray[2]);
-                mControllerConfig.modelPosition[2] = float.Parse(dataArray[3]);
+                mControllerConfig.modelPosition[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.modelPosition[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.modelPosition[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.modelRotation = new float[3];
-                mControllerConfig.modelRotation[0] = float.Parse(dataArray[4]);
-                mControllerConfig.modelRotation[1] = float.Parse(dataArray[5]);
-                mControllerConfig.modelRotation[2] = float.Parse(dataArray[6]);
+                mControllerConfig.modelRotation[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.modelRotation[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.modelRotation[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.modelScale = new float[3];
-                mControllerConfig.modelScale[0] = float.Parse(dataArray[7]);
-                mControllerConfig.modelScale[1] = float.Parse(dataArray[8]);
-                mControllerConfig.modelScale[2] = float.Parse(dataArray[9]);
+                mControllerConfig.modelScale[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.modelScale[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.modelScale[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.batteryPosition = new float[3];
-                mControllerConfig.batteryPosition[0] = float.Parse(dataArray[10]);
-                mControllerConfig.batteryPosition[1] = float.Parse(dataArray[11]);
-                mControllerConfig.batteryPosition[2] = float.Parse(dataArray[12]);
+                mControllerConfig.batteryPosition[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.batteryPosition[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.batteryPosition[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.batteryRotation = new float[3];
-                mControllerConfig.batteryRotation[0] = float.Parse(dataArray[13]);
-                mControllerConfig.batteryRotation[1] = float.Parse(dataArray[14]);
-                mControllerConfig.batteryRotation[2] = float.Parse(dataArray[15]);
+                mControllerConfig.batteryRotation[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.batteryRotation[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.batteryRotation[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.batteryScale = new float[3];
-                mControllerConfig.batteryScale[0] = float.Parse(dataArray[16]);
-                mControllerConfig.batteryScale[1] = float.Parse(dataArray[17]);
-                mControllerConfig.batteryScale[2] = float.Parse(dataArray[18]);
+                mControllerConfig.batteryScale[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.batteryScale[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.batteryScale[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.rayStartPosition = new float[3];
-                mControllerConfig.rayStartPosition[0] = float.Parse(dataArray[19]);
-                mControllerConfig.rayStartPosition[1] = float.Parse(dataArray[20]);
-                mControllerConfig.rayStartPosition[2] = float.Parse(dataArray[21]);
+                mControllerConfig.rayStartPosition[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.rayStartPosition[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.rayStartPosition[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 mControllerConfig.rayEndPosition = new float[3];
-                mControllerConfig.rayEndPosition[0] = float.Parse(dataArray[22]);
-                mControllerConfig.rayEndPosition[1] = float.Parse(dataArray[23]);
-                mControllerConfig.rayEndPosition[2] = float.Parse(dataArray[24]);
+                mControllerConfig.rayEndPosition[0] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.rayEndPosition[1] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
+                mControllerConfig.rayEndPosition[2] = float.Parse(dataArray[i++], NumberStyles.Any, CultureInfo.InvariantCulture);
 
                 
                 mControllerConfig.objPath = mControllerConfig.modelPath + "/controller_model.obj";
@@ -807,8 +810,8 @@ namespace ViarusTask
             
             string[] data = touchInfo.Split('_');
             int action = int.Parse(data[1]);
-            float x = (float) Math.Round(double.Parse(data[2]), 4);
-            float y = (float) Math.Round(double.Parse(data[3]), 4);
+            float x = (float) Math.Round(double.Parse(data[2], NumberStyles.Any, CultureInfo.InvariantCulture), 4);
+            float y = (float) Math.Round(double.Parse(data[3], NumberStyles.Any, CultureInfo.InvariantCulture), 4);
             NACTION_HAND_TYPE handType =
                 int.Parse(data[4]) == 1 ? NACTION_HAND_TYPE.HAND_LEFT : NACTION_HAND_TYPE.HAND_RIGHT;
             TouchPadPosition = new Vector2(x, y);

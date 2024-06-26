@@ -134,7 +134,7 @@ namespace Vrs.Internal
                         deviceConfigInfo += ",";
                     }
                 }
-                Debug.Log(deviceConfigInfo);
+               // Debug.Log(deviceConfigInfo);
             }
 
             Profile = VrsProfile.GetKnownProfile(VrsViewer.Instance.ScreenSize, VrsViewer.Instance.ViewerType);
@@ -171,7 +171,7 @@ namespace Vrs.Internal
 
             ComputeEyesFromProfile(1, 2000);
             profileChanged = true;
-            Debug.Log("UpdateScreenData=" + Profile.viewer.lenses.separation);
+            //Debug.Log("UpdateScreenData=" + Profile.viewer.lenses.separation);
         }
 
         public override void Recenter()
@@ -185,7 +185,7 @@ namespace Vrs.Internal
 
         public override void SetCameraNearFar(float near, float far)
         {
-            Debug.Log("EditorDevice.SetCameraNearFar : " + near + "," + far);
+           // Debug.Log("EditorDevice.SetCameraNearFar : " + near + "," + far);
         }
 
         private bool isHeadPoseUpdated = false;

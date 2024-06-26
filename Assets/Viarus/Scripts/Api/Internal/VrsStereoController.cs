@@ -91,7 +91,7 @@ namespace Vrs.Internal
 
         void OnProfileChanged()
         {
-            Debug.Log("OnProfileChanged");
+            //Debug.Log("OnProfileChanged");
             VrsEye[] eyes = VrsViewer.Instance.eyes;
             foreach (VrsEye eye in eyes)
             {
@@ -106,7 +106,7 @@ namespace Vrs.Internal
         
         public void AddStereoRig()
         {
-            Debug.Log("AddStereoRig.CreateEye");
+            //Debug.Log("AddStereoRig.CreateEye");
             CreateEye(VrsViewer.Eye.Left);
             CreateEye(VrsViewer.Eye.Right);
 
@@ -153,7 +153,7 @@ namespace Vrs.Internal
             mVrsEye.OnPostRenderListener += OnPostRenderListener;
             mVrsEye.OnPreRenderListener += OnPreRenderListener;
             VrsViewer.Instance.eyes[eye == VrsViewer.Eye.Left ? 0 : 1] = mVrsEye;
-            Debug.Log("CreateEye:" + nm + (eyes == null));
+            //Debug.Log("CreateEye:" + nm + (eyes == null));
         }
 
         void OnPreRenderListener(int cacheTextureId, VrsViewer.Eye eyeType)
@@ -164,7 +164,7 @@ namespace Vrs.Internal
                 
                 ViarusRenderEventType eventType = eyeType == VrsViewer.Eye.Left ? ViarusRenderEventType.LeftEyeBeginFrame : ViarusRenderEventType.RightEyeBeginFrame;
                 VrsPluginEvent.IssueWithData(eventType, cacheTextureId);
-                if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPreRender.eye[" + eyeType + "]");
+                //if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPreRender.eye[" + eyeType + "]");
             }
         }
 
@@ -174,7 +174,7 @@ namespace Vrs.Internal
             {
                 if (eyeType == VrsViewer.Eye.Right && Application.isMobilePlatform)
                 {
-                    if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRenderListener.PrepareFrame.Right");
+                    //if (VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRenderListener.PrepareFrame.Right");
                     VrsPluginEvent.Issue(ViarusRenderEventType.PrepareFrame);
                 }
                 return;
@@ -187,7 +187,7 @@ namespace Vrs.Internal
                 
                 
                 VrsPluginEvent.IssueWithData(eventType, cacheTextureId);
-                if(VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRender.eye[" + eyeType + "]");
+                //if(VrsGlobal.DEBUG_LOG_ENABLED) Debug.Log("OnPostRender.eye[" + eyeType + "]");
             }
 
             if (VrsViewer.USE_DTR && eyeType == VrsViewer.Eye.Right)

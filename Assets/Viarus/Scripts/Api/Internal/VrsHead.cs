@@ -54,7 +54,7 @@ namespace Vrs.Internal
         
         public void SetTrackPosition(bool b)
         {
-            Debug.Log("VrsHead.SetTrackPosition." + b);
+           // Debug.Log("VrsHead.SetTrackPosition." + b);
             trackPosition = b;
         }
 
@@ -238,7 +238,7 @@ namespace Vrs.Internal
         {
             Vector3 start = transform.position;
             Vector3 vector = transform.TransformDirection(Vector3.forward);
-            UnityEngine.Debug.DrawRay(start, vector * 20, Color.red);
+            //UnityEngine.Debug.DrawRay(start, vector * 20, Color.red);
         }
 #endif
     }

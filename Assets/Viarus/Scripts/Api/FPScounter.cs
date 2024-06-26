@@ -1,15 +1,3 @@
-
-
-
-
-
-
-
-
-
-
-
-
 using UnityEngine;
 
 namespace Vrs.Internal
@@ -29,25 +17,11 @@ namespace Vrs.Internal
         
         void Start()
         {
-            self = this;
             textMesh = GetComponent<TextMesh>();
-        }
-
-        
-        void Update()
-        {
-            /*calculate_fps();
-            fpsDeltaTime += Time.deltaTime;
-            if (fpsDeltaTime > 1)
+            if (self == null )
             {
-                
-                fpsDeltaTime = 0;
-                if (textMesh != null)
-                {
-                    textMesh.text = fpsFormat;
-                }
-            }*/
-
+                self = this;
+            }
         }
 
         private void calculate_fps()
@@ -69,7 +43,7 @@ namespace Vrs.Internal
 
         public static void Print(string s)
         {
-            self.textMesh.text += s;
+            self.textMesh.text = s+"   /   ";
         }
     }
 }

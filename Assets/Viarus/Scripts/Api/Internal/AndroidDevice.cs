@@ -14,6 +14,7 @@
 #if UNITY_ANDROID
 
 using UnityEngine;
+using System.Globalization;
 
 
 namespace Vrs.Internal
@@ -95,18 +96,18 @@ namespace Vrs.Internal
             int meshSizeX = -1;
             if (data.Length >= 6)
             {
-                meshSizeX = (int)float.Parse(data[5]);
+                meshSizeX = (int)float.Parse(data[5], NumberStyles.Any, CultureInfo.InvariantCulture);
             }
 
             int meshSizeY = -1;
             if (data.Length >= 7)
             {
-                meshSizeY = (int)float.Parse(data[6]);
+                meshSizeY = (int)float.Parse(data[6], NumberStyles.Any, CultureInfo.InvariantCulture);
             }
 
             if (data.Length >= 8)
             {
-                float fps = float.Parse(data[7]);
+                float fps = float.Parse(data[7], NumberStyles.Any, CultureInfo.InvariantCulture);
                 
                 VrsGlobal.refreshRate = Mathf.Max(60, fps > 0 ? fps : 0);
             }
@@ -160,7 +161,7 @@ namespace Vrs.Internal
 
                     if (profileData[i] == null || profileData[i].Length == 0) continue;
 
-                    VrsGlobal.dftProfileParams[i] = float.Parse(profileData[i]);
+                    VrsGlobal.dftProfileParams[i] = float.Parse(profileData[i], NumberStyles.Any, CultureInfo.InvariantCulture);
                 }
             }
             else

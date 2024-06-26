@@ -19989,7 +19989,7 @@ GameObject:
   - component: {fileID: 3086976758578582041}
   - component: {fileID: 3123543937981859225}
   m_Layer: 0
-  m_Name: NxrSphere
+  m_Name: VrsSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

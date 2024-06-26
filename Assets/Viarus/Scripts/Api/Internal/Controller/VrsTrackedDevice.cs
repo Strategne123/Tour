@@ -104,8 +104,8 @@ namespace Vrs.Internal
         {
             if (device.getType() != CDevice.DEVICE_NOLO_SIXDOF) return;
             
-            Debug.Log("VrsTrackedDevice.onDeviceConnectState:" + state + "," + device.getType() + "," + device.getName() + "," + device.getMode() + "," +
-                device.getisQuat());
+            /*Debug.Log("VrsTrackedDevice.onDeviceConnectState:" + state + "," + device.getType() + "," + device.getName() + "," + device.getMode() + "," +
+                device.getisQuat());*/
             if(state == 0)
             {
                 _currentStates.connectStatus = 1;
@@ -177,7 +177,7 @@ namespace Vrs.Internal
                 if (GetButtonUp(ButtonID.InternalTrigger))
                 {
                     VrsSDKApi.Instance.SixDofControllerPrimaryDeviceType = deviceType;
-                    Debug.Log("IsPrimaryControllerHand " + deviceType.ToString());
+                    //Debug.Log("IsPrimaryControllerHand " + deviceType.ToString());
                 }
 
                 if (IsConneted())
@@ -248,14 +248,14 @@ namespace Vrs.Internal
                         {
                             VrsControllerHelper.HandMode3DOF = VrsControllerHelper.LEFT_HAND_MODE;
                             deviceType = VrsInstantNativeApi.ViarusDeviceType.LeftController;
-                            Debug.Log("Current 3dof HandMode is Left !!!");
+                            //Debug.Log("Current 3dof HandMode is Left !!!");
                         }
                     }
                 }
 
-                if (!IsConneted() && controllerModel != null && controllerModel.gameObject.activeSelf)
+                if (!IsConneted())
                 {
-                    controllerModel.gameObject.SetActive(false);
+                    //controllerModel.gameObject.SetActive(false);
                     laserPointer.holder.SetActive(false);
                     if (deviceType == VrsInstantNativeApi.ViarusDeviceType.LeftController)
                     {
@@ -265,11 +265,11 @@ namespace Vrs.Internal
                     {
                         VrsControllerHelper.IsRightNoloControllerConnected = false;
                     }
-                    Debug.Log("controllerModel Dismiss " + deviceType + "," + controllerModel.gameObject.activeSelf);
+                    //Debug.Log("controllerModel Dismiss " + deviceType + "," + controllerModel.gameObject.activeSelf);
                 }
-                else if (IsConneted() && controllerModel != null && !controllerModel.gameObject.activeSelf)
+                else if (IsConneted() )
                 {
-                    controllerModel.gameObject.SetActive(true);
+                    //controllerModel.gameObject.SetActive(true);
                     laserPointer.holder.SetActive(true);
 
                     if (VrsControllerHelper.ControllerType == (int)VrsInstantNativeApi.ViarusControllerId.NOLO)
@@ -283,7 +283,7 @@ namespace Vrs.Internal
                             VrsControllerHelper.IsRightNoloControllerConnected = true;
                         }
                     }
-                    Debug.Log("controllerModel Show " + deviceType);
+                    //Debug.Log("controllerModel Show " + deviceType);
                 }
                 else if (!IsConneted() && isGamePad && VrsControllerHelper.Is3DofControllerConnected)
                 {

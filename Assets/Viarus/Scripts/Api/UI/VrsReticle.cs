@@ -96,12 +96,12 @@ namespace Vrs.Internal
         void OnEnable()
         {
             GazeInputModule.gazePointer = this;
-            Debug.Log("VrsReticle OnEnable");
+            //Debug.Log("VrsReticle OnEnable");
         }
 
         void OnDisable()
         {
-            Debug.Log("VrsReticle OnDisable");
+           // Debug.Log("VrsReticle OnDisable");
             if (GazeInputModule.gazePointer == this)
             {
                 GazeInputModule.gazePointer = null;
@@ -363,7 +363,7 @@ namespace Vrs.Internal
                 headControl.GetComponent<ViarusHMDControl>().Show();
             }
             headControl.transform.localRotation = Quaternion.identity;
-            Debug.Log("HeadShow");
+            //Debug.Log("HeadShow");
         }
 
         public void HeadDismiss()
@@ -372,7 +372,7 @@ namespace Vrs.Internal
             {
                 
                 headControl.GetComponent<ViarusHMDControl>().Hide();
-                Debug.Log("HeadDismiss");
+               // Debug.Log("HeadDismiss");
             }
         }
 

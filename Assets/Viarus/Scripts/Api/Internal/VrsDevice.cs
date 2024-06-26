@@ -194,6 +194,7 @@ namespace Vrs.Internal
            
         }
 
+        [Obsolete]
         public override void EnterARMode() {
             Debug.Log("VrsDevice->EnterARMode");
             VrsPluginEvent.Issue(ViarusRenderEventType.BeginVR);

@@ -26,23 +26,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+using System.Globalization;
 
 namespace Vrs.Internal
 {
@@ -120,7 +104,7 @@ namespace Vrs.Internal
         
         public override void DeactivateModule()
         {
-            Debug.Log("DeactivateModule");
+            //Debug.Log("DeactivateModule");
             DisableGazePointer();
             base.DeactivateModule();
             if (pointerData != null)
@@ -131,7 +115,7 @@ namespace Vrs.Internal
             }
 
             eventSystem.SetSelectedGameObject(null, pointerData);
-            Debug.Log("DeactivateModule");
+            //Debug.Log("DeactivateModule");
         }
 
         private void OnApplicationFocus(bool focus)
@@ -225,7 +209,6 @@ namespace Vrs.Internal
             }
             SetRaycastResultPosition();
         }
-
         
         private void CastRayFromController(bool isNolo)
         {
@@ -314,7 +297,7 @@ namespace Vrs.Internal
             }
             if (pointerData.pointerCurrentRaycast.gameObject == null && eventSystem.currentSelectedGameObject != null)
             {
-                Debug.LogError("Clear Seleted GameObject-Controller=>" + eventSystem.currentSelectedGameObject.name);
+                //Debug.LogError("Clear Seleted GameObject-Controller=>" + eventSystem.currentSelectedGameObject.name);
                 eventSystem.SetSelectedGameObject(null);
             }
         }
@@ -380,7 +363,7 @@ namespace Vrs.Internal
             lastHeadPose = headPose;
             if (pointerData.pointerCurrentRaycast.gameObject == null && eventSystem.currentSelectedGameObject != null)
             {
-                Debug.LogError("Clear Seleted GameObject-Gaze=>" + eventSystem.currentSelectedGameObject.name);
+                //Debug.LogError("Clear Seleted GameObject-Gaze=>" + eventSystem.currentSelectedGameObject.name);
                 eventSystem.SetSelectedGameObject(null);
             }
         }
@@ -440,6 +423,7 @@ namespace Vrs.Internal
                 lastGazeZ = gazeZ;
                 
                 VrsViewer.Instance.GazeApi(Vrs.Internal.GazeTag.Set_Distance, (-1 * gazeZ).ToString());
+                VrsViewer.Instance.GazeApi(Vrs.Internal.GazeTag.Set_Distance, (-1 * gazeZ).ToString(CultureInfo.InvariantCulture));
             }
 
             
