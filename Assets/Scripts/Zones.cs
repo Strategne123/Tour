@@ -3,18 +3,25 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using RenderHeads.Media.AVProVideo;
-using Vrs.Internal;
-using System;
+using System.Collections;
+using UnityEngine.Networking;
 
 public class Zones : MonoBehaviour
 {
+    [Header("Basic Settings")]
+    [SerializeField] private string folderCaption;
+    [SerializeField] private bool hasStudyRegime;
+
+
+    [Header("Links")]
+    [SerializeField] private Material sphereMaterial;
     [SerializeField] private MediaPlayer mediaPlayer;
-    [SerializeField] private List<Stage> stages = new List<Stage>();
     [SerializeField] private TMP_Text allQuestionsText;
     [SerializeField] private TMP_Text wrongAnswersText;
     [SerializeField] private TMP_Text mainQuestion;
     [SerializeField] private GameObject modePanel;
 
+    private List<Stage> stages = new List<Stage>();
     private int currentStageIndex;
     private int currentQuestionIndex;
     private int wrongAnswers = 0;
@@ -22,12 +29,9 @@ public class Zones : MonoBehaviour
     private float nextQuestionTime = 100;
     private string videoFolderPath;
     private bool isLastAnswer = false, isStarted = false;
-
-    public Action<AnswerType, bool, int> OnChoosedAnswer;
-
     private bool haveDoneMistake = false;
 
-
+    public Action<AnswerType, bool, int> OnChoosedAnswer;
     [HideInInspector] public Mode currentMode;
 
     private void Start()
@@ -35,6 +39,19 @@ public class Zones : MonoBehaviour
         currentStageIndex = 0;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
+        for(var i = 0; i<transform.childCount;i++)
+        {
+            var stage = transform.GetChild(i).GetComponent<Stage>();
+            if(stage != null)
+            {
+                stages.Add(stage);
+            }
+        }
+        if(!hasStudyRegime)
+        {
+            modePanel.SetActive(false);
+            SelectMode(0);
+        }
     }
 
     public void OpenModePanel()
@@ -81,20 +98,42 @@ public class Zones : MonoBehaviour
     private void PlayVideo()
     {
 #if UNITY_EDITOR
-        videoFolderPath = Application.dataPath + "/TigerVideos/";
+        videoFolderPath = Application.dataPath + "/" + folderCaption + "/";
 #else
-videoFolderPath = "storage/emulated/0/TigerVideos/";
+videoFolderPath = "storage/emulated/0/"+folderCaption+/";
 #endif
 
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
-        mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
-        nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-        Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
-        mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
+        if (videoPath.EndsWith(".jpg"))
+        {
+            StartCoroutine(LoadImage(videoPath));
+        }
+        else
+        { 
+            mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
+            nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
+            Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
+            mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
+            mediaPlayer.Play();
+        }
         CountAnswers();
-        mediaPlayer.Play();
     }
 
+    private IEnumerator LoadImage(string imagePath)
+    {
+        UnityWebRequest www = UnityWebRequestTexture.GetTexture("file://" + imagePath);
+        yield return www.SendWebRequest();
+
+        if (www.result == UnityWebRequest.Result.Success)
+        {
+            Texture2D texture = DownloadHandlerTexture.GetContent(www);
+            mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = texture;
+        }
+        else
+        {
+            Debug.LogError("Failed to load image: " + www.error);
+        }
+    }
 
     private void PauseVideo()
     {
@@ -170,11 +209,16 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
 
     public void NextStage()
     {
-        if (currentStageIndex < stages.Count - 1)
+        SetStage(currentStageIndex+1);
+    }
+
+    public void SetStage(int numStage)
+    {
+        if (numStage < stages.Count - 1 && numStage>=0)
         {
             mediaPlayer.CloseMedia();
             stages[currentStageIndex].gameObject.SetActive(false);
-            currentStageIndex++;
+            currentStageIndex = numStage;
             currentQuestionIndex = 0;
             isLastAnswer = false;
             PlayVideo();
@@ -194,6 +238,7 @@ videoFolderPath = "storage/emulated/0/TigerVideos/";
             {
                 PauseVideo();
             }
+            сделать проверку на картинку
             if (mediaPlayer.Control.IsFinished())
             {
                 NextStage();

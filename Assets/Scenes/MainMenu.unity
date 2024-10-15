@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1338,6 +1337,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -1746,13 +1746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1856308e2f29e6349bb5e860d95607d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugInEditor: 0
-  gamepadEnabled: 1
-  controllerModelDisplay: 1
-  mTransform: {fileID: 0}
-  EditorRemoteQuat: {x: 0, y: 0, z: 0, w: 1}
-  isNeedCustomModel: 0
-  customModelPrefabName: CustomModel
 --- !u!114 &2069389863
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1768,21 +1761,15 @@ MonoBehaviour:
   eyes:
   - {fileID: 0}
   - {fileID: 0}
-  HmdType: 2
-  openEffectRender: 0
   splitScreenModeEnabled: 1
   headControlEnabled: 1
   duration: 2
-  appHandleTriggerEvent: 0
-  appHandleXYABEvent: 0
-  useThirdPartyPosition: 0
+  targetFrameRate: 270
   textureMsaa: 2
   trackerPosition: 1
   settings:
     timewarpEnabled: -1
     syncFrameEnabled: 0
-  remoteDebug: 0
-  remoteController: 0
   showFPS: 0
   textureQuality: 3
   requestLock: 0
@@ -1796,5 +1783,3 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   sleepTimeoutMode: 0
-  controllerSupportMode: 0
-  sixDofMode: 1

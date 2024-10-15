@@ -45,8 +45,6 @@ public class Question : MonoBehaviour
     public int GetIndexByAnswer(Answer answer) => answers.IndexOf(answer);
 
     public Answer GetAnswerByIndex(int index) => answers[index];
-
-
 }
 
 

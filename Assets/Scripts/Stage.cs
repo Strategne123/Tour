@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using UnityEngine;
 
 public class Stage : MonoBehaviour
 {
     public string videoCaption;
     [SerializeField] private float startAngle;
-    [SerializeField] private List<Question> questions = new List<Question>();
+    private List<Question> questions = new List<Question>();
 
     private void Awake()
     {

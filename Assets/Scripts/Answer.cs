@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public enum AnswerType
 {
@@ -8,11 +9,18 @@ public enum AnswerType
 
 public class Answer : MonoBehaviour
 {
+    [SerializeField] private string answerText;
     [SerializeField] private GameObject answerObject;
     [SerializeField] public AnswerType answerType;
+    [SerializeField] private int numNextVideo;
 
     [HideInInspector] public Question parentQuestion;
     public bool isCorrect;
+
+    private void Start()
+    {
+        GetComponentInChildren<Text>().text = answerText;
+    }
 
     public void ResponseProcess(Zones zone)
     {
@@ -32,12 +40,11 @@ public class Answer : MonoBehaviour
         zone.TrueAnswer();
         if (answerType == AnswerType.ContinueVideo)
         {
-            
             zone.NextQuestion();
         }
         else
         {
-            zone.NextStage();
+            zone.SetStage(numNextVideo);
         }
     }
 }

@@ -536,10 +536,10 @@ namespace RenderHeads.Media.AVProVideo
 							mediaPath = null;
 						}
 					}
-					else
+					/*else
 					{
 						Debug.LogError("[AVProVideo] No MediaReference specified", this);
-					}
+					}*/
 				}
 				else if (_mediaSource == MediaSource.Path)
 				{
@@ -618,10 +618,10 @@ namespace RenderHeads.Media.AVProVideo
 						}
 					}
 				}
-				else
+				/*else
 				{
 					Debug.LogError("[AVProVideo] No file path specified", this);
-				}
+				}*/
 			}
 			return result;
 		}
