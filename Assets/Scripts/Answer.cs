@@ -1,5 +1,5 @@
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public enum AnswerType
 {
@@ -19,7 +19,7 @@ public class Answer : MonoBehaviour
 
     private void Start()
     {
-        GetComponentInChildren<Text>().text = answerText;
+        GetComponentInChildren<TMP_Text>().text = answerText;
     }
 
     public void ResponseProcess(Zones zone)

@@ -12,7 +12,6 @@ public class Zones : MonoBehaviour
     [SerializeField] private string folderCaption;
     [SerializeField] private bool hasStudyRegime;
 
-
     [Header("Links")]
     [SerializeField] private Material sphereMaterial;
     [SerializeField] private MediaPlayer mediaPlayer;
@@ -22,10 +21,11 @@ public class Zones : MonoBehaviour
     [SerializeField] private GameObject modePanel;
 
     private List<Stage> stages = new List<Stage>();
+    private Dictionary<string, Texture2D> preloadedTextures = new Dictionary<string, Texture2D>();
     private int currentStageIndex;
     private int currentQuestionIndex;
     private int wrongAnswers = 0;
-    private int allAnswers = 0,currentAnswers = 0;
+    private int allAnswers = 0, currentAnswers = 0;
     private float nextQuestionTime = 100;
     private string videoFolderPath;
     private bool isLastAnswer = false, isStarted = false;
@@ -39,19 +39,55 @@ public class Zones : MonoBehaviour
         currentStageIndex = 0;
         currentQuestionIndex = 0;
         mainQuestion.text = "";
-        for(var i = 0; i<transform.childCount;i++)
+
+        for (var i = 0; i < transform.childCount; i++)
         {
             var stage = transform.GetChild(i).GetComponent<Stage>();
-            if(stage != null)
+            if (stage != null)
             {
                 stages.Add(stage);
             }
         }
-        if(!hasStudyRegime)
+        StartCoroutine(PreloadTextures());
+        
+
+        
+    }
+
+    private IEnumerator PreloadTextures()
+    {
+#if UNITY_EDITOR
+        videoFolderPath = Application.dataPath + "/" + folderCaption + "/";
+#else
+        videoFolderPath = "storage/emulated/0/" + folderCaption + "/";
+#endif
+
+        foreach (var stage in stages)
+        {
+            string imagePath = videoFolderPath + stage.videoCaption;
+
+            if (imagePath.EndsWith(".jpg"))
+            {
+                UnityWebRequest www = UnityWebRequestTexture.GetTexture("file://" + imagePath);
+                yield return www.SendWebRequest();
+
+                if (www.result == UnityWebRequest.Result.Success)
+                {
+                    Texture2D texture = DownloadHandlerTexture.GetContent(www);
+                    preloadedTextures[imagePath] = texture;
+                }
+                else
+                {
+                    Debug.LogError("Failed to preload image: " + www.error);
+                }
+            }
+        }
+        if (!hasStudyRegime)
         {
             modePanel.SetActive(false);
             SelectMode(0);
         }
+        Debug.Log("All textures preloaded.");
     }
 
     public void OpenModePanel()
@@ -84,7 +120,7 @@ public class Zones : MonoBehaviour
             isStarted = true;
             PlayVideo();
         }
-        else if(!isLastAnswer)
+        else if (!isLastAnswer)
         {
             PauseVideo();
         }
@@ -92,24 +128,26 @@ public class Zones : MonoBehaviour
         {
             mediaPlayer.Play();
         }
-
     }
 
     private void PlayVideo()
     {
-#if UNITY_EDITOR
-        videoFolderPath = Application.dataPath + "/" + folderCaption + "/";
-#else
-videoFolderPath = "storage/emulated/0/"+folderCaption+/";
-#endif
-
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
+
         if (videoPath.EndsWith(".jpg"))
         {
-            StartCoroutine(LoadImage(videoPath));
+            if (preloadedTextures.ContainsKey(videoPath))
+            {
+                mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = preloadedTextures[videoPath];
+            }
+            else
+            {
+                Debug.LogError("Texture not found in preloaded textures: " + videoPath);
+            }
         }
         else
-        { 
+        {
+            mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = null;
             mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
             nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
             Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
@@ -117,22 +155,6 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
             mediaPlayer.Play();
         }
         CountAnswers();
-    }
-
-    private IEnumerator LoadImage(string imagePath)
-    {
-        UnityWebRequest www = UnityWebRequestTexture.GetTexture("file://" + imagePath);
-        yield return www.SendWebRequest();
-
-        if (www.result == UnityWebRequest.Result.Success)
-        {
-            Texture2D texture = DownloadHandlerTexture.GetContent(www);
-            mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = texture;
-        }
-        else
-        {
-            Debug.LogError("Failed to load image: " + www.error);
-        }
     }
 
     private void PauseVideo()
@@ -168,26 +190,23 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
         mediaPlayer.Play();
     }
 
-
     public void ChooseAnswer(Answer answer)
     {
-        print("Выбран ответ"+answer.gameObject.name);
+        print("Выбран ответ" + answer.gameObject.name);
         OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect, answer.parentQuestion.GetIndexByAnswer(answer));
         answer.ResponseProcess(this);
     }
 
-
     public void MakeMistake()
     {
-            wrongAnswers++;
-            wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
+        wrongAnswers++;
+        wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
     }
 
     public void TrueAnswer()
     {
         currentAnswers++;
     }
-
 
     public void NextQuestion()
     {
@@ -196,7 +215,6 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
             stages[currentStageIndex].HideQuestion(currentQuestionIndex);
             currentQuestionIndex++;
             nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-
         }
         else
         {
@@ -206,15 +224,18 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
         ReturnVideo();
     }
 
-
     public void NextStage()
     {
-        SetStage(currentStageIndex+1);
+        if (currentStageIndex != 0)
+        {
+            currentStageIndex++;
+        }
+        SetStage(currentStageIndex);
     }
 
     public void SetStage(int numStage)
     {
-        if (numStage < stages.Count - 1 && numStage>=0)
+        if (numStage < stages.Count && numStage >= 0)
         {
             mediaPlayer.CloseMedia();
             stages[currentStageIndex].gameObject.SetActive(false);
@@ -229,22 +250,20 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
         }
     }
 
-
     private void Update()
     {
         try
         {
-            if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer)
+            if (!mediaPlayer.Control.IsPaused() && mediaPlayer.Control.GetCurrentTime() >= nextQuestionTime && !isLastAnswer || mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture != null)
             {
                 PauseVideo();
             }
-            сделать проверку на картинку
             if (mediaPlayer.Control.IsFinished())
             {
                 NextStage();
             }
         }
-        catch(Exception e)
+        catch (Exception e)
         {
             //FPScounter.Print(e.ToString());
         }
@@ -255,10 +274,8 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
         Application.Quit();
     }
 
-
     public Question GetCurrentQuestion() => stages[currentStageIndex].GetQuestionAt(currentQuestionIndex);
 
-    
     public void Restart()
     {
         isLastAnswer = false;
@@ -270,7 +287,7 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
         wrongAnswers = 0;
         wrongAnswersText.text = "\nОшибок: " + wrongAnswers;
         allQuestionsText.text = "Ответов: " + currentAnswers + "/" + allAnswers;
-        foreach(var stage in stages)
+        foreach (var stage in stages)
         {
             stage.gameObject.SetActive(false);
         }
@@ -279,6 +296,7 @@ videoFolderPath = "storage/emulated/0/"+folderCaption+/";
         mainQuestion.text = "";
     }
 }
+
 
 public enum Mode
 {
