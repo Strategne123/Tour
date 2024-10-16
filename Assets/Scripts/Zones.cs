@@ -13,15 +13,14 @@ public class Zones : MonoBehaviour
     [SerializeField] private bool hasStudyRegime;
 
     [Header("Links")]
-    [SerializeField] private Material sphereMaterial;
     [SerializeField] private MediaPlayer mediaPlayer;
     [SerializeField] private TMP_Text allQuestionsText;
     [SerializeField] private TMP_Text wrongAnswersText;
     [SerializeField] private TMP_Text mainQuestion;
     [SerializeField] private GameObject modePanel;
+    [SerializeField] private List<Texture2D> preloadedTextures = new List<Texture2D>();
 
-    private List<Stage> stages = new List<Stage>();
-    private Dictionary<string, Texture2D> preloadedTextures = new Dictionary<string, Texture2D>();
+    private List<Stage> stages = new List<Stage>(); 
     private int currentStageIndex;
     private int currentQuestionIndex;
     private int wrongAnswers = 0;
@@ -48,13 +47,21 @@ public class Zones : MonoBehaviour
                 stages.Add(stage);
             }
         }
-        StartCoroutine(PreloadTextures());
-        
+        if (!hasStudyRegime)
+        {
+            modePanel.SetActive(false);
+            Invoke("Starter",1);
+        }
+        //StartCoroutine(PreloadTextures());
 
-        
     }
 
-    private IEnumerator PreloadTextures()
+    private void Starter()
+    {
+        SelectMode(0);
+    }
+
+    /*private IEnumerator PreloadTextures()
     {
 #if UNITY_EDITOR
         videoFolderPath = Application.dataPath + "/" + folderCaption + "/";
@@ -74,7 +81,7 @@ public class Zones : MonoBehaviour
                 if (www.result == UnityWebRequest.Result.Success)
                 {
                     Texture2D texture = DownloadHandlerTexture.GetContent(www);
-                    preloadedTextures[imagePath] = texture;
+                    preloadedTextures[stage.videoCaption] = texture;
                 }
                 else
                 {
@@ -88,7 +95,7 @@ public class Zones : MonoBehaviour
             SelectMode(0);
         }
         Debug.Log("All textures preloaded.");
-    }
+    }*/
 
     public void OpenModePanel()
     {
@@ -130,20 +137,30 @@ public class Zones : MonoBehaviour
         }
     }
 
+    private Texture2D GetTextureByPath(string path)
+    {
+        foreach(var texture in preloadedTextures)
+        {
+            if(path.EndsWith(texture.name+".jpg"))
+            {
+                return texture;
+            }
+        }
+        Debug.LogError("No Such texture with path " + path);
+        return null;
+    }
+
     private void PlayVideo()
     {
+#if UNITY_EDITOR
+        videoFolderPath = Application.dataPath + "/" + folderCaption + "/";
+#else
+videoFolderPath ="storage/emulated/0/"+folderCaption+"/";
+#endif
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
-
         if (videoPath.EndsWith(".jpg"))
         {
-            if (preloadedTextures.ContainsKey(videoPath))
-            {
-                mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = preloadedTextures[videoPath];
-            }
-            else
-            {
-                Debug.LogError("Texture not found in preloaded textures: " + videoPath);
-            }
+            mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = GetTextureByPath(videoPath);
         }
         else
         {

@@ -734,6 +734,11 @@ namespace RenderHeads.Media.AVProVideo
 			return CurrentPlayer.TextureProducer.GetTextureMatrix();
 		}
 
+		public RenderTextureFormat GetCompatibleRenderTextureFormat(ITextureProducer.GetCompatibleRenderTextureFormatOptions options, int plane)
+		{
+			return CurrentPlayer.TextureProducer.GetCompatibleRenderTextureFormat(options, plane);
+		}
+
 #endregion Implementing ITextureProducer
 
 		private static string GetTransitionName(Transition transition)

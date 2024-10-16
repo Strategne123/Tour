@@ -1,4 +1,4 @@
-﻿#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_IOS || UNITY_ANDROID
+#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WSA_10_0 || UNITY_IOS || UNITY_ANDROID
 	#define UNITY_PLATFORM_SUPPORTS_LINEAR
 #endif
 
@@ -161,6 +161,12 @@ namespace RenderHeads.Media.AVProVideo
 			Vector4 v3 = new Vector4(transform[4], transform[5], 0, 1);
 			Matrix4x4 xfrm = new Matrix4x4(v0, v1, v2, v3);
 			return xfrm;
+		}
+		/// <inheritdoc/>
+		public virtual RenderTextureFormat GetCompatibleRenderTextureFormat(ITextureProducer.GetCompatibleRenderTextureFormatOptions options, int plane)
+		{
+			// Just return the default
+			return RenderTextureFormat.Default;
 		}
 
 		public StereoPacking GetTextureStereoPacking()

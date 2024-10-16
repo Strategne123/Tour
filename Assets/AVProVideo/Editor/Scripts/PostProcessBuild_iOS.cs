@@ -1,20 +1,44 @@
-﻿#if (UNITY_IOS || UNITY_TVOS || UNITY_VISIONOS) && UNITY_2017_1_OR_NEWER
-
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.Callbacks;
-using UnityEditor.iOS.Xcode;
-using UnityEditor.iOS.Xcode.Extensions;
-using System.IO;
-using System;
-
 //-----------------------------------------------------------------------------
 // Copyright 2012-2024 RenderHeads Ltd.  All rights reserved.
 //-----------------------------------------------------------------------------
 
+#if (UNITY_IOS || UNITY_TVOS || UNITY_VISIONOS) && UNITY_2017_1_OR_NEWER
+
+// Unity versions where xcframework support was added
+// 2023.2.18f1
+// 2022.3.23f1
+// 2021.3.37f1
+
+// There has to be a better way...
+#if UNITY_2023_2_OR_NEWER && !(UNITY_2023_2_0 || UNITY_2023_2_1 || UNITY_2023_2_2 || UNITY_2023_2_3 || UNITY_2023_2_4 || UNITY_2023_2_5 || UNITY_2023_2_6 || UNITY_2023_2_7 || UNITY_2023_2_8 || UNITY_2023_2_9 || UNITY_2023_2_10 || UNITY_2023_2_11 || UNITY_2023_2_12 || UNITY_2023_2_13 || UNITY_2023_2_14 || UNITY_2023_2_15 || UNITY_2023_2_16 || UNITY_2023_2_17)
+#define AVPROVIDEO_UNITY_SUPPORTS_XCFRAMEWORKS
+#elif UNITY_2023_1_OR_NEWER
+#define AVPROVIDEO_UNITY_DOES_NOT_SUPPORT_XCFRAMEWORKS
+#elif UNITY_2022_3_OR_NEWER && !(UNITY_2022_3_0 || UNITY_2022_3_1 || UNITY_2022_3_2 || UNITY_2022_3_3 || UNITY_2022_3_4 || UNITY_2022_3_5 || UNITY_2022_3_6 || UNITY_2022_3_7 || UNITY_2022_3_8 || UNITY_2022_3_9 || UNITY_2022_3_10 || UNITY_2022_3_11 || UNITY_2022_3_12 || UNITY_2022_3_13 || UNITY_2022_3_14 || UNITY_2022_3_15 || UNITY_2022_3_16 || UNITY_2022_3_17 || UNITY_2022_3_18 || UNITY_2022_3_19 || UNITY_2022_3_20 || UNITY_2022_3_21 || UNITY_2022_3_22)
+#define AVPROVIDEO_UNITY_SUPPORTS_XCFRAMEWORKS
+#elif UNITY_2022_1_OR_NEWER
+#define AVPROVIDEO_UNITY_DOES_NOT_SUPPORT_XCFRAMEWORKS
+#elif UNITY_2021_3_OR_NEWER && !(UNITY_2021_3_0 || UNITY_2021_3_1 || UNITY_2021_3_2 || UNITY_2021_3_3 || UNITY_2021_3_4 || UNITY_2021_3_5 || UNITY_2021_3_6 || UNITY_2021_3_7 || UNITY_2021_3_8 || UNITY_2021_3_9 || UNITY_2021_3_10 || UNITY_2021_3_11 || UNITY_2021_3_12 || UNITY_2021_3_13 || UNITY_2021_3_14 || UNITY_2021_3_15 || UNITY_2021_3_16 || UNITY_2021_3_17 || UNITY_2021_3_18 || UNITY_2021_3_19 || UNITY_2021_3_20 || UNITY_2021_3_21 || UNITY_2021_3_22 || UNITY_2021_3_23 || UNITY_2021_3_24 || UNITY_2021_3_25 || UNITY_2021_3_26 || UNITY_2021_3_27 || UNITY_2021_3_28 || UNITY_2021_3_29 || UNITY_2021_3_30 || UNITY_2021_3_31 || UNITY_2021_3_32 || UNITY_2021_3_33 || UNITY_2021_3_34 || UNITY_2021_3_35 || UNITY_2021_3_36)
+#define AVPROVIDEO_UNITY_SUPPORTS_XCFRAMEWORKS
+#else
+#define AVPROVIDEO_UNITY_DOES_NOT_SUPPORT_XCFRAMEWORKS
+#endif
+
+#if UNITY_2022_3 || UNITY_6000_0_OR_NEWER
+#define UNITY_SUPPORTS_VISIONOS
+#endif
+
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.Callbacks;
+using UnityEditor.iOS.Xcode;
+using System;
+using System.Collections.Generic;
+using System.IO;
+
 namespace RenderHeads.Media.AVProVideo.Editor
 {
+
 	public class PostProcessBuild_iOS
 	{
 		const string AVProVideoPluginName = "AVProVideo.xcframework";
@@ -37,7 +61,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 
 					case BuildTarget.tvOS:
 						return new Platform(BuildTarget.tvOS, "tvOS", "f83f62879d8fb417cb18d0547c9bfd02");
-#if UNITY_2022_3
+#if UNITY_SUPPORTS_VISIONOS
 					case BuildTarget.VisionOS:
 						return new Platform(BuildTarget.VisionOS, "visionOS", "fe151797423674af0941aae11c872b90");
 #endif
@@ -130,8 +154,16 @@ namespace RenderHeads.Media.AVProVideo.Editor
 					// Do not want to copy Unity's meta files into the built project
 					continue;
 				}
-
-				srcFileInfo.CopyTo(Path.Combine(dstDirInfo.FullName, srcFileInfo.Name), true);
+				else
+				if (srcFileInfo.Name == ".DS_Store")
+				{
+					// Do not want to copy .DS_Store files into the built project
+					continue;
+				}
+				else
+				{
+					srcFileInfo.CopyTo(Path.Combine(dstDirInfo.FullName, srcFileInfo.Name), true);
+				}
 			}
 		}
 
@@ -159,7 +191,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 			{
 				case BuildTarget.iOS:
 				case BuildTarget.tvOS:
-#if UNITY_2022_3
+#if UNITY_SUPPORTS_VISIONOS
 				case BuildTarget.VisionOS:
 #endif
 					return true;
@@ -180,13 +212,64 @@ namespace RenderHeads.Media.AVProVideo.Editor
 				case BuildTarget.iOS:
 				case BuildTarget.tvOS:
 					return "Unity-iPhone.xcodeproj";
-#if UNITY_2022_3
+#if UNITY_SUPPORTS_VISIONOS
 				case BuildTarget.VisionOS:
 					return "Unity-VisionOS.xcodeproj";
 #endif
 				default:
 					Debug.LogError($"[AVProVideo] GetXcodeProjectNameForBuildTarget - unrecognised build target: {target}");
 					return null;
+			}
+		}
+
+		// Converts the Unity asset path to the expected path in the built Xcode project.
+		private static string ConvertPluginAssetPathToXcodeProjectPath(string pluginPath, string subFolder)
+		{
+
+			List<string> components = new List<string>(pluginPath.Split(new char[] { '/' }));
+#if UNITY_TVOS
+			// Unity just copies the xcframework into the frameworks folder
+			string frameworkPath = Path.Combine(subFolder, components[^1]);
+#else
+	#if UNITY_VISIONOS
+			// For reasons unknown unity puts everything under an ARM64 folder on visionOS
+			components.Insert(0, "ARM64");
+			components.Insert(0, subFolder);
+	#else
+			components[0] = subFolder;
+	#endif
+	#if UNITY_2019_1_OR_NEWER
+				string frameworkPath = string.Join("/", components);
+	#else
+				string frameworkPath = string.Join("/", components.ToArray());
+	#endif
+#endif
+			return frameworkPath;
+		}
+
+		//
+		private static void StripMetaFilesFromDirectory(DirectoryInfo dirInfo)
+		{
+			// Remove any meta files
+			foreach (FileInfo srcFileInfo in dirInfo.GetFiles())
+			{
+				if (srcFileInfo.Extension == ".meta")
+				{
+					Debug.Log($"[AVProVideo] Deleting {srcFileInfo.FullName}");
+					File.Delete(srcFileInfo.FullName);
+				}
+				else
+				if (srcFileInfo.Name == ".DS_Store")
+				{
+					Debug.Log($"[AVProVideo] Deleting {srcFileInfo.FullName}");
+					File.Delete(srcFileInfo.FullName);
+				}
+			}
+
+			// Do the same for any sub-directories
+			foreach (DirectoryInfo subDirInfo in dirInfo.GetDirectories("*"))
+			{
+				StripMetaFilesFromDirectory(subDirInfo);
 			}
 		}
 
@@ -234,18 +317,21 @@ namespace RenderHeads.Media.AVProVideo.Editor
 				return;
 			}
 
-			string destPluginPath = Path.Join("Libraries", "AVProVideo");
+			Debug.Log($"[AVProVideo] Plugin path: {pluginPath}");
 
+			string destPluginPath = Path.Combine("Libraries", "AVProVideo");
+			Directory.CreateDirectory(Path.Combine(path, destPluginPath));
+
+			// Get the Unity framework target GUID
+			string unityFrameworkTargetGuid = GetUnityFrameworkTargetGuid(project);
+
+#if AVPROVIDEO_UNITY_DOES_NOT_SUPPORT_XCFRAMEWORKS
 			// Get the path to the xcframework
-			// string xcframeworkPath = ConvertPluginAssetPathToXcodeProjectPath(pluginPath, "Libraries");
-			string xcframeworkPath = Path.Join(destPluginPath, AVProVideoPluginName);
+			string xcframeworkPath = Path.Combine(destPluginPath, AVProVideoPluginName);
 
 			// Copy over the xcframework to the generated xcode project
 			Debug.Log($"[AVProVideo] Copying AVProVideo.xcframework into the Xcode project at {destPluginPath}");
 			CopyDirectory(pluginPath, Path.Combine(path, xcframeworkPath));
-
-			// Get the Unity framework target GUID
-			string unityFrameworkTargetGuid = GetUnityFrameworkTargetGuid(project);
 
 			if (!project.ContainsFileByProjectPath(xcframeworkPath))
 			{
@@ -256,14 +342,48 @@ namespace RenderHeads.Media.AVProVideo.Editor
 				string frameworksBuildPhaseForUnityFrameworkTarget = project.GetFrameworksBuildPhaseByTarget(unityFrameworkTargetGuid);
 				project.AddFileToBuildSection(unityFrameworkTargetGuid, frameworksBuildPhaseForUnityFrameworkTarget, xcframeworkGuid);
 			}
+#else
+			// If we've upgraded Unity to a version that supports xcframeworks we need to purge the meta files from the plugin
+			// string xcframeworkPath = ConvertPluginAssetPathToXcodeProjectPath(pluginPath, "Frameworks");
+
+			string xcframeworkPath = string.Empty;
+
+			IReadOnlyList<string> paths = project.GetRealPathsOfAllFiles(PBXSourceTree.Source);
+			foreach (string p in paths)
+			{
+				if (p.EndsWith(AVProVideoPluginName))
+				{
+					xcframeworkPath = p;
+					break;
+				}
+			}
+
+			if (!string.IsNullOrEmpty(xcframeworkPath))
+			{
+				string dest_xcframeworkPath = Path.Combine(path, xcframeworkPath);
+				Debug.Log($"[AVProVideo] xcframework path is: {dest_xcframeworkPath}");
+				StripMetaFilesFromDirectory(new DirectoryInfo(dest_xcframeworkPath));
+			}
+
+			// string dest_xcframeworkPath = Path.Combine(path, xcframeworkPath);
+			// if (!project.ContainsFileByProjectPath(xcframeworkPath))
+			// {
+			// 	Debug.Log("[AVProVideo] Stripping meta files from AVProVideo.xcframework");
+			// 	StripMetaFilesFromDirectory(new DirectoryInfo(dest_xcframeworkPath));
+			// }
+			else
+			{
+				Debug.LogError($"[AVProVideo] Failed to find AVProPlugin.xcframework in the built project");
+			}
+#endif
 
 			Debug.Log("[AVProVideo] Writing AVProVideoBootstrap.m to the UnityFramework target");
-			string bootstrapPath = Path.Join(destPluginPath, "AVProVideoBootstrap.m");
+			string bootstrapPath = Path.Combine(destPluginPath, "AVProVideoBootstrap.m");
 			File.WriteAllText(Path.Combine(path, bootstrapPath), AVProVideoBootstrap);
 			string bootstrapGuid = project.AddFile(bootstrapPath, bootstrapPath);
 			project.AddFileToBuild(unityFrameworkTargetGuid, bootstrapGuid);
 
-			string forceSwiftPath = Path.Join(destPluginPath, "AVProVideoForceSwift.swift");
+			string forceSwiftPath = Path.Combine(destPluginPath, "AVProVideoForceSwift.swift");
 			Debug.Log("[AVProVideo] Writing AVProVideoForceSwift.swift to the UnityFramework target");
 			File.WriteAllText(Path.Combine(path, forceSwiftPath), AVProVideoForceSwift);
 			string forceSwiftGuid = project.AddFile(forceSwiftPath, forceSwiftPath);

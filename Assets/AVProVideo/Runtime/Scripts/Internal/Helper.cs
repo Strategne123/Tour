@@ -3,20 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 
 //-----------------------------------------------------------------------------
-// Copyright 2015-2022 RenderHeads Ltd.  All rights reserved.
+// Copyright 2015-2024 RenderHeads Ltd.  All rights reserved.
 //-----------------------------------------------------------------------------
 
 namespace RenderHeads.Media.AVProVideo
 {
 	public static class Helper
 	{
-		public const string AVProVideoVersion = "3.0.0";
+		public const string AVProVideoVersion = "3.0.11";
 		public sealed class ExpectedPluginVersion
 		{
-			public const string Windows      = "3.0.0";
-			public const string WinRT        = "3.0.0";
-			public const string Android      = "3.0.0";
-			public const string Apple        = "3.0.0";
+			public const string Windows      = "3.0.10";
+			public const string WinRT        = "3.0.10";
+			public const string Android      = "3.0.11";
+			public const string Apple        = "3.0.8";
 		}
 
 		public const string UnityBaseTextureName = "_MainTex";
@@ -178,11 +178,11 @@ namespace RenderHeads.Media.AVProVideo
 		{
 			if (context == null)
 			{
-				//Debug.Log("[AVProVideo] " + message);
+				Debug.Log("[AVProVideo] " + message);
 			}
 			else
 			{
-				//Debug.Log("[AVProVideo] " + message, context);
+				Debug.Log("[AVProVideo] " + message, context);
 			}
 		}
 
@@ -366,7 +366,11 @@ namespace RenderHeads.Media.AVProVideo
 			frame = Mathf.Max(0, frame);
 			frameRate = Mathf.Max(0f, frameRate);
 			double frameDurationSeconds = 1.0 / frameRate;
-			return ((double)frame * frameDurationSeconds) + (frameDurationSeconds * 0.5);		// Add half a frame we that the time lands in the middle of the frame range and not at the edges
+#if !UNITY_EDITOR && UNITY_ANDROID
+			return ((double)frame * frameDurationSeconds);
+#else
+			return ((double)frame * frameDurationSeconds) + (frameDurationSeconds * 0.5);       // Add half a frame we that the time lands in the middle of the frame range and not at the edges
+#endif
 		}
 
 		public static double FindNextKeyFrameTimeSeconds(double seconds, float frameRate, int keyFrameInterval)

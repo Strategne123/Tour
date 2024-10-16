@@ -1,8 +1,8 @@
-﻿#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_TVOS
+﻿#if UNITY_EDITOR_OSX || UNITY_STANDALONE_OSX || UNITY_IOS || UNITY_TVOS || UNITY_VISIONOS
 	#define UNITY_PLATFORM_SUPPORTS_YPCBCR
 #endif
 
-#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_IOS || UNITY_TVOS || UNITY_ANDROID || (UNITY_WEBGL && UNITY_2017_2_OR_NEWER)
+#if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WSA_10_0 || UNITY_IOS || UNITY_TVOS || UNITY_VISIONOS || UNITY_ANDROID || (UNITY_WEBGL && UNITY_2017_2_OR_NEWER)
 	#define UNITY_PLATFORM_SUPPORTS_LINEAR
 #endif
 
@@ -12,7 +12,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 
 //-----------------------------------------------------------------------------
-// Copyright 2015-2022 RenderHeads Ltd.  All rights reserved.
+// Copyright 2015-2024 RenderHeads Ltd.  All rights reserved.
 //-----------------------------------------------------------------------------
 
 namespace RenderHeads.Media.AVProVideo
@@ -32,19 +32,19 @@ namespace RenderHeads.Media.AVProVideo
 		}
 
 		// ITextureProducer implementation
-		
+
 		/// <inheritdoc/>
 		public int GetTextureCount() { return 1; }
-		
+
 		/// <inheritdoc/>
 		public Texture GetTexture(int index = 0) { return _texture; }
-		
+
 		/// <inheritdoc/>
 		public int GetTextureFrameCount() { return _textureSource.GetTextureFrameCount(); }
-		
+
 		/// <inheritdoc/>
 		public bool SupportsTextureFrameCount() { return _textureSource.SupportsTextureFrameCount(); }
-		
+
 		/// <inheritdoc/>
 		public long GetTextureTimeStamp() { return _textureSource.GetTextureTimeStamp(); }
 
@@ -509,8 +509,14 @@ namespace RenderHeads.Media.AVProVideo
 
 			if (!targetTexture)
 			{
+				ITextureProducer.GetCompatibleRenderTextureFormatOptions options = ITextureProducer.GetCompatibleRenderTextureFormatOptions.ForResolve;
+				if (texture.GetTextureAlphaPacking() != AlphaPacking.None)
+				{
+					options |= ITextureProducer.GetCompatibleRenderTextureFormatOptions.RequiresAlpha;
+				}
+				RenderTextureFormat format = texture.GetCompatibleRenderTextureFormat(options);
 				RenderTextureReadWrite readWrite = ((flags & ResolveFlags.ColorspaceSRGB) == ResolveFlags.ColorspaceSRGB) ? RenderTextureReadWrite.sRGB : RenderTextureReadWrite.Linear;
-				targetTexture = RenderTexture.GetTemporary(targetWidth, targetHeight, 0, RenderTextureFormat.ARGB32, readWrite);
+				targetTexture = RenderTexture.GetTemporary(targetWidth, targetHeight, 0, format, readWrite);
 			}
 
 			// Set target mipmap generation support
@@ -600,11 +606,10 @@ namespace RenderHeads.Media.AVProVideo
 
 		public static bool RequiresResolve(ITextureProducer texture)
 		{
-			return (texture.GetTextureAlphaPacking() != AlphaPacking.None ||
-				texture.RequiresVerticalFlip() ||
-				texture.GetTextureStereoPacking() != StereoPacking.None ||
-				texture.GetTextureCount() > 1
-			);
+			return texture.GetTextureAlphaPacking() != AlphaPacking.None ||
+			       texture.RequiresVerticalFlip() ||
+			       texture.GetTextureStereoPacking() != StereoPacking.None ||
+			       texture.GetTextureCount() > 1;
 		}
 
 		public static void DrawTexture(Rect destRect, Texture texture, ScaleMode scaleMode, AlphaPacking alphaPacking, float pixelAspectRatio, Material material)

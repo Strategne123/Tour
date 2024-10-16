@@ -202,9 +202,13 @@ namespace RenderHeads.Media.AVProVideo.Editor
 
 #if (UNITY_EDITOR && UNITY_ANDROID)
             aFilesToDelete.Add( new SFileToDelete( "Android/guava-27.1-android.jar" ) );
+			aFilesToDelete.Add( new SFileToDelete( "Android/libs/arm64-v8a/libc++_shared.so" ) );
+			aFilesToDelete.Add( new SFileToDelete( "Android/libs/armeabi-v7a/libc++_shared.so" ) );
+			aFilesToDelete.Add( new SFileToDelete( "Android/libs/x86/libc++_shared.so" ) );
+			aFilesToDelete.Add( new SFileToDelete( "Android/libs/x86_64/libc++_shared.so" ) );
 #endif
 
-            if ( aFilesToDelete.Count > 0 )
+			if( aFilesToDelete.Count > 0 )
             {
                 int iNumFoundFilesToDelete = 0;
                 string aFilesToDeleteString = "";

@@ -79,6 +79,7 @@ namespace RenderHeads.Media.AVProVideo
 		{
 			public Windows.VideoApi videoApi = Windows.VideoApi.MediaFoundation;
 			public bool useHardwareDecoding = true;
+			public bool useRendererSync = true;
 			public bool useTextureMips = false;
 			public bool use10BitTextures = false;
 			public bool hintAlphaChannel = false;
@@ -113,6 +114,7 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return (base.IsModified()
 				|| !useHardwareDecoding
+				|| !useRendererSync
 				|| useTextureMips
 				|| use10BitTextures
 				|| hintAlphaChannel
@@ -167,12 +169,13 @@ namespace RenderHeads.Media.AVProVideo
 		public class OptionsWindowsUWP : PlatformOptions
 		{
 			public bool useHardwareDecoding = true;
+			public bool useRendererSync = true;
 			public bool useTextureMips = false;
 			public bool use10BitTextures = false;
 			public bool hintOutput10Bit = false;
 			public bool useLowLatency = false;
 			public WindowsUWP.VideoApi videoApi = WindowsUWP.VideoApi.WinRT;
-			public WindowsUWP.AudioOutput audioOutput = WindowsUWP.AudioOutput.System;
+			public WindowsUWP.AudioOutput _audioMode = WindowsUWP.AudioOutput.System;
 			public Audio360ChannelMode audio360ChannelMode = Audio360ChannelMode.TBE_8_2;
 
 			/// WinRT only
@@ -185,10 +188,11 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return (base.IsModified()
 				|| !useHardwareDecoding
+				|| !useRendererSync
 				|| useTextureMips
 				|| use10BitTextures
 				|| useLowLatency
-				|| audioOutput != WindowsUWP.AudioOutput.System
+				|| _audioMode != WindowsUWP.AudioOutput.System
 				|| (audio360ChannelMode != Audio360ChannelMode.TBE_8_2)
 				|| videoApi != WindowsUWP.VideoApi.WinRT
 				|| startWithHighestBitrate
@@ -531,7 +535,7 @@ namespace RenderHeads.Media.AVProVideo
 
 
 			public Android.VideoApi videoApi = Android.VideoApi.ExoPlayer;
-			public bool showPosterFrame = false;
+//			public bool showPosterFrame = false;
 			public Audio360ChannelMode audio360ChannelMode = Audio360ChannelMode.TBE_8_2;
 			public int audio360LatencyMS = 0;
 			public bool preferSoftwareDecoder = false;
@@ -552,7 +556,7 @@ namespace RenderHeads.Media.AVProVideo
 			public bool useFastOesPath;
 			[Obsolete("audioOutput is deprecated and replaced with audioMode")]
 			public int audioOutput;
-			[Obsolete("audioOutput is deprecated and its functionality has been removed")]
+			[Obsolete("blitTextureFiltering is deprecated and its functionality has been removed")]
 			public int blitTextureFiltering;
 			[Obsolete("forceEnableMediaCodecAsyncQueueing is deprecated and replaced with forceEnableMediaCodecAsynchronousQueueing")]
 			public bool forceEnableMediaCodecAsyncQueueing;
@@ -563,9 +567,10 @@ namespace RenderHeads.Media.AVProVideo
 					|| (fileOffset != 0)
 					|| textureFormat != DefaultTextureFormat
 					|| audioMode != AudioMode.SystemDirect
-					|| showPosterFrame
+//					|| showPosterFrame
 					|| (videoApi != Android.VideoApi.ExoPlayer)
 					|| (audio360ChannelMode != Audio360ChannelMode.TBE_8_2)
+					|| (audio360LatencyMS != 0 )
 					|| preferSoftwareDecoder
 					|| forceRtpTCP
 					|| forceEnableMediaCodecAsynchronousQueueing

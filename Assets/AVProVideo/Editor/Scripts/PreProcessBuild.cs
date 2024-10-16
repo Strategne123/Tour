@@ -34,10 +34,6 @@ namespace RenderHeads.Media.AVProVideo.Editor
 			if (IsTargetMacOS(target) || target == BuildTarget.iOS || target == BuildTarget.tvOS)
 			{
 				int indexMetal = GetGraphicsApiIndex(target, GraphicsDeviceType.Metal);
-				int indexOpenGLCore = GetGraphicsApiIndex(target, GraphicsDeviceType.OpenGLCore);
-				int indexOpenGLES2 = GetGraphicsApiIndex(target, GraphicsDeviceType.OpenGLES2);
-				int indexOpenGLES3 = GetGraphicsApiIndex(target, GraphicsDeviceType.OpenGLES3);
-
 				if (indexMetal < 0)
 				{
 					string message = "Metal graphics API is required by AVPro Video.";
@@ -45,6 +41,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 					ShowAbortDialog(message);
 				}
 
+				int indexOpenGLCore = GetGraphicsApiIndex(target, GraphicsDeviceType.OpenGLCore);
 				if (indexOpenGLCore >= 0 && indexMetal >=0 && indexOpenGLCore < indexMetal)
 				{
 					string message = "OpenGL graphics API is not supported by AVPro Video.";
@@ -52,7 +49,8 @@ namespace RenderHeads.Media.AVProVideo.Editor
 					message += "\n\nPlease go to Player Settings > Auto Graphics API and add Metal to the top of the list.";
 					ShowAbortDialog(message);
 				}
-
+#if !UNITY_2023_1_OR_NEWER
+				int indexOpenGLES2 = GetGraphicsApiIndex(target, GraphicsDeviceType.OpenGLES2);
 				if (indexOpenGLES2 >= 0 && indexMetal >=0 && indexOpenGLES2 < indexMetal)
 				{
 					string message = "OpenGLES2 graphics API is not supported by AVPro Video.";
@@ -60,7 +58,8 @@ namespace RenderHeads.Media.AVProVideo.Editor
 					message += "\n\nPlease go to Player Settings > Auto Graphics API and add Metal to the top of the list.";
 					ShowAbortDialog(message);
 				}
-
+#endif
+				int indexOpenGLES3 = GetGraphicsApiIndex(target, GraphicsDeviceType.OpenGLES3);
 				if (indexOpenGLES3 >= 0 && indexMetal >=0 && indexOpenGLES3 < indexMetal)
 				{
 					string message = "OpenGLES3 graphics API is not supported by AVPro Video.";

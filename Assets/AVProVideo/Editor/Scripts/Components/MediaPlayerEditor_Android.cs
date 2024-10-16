@@ -29,7 +29,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 
 		private readonly static FieldDescription _optionFileOffset = new FieldDescription(".fileOffset", GUIContent.none);
 //		private readonly static FieldDescription _optionBlitTextureFiltering = new FieldDescription(".blitTextureFiltering", new GUIContent("Blit Texture Filtering", "The texture filtering used for the final internal blit."));
-		private readonly static FieldDescription _optionShowPosterFrames = new FieldDescription(".showPosterFrame", new GUIContent("Show Poster Frame", "Allows a paused loaded video to display the initial frame. This uses up decoder resources."));
+//		private readonly static FieldDescription _optionShowPosterFrames = new FieldDescription(".showPosterFrame", new GUIContent("Show Poster Frame", "Allows a paused loaded video to display the initial frame. This uses up decoder resources."));
 		private readonly static FieldDescription _optionPreferSoftwareDecoder = new FieldDescription(".preferSoftwareDecoder", GUIContent.none);
 		private readonly static FieldDescription _optionForceRtpTCP = new FieldDescription(".forceRtpTCP", GUIContent.none);
 		private readonly static FieldDescription _optionForceEnableMediaCodecAsynchronousQueueing = new FieldDescription(".forceEnableMediaCodecAsynchronousQueueing", GUIContent.none);
@@ -108,6 +108,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 				}
 			}
 
+#if false
 			// MediaPlayer API options
 			{
 				EditorGUILayout.BeginVertical(GUI.skin.box);
@@ -117,6 +118,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 
 				EditorGUILayout.EndVertical();
 			}
+#endif
 
 			// ExoPlayer API options
 			{

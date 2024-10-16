@@ -509,6 +509,28 @@ namespace RenderHeads.Media.AVProVideo
 		/// </summary>
 		Matrix4x4 GetTextureMatrix();
 
+		/// <summary>
+		/// Options for passing into GetCompatibleRenderTextureFormat
+		/// </summary>
+		[Flags]
+		enum GetCompatibleRenderTextureFormatOptions
+		{
+			/// <summary>No options, default behaviour based on the texture's format</summary>
+			Default       = 0,
+			/// <summary>The format is for a final resolve, i.e. converting from YCbCr to RGBA</summary>
+			ForResolve    = 1 << 0,
+			/// <summary>The format requires an alpha channel</summary>
+			RequiresAlpha = 1 << 1,
+		}
+
+		/// <summary>
+		/// Get a render texture format that is compatible with the textures internal format
+		/// </summary>
+		/// <param name="options">Any options that may change the choice of render texture format, defaults to None</param>
+		/// <param name="plane">Index of the plane to get compatible render texture format for, defaults to the first plane</param>
+		/// <returns>A compatible render texture format</returns>
+		RenderTextureFormat GetCompatibleRenderTextureFormat(GetCompatibleRenderTextureFormatOptions options = GetCompatibleRenderTextureFormatOptions.Default, int plane = 0);
+
 #if AVPRO_NEW_GAMMA
 		/// <summary>
 		/// Returns the gamma type of a sampled pixel

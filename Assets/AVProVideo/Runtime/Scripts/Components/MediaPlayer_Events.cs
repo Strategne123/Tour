@@ -62,7 +62,9 @@ namespace RenderHeads.Media.AVProVideo
 				!_controlInterface.IsFinished())
 			{
 				bool reset = true;
-#if UNITY_EDITOR_WIN || (!UNITY_EDITOR && (UNITY_STANDALONE_WIN || UNITY_WSA))
+// RJT NOTE: Commented out for now as seems over-aggressive and can lead to freeze conditions as seen in: https://github.com/RenderHeads/UnityPlugin-AVProVideo/issues/1692
+// - If we need to reinstate then we'd likely need considerably more tolerance, especially on slower machines
+#if false//UNITY_EDITOR_WIN || (!UNITY_EDITOR && (UNITY_STANDALONE_WIN || UNITY_WSA))
 				reset = false;
 				if (_infoInterface.HasVideo())
 				{

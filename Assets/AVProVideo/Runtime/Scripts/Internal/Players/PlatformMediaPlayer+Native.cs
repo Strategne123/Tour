@@ -126,6 +126,29 @@ namespace RenderHeads.Media.AVProVideo
 				internal int bufferForPlaybackAfterRebufferMs;
 			}
 
+			internal enum AVPPlayerOpenOptionsForceFileFormat: int
+			{
+				Unknown,
+				HLS,
+				DASH,
+				SmoothStreaming
+			};
+
+			[Flags]
+			internal enum AVPPlayerOpenOptionsFlags: int
+			{
+				None = 0,
+			};
+
+			// NOTE: The layout of this structure is important - if adding anything put it at the end, make sure alignment is 4 bytes and DO NOT USE bool
+			[StructLayout(LayoutKind.Sequential)]
+			internal struct AVPPlayerOpenOptions
+			{
+				internal long fileOffset;
+				internal AVPPlayerOpenOptionsForceFileFormat forceFileFormat;
+				internal AVPPlayerOpenOptionsFlags flags;
+			};
+
 			[Flags]
 			internal enum AVPPlayerStatus : int
 			{
@@ -317,6 +340,7 @@ namespace RenderHeads.Media.AVProVideo
 				RG16,
 				BGR10XR,
 				RGBA16Float,
+				AndroidOES,
 			}
 
 			[StructLayout(LayoutKind.Sequential)]
@@ -407,7 +431,7 @@ namespace RenderHeads.Media.AVProVideo
 			internal static extern IntPtr AVPPluginGetRenderEventFunction();
 
 			[DllImport(PluginName)]
-			internal static extern IntPtr AVPPluginMakePlayer(Native.AVPPlayerSettings settings);
+			internal static extern IntPtr AVPPluginMakePlayer(AVPPlayerSettings settings);
 
 			[DllImport(PluginName)]
 			internal static extern void AVPPlayerRelease(IntPtr player);
@@ -450,7 +474,7 @@ namespace RenderHeads.Media.AVProVideo
 			
 			[DllImport(PluginName)]
 			[return: MarshalAs(UnmanagedType.U1)]
-			internal static extern bool AVPPlayerOpenURL(IntPtr player, string url, string headers);
+			internal static extern bool AVPPlayerOpenURL(IntPtr player, string url, string headers, AVPPlayerOpenOptions options);
 
 			[DllImport(PluginName)]
 			internal static extern void AVPPlayerClose(IntPtr player);
@@ -512,16 +536,16 @@ namespace RenderHeads.Media.AVProVideo
 			}
 
 			[DllImport(PluginName)]
-			public static extern void AVPPluginCacheMediaForURL(string url, string headers, MediaCachingOptions options);
+			public static extern void AVPPluginCacheMediaForURL(IntPtr player, string url, string headers, MediaCachingOptions options);
 
 			[DllImport(PluginName)]
-			public static extern void AVPPluginCancelDownloadOfMediaForURL(string url);
+			public static extern void AVPPluginCancelDownloadOfMediaForURL(IntPtr player, string url);
 
 			[DllImport(PluginName)]
-			public static extern void AVPPluginRemoveCachedMediaForURL(string url);
+			public static extern void AVPPluginRemoveCachedMediaForURL(IntPtr player, string url);
 
 			[DllImport(PluginName)]
-			public static extern int AVPPluginGetCachedMediaStatusForURL(string url, ref float progress);
+			public static extern int AVPPluginGetCachedMediaStatusForURL(IntPtr player, string url, ref float progress);
 		}
 	}
 }
