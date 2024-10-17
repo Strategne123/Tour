@@ -7,7 +7,7 @@ using UnityEngine;
 public class Question : MonoBehaviour
 {
     [SerializeField] private string questionText;
-    public TMP_Text questionTextUI;
+    [HideInInspector] public TMP_Text questionTextUI;
     [SerializeField] private List<Answer> answers = new List<Answer>();
 
     [HideInInspector] public int correctAnswers = 0;
@@ -18,7 +18,7 @@ public class Question : MonoBehaviour
     {
         answers.Clear();
         answers = GetComponentsInChildren<Answer>().ToList<Answer>();
-        
+        //questionTextUI = GameObject.Find("MainQuestionText").GetComponent<TMP_Text>(); ;
         foreach (var answer in answers)
         {
             answer.parentQuestion = this;
@@ -31,7 +31,7 @@ public class Question : MonoBehaviour
 
     public void SetQuestionText(bool isStudy)
     {
-        questionTextUI.text = questionText;
+        //questionTextUI.text = questionText;
         foreach (var answer in answers)
         {
             answer.gameObject.SetActive(true);

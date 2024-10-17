@@ -12,7 +12,7 @@ public class AnswerEditor : Editor
 
     private void OnEnable()
     {
-        answerTextProp = serializedObject.FindProperty("answerText");
+       // answerTextProp = serializedObject.FindProperty("answerText");
         answerObjectProp = serializedObject.FindProperty("answerObject");
         answerTypeProp = serializedObject.FindProperty("answerType");
         numNextVideoProp = serializedObject.FindProperty("numNextVideo");
@@ -22,7 +22,7 @@ public class AnswerEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        EditorGUILayout.PropertyField(answerTextProp);
+        //EditorGUILayout.PropertyField(answerTextProp);
         EditorGUILayout.PropertyField(answerObjectProp);
         EditorGUILayout.PropertyField(answerTypeProp);
         EditorGUILayout.PropertyField(isCorrectProp);

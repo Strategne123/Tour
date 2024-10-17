@@ -34,8 +34,9 @@ namespace Vrs.Internal
 
 		private void Init()
 		{ 
-        textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
-			SetInitialTransparency();
+			zone = FindObjectOfType<Zones>();
+       /* textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
+			//SetInitialTransparency();
 			if (zone.currentMode == Mode.Exam)
 			{
                 Color targetColor = new Color(0, 0, 0, 0);
@@ -57,7 +58,7 @@ namespace Vrs.Internal
                 Color originalColor = answerBackground.color;
                 targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.78f);
                 answerBackground.color = targetColor;
-            }
+            }*/
 		}
 
 		private void SetInitialTransparency()
@@ -72,7 +73,9 @@ namespace Vrs.Internal
 		}
 		public void SetGazedAt(bool gazedAt)
 		{
-			if (mGazeAt != gazedAt)
+            if (!zone.hasStudyRegime)
+                return;
+            if (mGazeAt != gazedAt)
 			{
 				mGazeAt = gazedAt;
 				if (changeColorCoroutine != null)
@@ -156,6 +159,8 @@ namespace Vrs.Internal
 
 		public void OnGazeEnter()
 		{
+			if (!zone.hasStudyRegime)
+				return;
 			if (zone.currentMode == Mode.Exam)
 			{
 				OnGazeEntered?.Invoke();
@@ -165,12 +170,16 @@ namespace Vrs.Internal
 
 		public void OnGazeExit()
 		{
-			if (zone.currentMode == Mode.Exam)
+            if (!zone.hasStudyRegime)
+                return;
+            if (zone.currentMode == Mode.Exam)
 			{
 				OnGazeExited?.Invoke();
 				SetGazedAt(false); 
 			}
 		}
+
+
 
 		public void OnGazeTrigger() { }
 

@@ -9,7 +9,7 @@ public enum AnswerType
 
 public class Answer : MonoBehaviour
 {
-    [SerializeField] private string answerText;
+    //[SerializeField] private string answerText;
     [SerializeField] private GameObject answerObject;
     [SerializeField] public AnswerType answerType;
     [SerializeField] private int numNextVideo;
@@ -19,7 +19,7 @@ public class Answer : MonoBehaviour
 
     private void Start()
     {
-        GetComponentInChildren<TMP_Text>().text = answerText;
+        //GetComponentInChildren<TMP_Text>().text = answerText;
     }
 
     public void ResponseProcess(Zones zone)
@@ -30,13 +30,13 @@ public class Answer : MonoBehaviour
             gameObject.SetActive(false);
             return;
         }
-        parentQuestion.correctAnswers--;
+        /*parentQuestion.correctAnswers--;
         if (parentQuestion.correctAnswers > 0)
         {
             gameObject.SetActive(false);
             return;
-        }
-        parentQuestion.questionTextUI.text = "";
+        }*/
+        //parentQuestion.questionTextUI.text = "";
         zone.TrueAnswer();
         if (answerType == AnswerType.ContinueVideo)
         {

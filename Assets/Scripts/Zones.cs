@@ -10,7 +10,7 @@ public class Zones : MonoBehaviour
 {
     [Header("Basic Settings")]
     [SerializeField] private string folderCaption;
-    [SerializeField] private bool hasStudyRegime;
+    [SerializeField] public bool hasStudyRegime;
 
     [Header("Links")]
     [SerializeField] private MediaPlayer mediaPlayer;
@@ -158,6 +158,8 @@ public class Zones : MonoBehaviour
 videoFolderPath ="storage/emulated/0/"+folderCaption+"/";
 #endif
         var videoPath = videoFolderPath + stages[currentStageIndex].videoCaption;
+        Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
+        mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
         if (videoPath.EndsWith(".jpg"))
         {
             mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = GetTextureByPath(videoPath);
@@ -167,8 +169,6 @@ videoFolderPath ="storage/emulated/0/"+folderCaption+"/";
             mediaPlayer.GetComponent<ApplyToMesh>().DefaultTexture = null;
             mediaPlayer.OpenMedia(new MediaPath(videoPath, MediaPathType.AbsolutePathOrURL));
             nextQuestionTime = stages[currentStageIndex].GetNextQuestionTime(currentQuestionIndex);
-            Vector3 eulerRotation = new Vector3(0, stages[currentStageIndex].GetStartAngle(), 0);
-            mediaPlayer.transform.rotation = Quaternion.Euler(eulerRotation);
             mediaPlayer.Play();
         }
         CountAnswers();

@@ -62,7 +62,7 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return (_controlInterface != null) ? _controlInterface.IsLooping() : _loop;
 			}
-
+			
 			set
 			{
 				_loop = value;
@@ -80,7 +80,7 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return (_controlInterface != null) ? _controlInterface.GetVolume() : _audioVolume;
 			}
-
+			
 			set
 			{
 				_audioVolume = Mathf.Clamp01(value);
@@ -98,7 +98,7 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return (_controlInterface != null) ? _controlInterface.GetBalance() : _audioBalance;
 			}
-
+			
 			set
 			{
 				_audioBalance = Mathf.Clamp(value, -1f, 1f);
@@ -109,13 +109,13 @@ namespace RenderHeads.Media.AVProVideo
 
 		[FormerlySerializedAs("m_Muted")]
 		[SerializeField] bool _audioMuted = false;
-		public virtual bool AudioMuted
+		public virtual bool AudioMuted 
 		{
 			get
 			{
 				return (_controlInterface != null) ? _controlInterface.IsMuted() : _audioMuted;
 			}
-
+			
 			set
 			{
 				_audioMuted = value;
@@ -142,7 +142,7 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				return (_controlInterface != null) ? _controlInterface.GetPlaybackRate() : _playbackRate;
 			}
-
+			
 			set
 			{
 				_playbackRate = value;
@@ -160,7 +160,7 @@ namespace RenderHeads.Media.AVProVideo
 		[FormerlySerializedAs("m_ResampleMode")]
 		[SerializeField] Resampler.ResampleMode _resampleMode = Resampler.ResampleMode.POINT;
 		public Resampler.ResampleMode ResampleMode { get { return _resampleMode; } set { _resampleMode = value; } }
-
+		
 		[FormerlySerializedAs("m_ResampleBufferSize")]
 		[Range(3, 10)]
 		[SerializeField] int _resampleBufferSize = 5;
@@ -192,7 +192,7 @@ namespace RenderHeads.Media.AVProVideo
 				else
 					return _textureFilterMode;
 			}
-
+			
 			set
 			{
 				_textureFilterMode = value;
@@ -218,7 +218,7 @@ namespace RenderHeads.Media.AVProVideo
 				else
 					return _textureWrapMode;
 			}
-
+			
 			set
 			{
 				_textureWrapMode = value;
@@ -484,7 +484,7 @@ namespace RenderHeads.Media.AVProVideo
 			_mediaSource = MediaSource.Path;
 			_mediaPath.Path = path;
 			_mediaPath.PathType = pathType;
-
+			
 			return OpenMedia(autoPlay);
 		}
 
@@ -536,10 +536,10 @@ namespace RenderHeads.Media.AVProVideo
 							mediaPath = null;
 						}
 					}
-					else
+					/*else
 					{
 						Debug.LogError("[AVProVideo] No MediaReference specified", this);
-					}
+					}*/
 				}
 				else if (_mediaSource == MediaSource.Path)
 				{
@@ -552,7 +552,7 @@ namespace RenderHeads.Media.AVProVideo
 						Debug.LogError("[AVProVideo] No file path specified", this);
 					}
 				}
-
+				
 				if (null != mediaPath)
 				{
 					string fullPath = mediaPath.GetResolvedFullPath();
@@ -588,7 +588,7 @@ namespace RenderHeads.Media.AVProVideo
 							_controlInterface.SetAudioChannelMode(Audio360ChannelMode.INVALID);
 						}
 #elif (!UNITY_EDITOR && UNITY_WSA_10_0)
-						if (_optionsWindowsUWP._audioMode == WindowsUWP.AudioOutput.FacebookAudio360)
+						if (_optionsWindowsUWP.audioOutput == WindowsUWP.AudioOutput.FacebookAudio360)
 						{
 							_controlInterface.SetAudioChannelMode(_optionsWindowsUWP.audio360ChannelMode);
 						}
@@ -605,23 +605,23 @@ namespace RenderHeads.Media.AVProVideo
 						}
 
 						SetLoadOptions();
-						SetPlaybackOptions();
 
-						if (_controlInterface.OpenMedia(fullPath, fileOffset, customHttpHeaders, mediaHints, (int)_forceFileFormat, startWithHighestBitrate))
-						{
-							StartRenderCoroutine();
-							result = true;
-						}
-						else
+						if (!_controlInterface.OpenMedia(fullPath, fileOffset, customHttpHeaders, mediaHints, (int)_forceFileFormat, startWithHighestBitrate))
 						{
 							Debug.LogError("[AVProVideo] Failed to open " + fullPath, this);
 						}
+						else
+						{
+							SetPlaybackOptions();
+							result = true;
+							StartRenderCoroutine();
+						}
 					}
 				}
-				else
+				/*else
 				{
 					Debug.LogError("[AVProVideo] No file path specified", this);
-				}
+				}*/
 			}
 			return result;
 		}
@@ -634,22 +634,13 @@ namespace RenderHeads.Media.AVProVideo
 		#elif (UNITY_EDITOR_OSX && UNITY_TVOS) || (!UNITY_EDITOR && UNITY_TVOS)
 		#elif (UNITY_EDITOR_OSX || (!UNITY_EDITOR && UNITY_STANDALONE_OSX))
 		#elif (UNITY_EDITOR_WIN) || (!UNITY_EDITOR && UNITY_STANDALONE_WIN)
-			// RJT NOTE: Added Windows here as it currently creates players on demand so most parameters can be passed down pre-'Open()' and honoured
-			// - (Fixes some issues in https://github.com/RenderHeads/UnityPlugin-AVProVideo/issues/1692)
-			if (_optionsWindows.videoApi == Windows.VideoApi.WinRT)
-			{
-				((WindowsRtMediaPlayer)_baseMediaPlayer).SetOptions(_optionsWindows);
-			}
-			else
-			{
-				((WindowsMediaPlayer)_baseMediaPlayer).SetOptions(_optionsWindows);
-			}
 		#elif (!UNITY_EDITOR && UNITY_WSA_10_0)
 		#elif (!UNITY_EDITOR && UNITY_ANDROID)
 		#elif (!UNITY_EDITOR && UNITY_WEBGL)
 			((WebGLMediaPlayer)_baseMediaPlayer).SetOptions(_optionsWebGL);
 		#endif
 	#endif
+
 			// Encryption support
 			PlatformOptions options = GetCurrentPlatformOptions();
 			if (options != null)
@@ -828,7 +819,7 @@ namespace RenderHeads.Media.AVProVideo
 
 				UpdateAudioHeadTransform();
 				UpdateAudioFocus();
-
+				
 				_playerInterface.Update();
 
 				// Render (done in co-routine)
@@ -1248,7 +1239,7 @@ namespace RenderHeads.Media.AVProVideo
 			{
 				result = result.Trim();
 			}
-
+			
 			string globalHeaders = _httpHeaders.ToValidatedString();
 			if (!string.IsNullOrEmpty(globalHeaders))
 			{
@@ -1446,12 +1437,13 @@ namespace RenderHeads.Media.AVProVideo
 
 		public bool IsUsingAndroidOESPath()
 		{
-			#if !UNITY_EDITOR && UNITY_ANDROID
-				PlatformMediaPlayer platformMediaPlayer = (PlatformMediaPlayer)_baseMediaPlayer;
-				return platformMediaPlayer.IsUsingOESFastpath();
-			#else
-				return false;
+			// Android OES mode is not available in the trial
+//			bool result = (PlatformOptionsAndroid.useFastOesPath && !s_TrialVersion);
+			bool result = ((PlatformOptionsAndroid.textureFormat == MediaPlayer.OptionsAndroid.TextureFormat.YCbCr420_OES) && !s_TrialVersion);
+			#if (UNITY_EDITOR || !UNITY_ANDROID)
+			result = false;
 			#endif
+			return result;
 		}
 
 #region Save Frame To PNG

@@ -259,7 +259,7 @@ namespace RenderHeads.Media.AVProVideo.Editor
 			Texture iconTexture = null;
 			if (!string.IsNullOrEmpty(iconName))
 			{
-				iconTexture = EditorGUIUtility.IconContent(iconName).image;
+				//iconTexture = EditorGUIUtility.IconContent(iconName).image;
 			}
 			return iconTexture;
 		}
