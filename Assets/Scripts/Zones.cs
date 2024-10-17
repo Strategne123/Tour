@@ -30,7 +30,7 @@ public class Zones : MonoBehaviour
     private bool isLastAnswer = false, isStarted = false;
     private bool haveDoneMistake = false;
 
-    public Action<AnswerType, bool, int> OnChoosedAnswer;
+    public Action<AnswerType, bool, int, int> OnChoosedAnswer;
     [HideInInspector] public Mode currentMode;
 
     private void Start()
@@ -210,7 +210,7 @@ videoFolderPath ="storage/emulated/0/"+folderCaption+"/";
     public void ChooseAnswer(Answer answer)
     {
         print("Выбран ответ" + answer.gameObject.name);
-        OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect, answer.parentQuestion.GetIndexByAnswer(answer));
+        OnChoosedAnswer?.Invoke(answer.answerType, answer.isCorrect, answer.parentQuestion.GetIndexByAnswer(answer), answer.numNextVideo);
         answer.ResponseProcess(this);
     }
 

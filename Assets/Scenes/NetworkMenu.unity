@@ -38,7 +38,6 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.44657844, g: 0.49641222, b: 0.57481694, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1459,7 +1458,7 @@ MonoBehaviour:
   evaluationMethod: 0
   evaluationInterval: 3
   timeInterpolationGui: 0
-  _networkObjects: {fileID: 0}
+  _networkObjects: {fileID: 7223262605729453899, guid: f8ebba920dd45ab40b1b974e46c59107, type: 3}
 --- !u!1 &828986271
 GameObject:
   m_ObjectHideFlags: 0
@@ -2856,6 +2855,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -3051,18 +3051,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2370101230624926402
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7401413059006147290}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7776cf9730f82644598d831eb7c96960, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2756622671378530921
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,6 +3402,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2102957d9ff9041ac7002021d65d08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cachedEventSystem: {fileID: 0}
+  cachedVRInputModule: {fileID: 0}
 --- !u!1 &7401413057642717620
 GameObject:
   m_ObjectHideFlags: 0
@@ -3447,21 +3437,14 @@ MonoBehaviour:
   eyes:
   - {fileID: 0}
   - {fileID: 0}
-  HmdType: 2
-  openEffectRender: 0
   splitScreenModeEnabled: 1
   headControlEnabled: 1
   duration: 2
-  appHandleTriggerEvent: 0
-  appHandleXYABEvent: 0
-  useThirdPartyPosition: 0
   textureMsaa: 2
   trackerPosition: 1
   settings:
     timewarpEnabled: -1
     syncFrameEnabled: 0
-  remoteDebug: 0
-  remoteController: 0
   showFPS: 0
   textureQuality: 3
   requestLock: 0
@@ -3475,8 +3458,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   sleepTimeoutMode: 0
-  controllerSupportMode: 0
-  sixDofMode: 1
 --- !u!114 &7401413057642717626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3489,13 +3470,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1856308e2f29e6349bb5e860d95607d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isCreateControllerHandler: 0
   debugInEditor: 0
   gamepadEnabled: 1
   controllerModelDisplay: 1
+  <HeadPosition>k__BackingField: {x: 0, y: 0, z: 0}
   mTransform: {fileID: 0}
+  controllerQuat: {x: 0, y: 0, z: 0, w: 1}
   EditorRemoteQuat: {x: 0, y: 0, z: 0, w: 1}
+  Controller_Name_DEFAULT: Handler_01
+  Controller_Name_XIMMERSE: Handler_03
+  Controller_Name_CLEER: Handler_04
+  DebugCtrlModelInEditor: 0
   isNeedCustomModel: 0
   customModelPrefabName: CustomModel
+  trackedDevice: {fileID: 0}
+  tipsGo: {fileID: 0}
+  isTipsCreated: 0
+  lastModelPath: 
 --- !u!4 &7401413057642717627
 Transform:
   m_ObjectHideFlags: 0
@@ -3711,6 +3703,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40c4d723b55c09242b7bb1b270d893be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fpsFormat: 
+  updateInterval: 0.2
+  accum: 0
+  frames: 0
+  timeLeft: 0
+  textMesh: {fileID: 0}
 --- !u!4 &7401413058956855798
 Transform:
   m_ObjectHideFlags: 0
@@ -3815,7 +3813,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7401413059006147289}
-  - component: {fileID: 2370101230624926402}
   m_Layer: 0
   m_Name: ViarusHMD
   m_TagString: Untagged
@@ -3898,6 +3895,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0

@@ -10,13 +10,11 @@ public class NetworkZones : NetworkBehaviour
     private void OnEnable()
     {
         _zones.OnChoosedAnswer += ChooseAnswer;
-        NetworkGameMode.Instance.OnGameModeChanged += SelectMode;
     }
 
     private void OnDisable()
     {
         _zones.OnChoosedAnswer -= ChooseAnswer;
-        NetworkGameMode.Instance.OnGameModeChanged -= SelectMode;
     }
 
     private void Start()
@@ -30,7 +28,7 @@ public class NetworkZones : NetworkBehaviour
     }
 
     [Command]
-    private void ChooseAnswer(AnswerType answerType, bool isCorrect, int index)
+    private void ChooseAnswer(AnswerType answerType, bool isCorrect, int index, int numNextVideo)
     {
         if (!isCorrect)
         {
@@ -51,7 +49,7 @@ public class NetworkZones : NetworkBehaviour
         }
         else
         {
-            _zones.NextStage();
+            _zones.SetStage(numNextVideo);
         }
     }
 }

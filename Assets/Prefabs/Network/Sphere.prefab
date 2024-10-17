@@ -2681,7 +2681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka13.jpg
-  startAngle: 200
+  startAngle: 70
 --- !u!1 &297104581554308941
 GameObject:
   m_ObjectHideFlags: 0
@@ -8512,7 +8512,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka11.jpg
-  startAngle: 200
+  startAngle: 240
 --- !u!1 &1446413981938382643
 GameObject:
   m_ObjectHideFlags: 0
@@ -8787,7 +8787,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka9.jpg
-  startAngle: 200
+  startAngle: 100
 --- !u!1 &1550852306601613258
 GameObject:
   m_ObjectHideFlags: 0
@@ -9783,7 +9783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka10.jpg
-  startAngle: 200
+  startAngle: 100
 --- !u!1 &1780895452977199074
 GameObject:
   m_ObjectHideFlags: 0
@@ -11709,6 +11709,7 @@ GameObject:
   m_Component:
   - component: {fileID: 29227617029499917}
   - component: {fileID: 6850448167173442396}
+  - component: {fileID: 5018080955593347412}
   m_Layer: 0
   m_Name: Zones
   m_TagString: Untagged
@@ -11792,6 +11793,22 @@ MonoBehaviour:
   - {fileID: 2800000, guid: fc5e0a02abca0cb46843d1e1f5445af7, type: 3}
   - {fileID: 2800000, guid: b9e7e25ccf122fb4ba84de0212034bd3, type: 3}
   currentMode: 0
+--- !u!114 &5018080955593347412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086343751347283283}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ea85bb8bb0745f2b3906eeaea9716f2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  syncDirection: 0
+  syncMode: 0
+  syncInterval: 0
+  _zones: {fileID: 6850448167173442396}
 --- !u!1 &2110115826541828079
 GameObject:
   m_ObjectHideFlags: 0
@@ -12018,7 +12035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka0.jpg
-  startAngle: 0
+  startAngle: -10
 --- !u!1 &2156786582952106039
 GameObject:
   m_ObjectHideFlags: 0
@@ -13084,7 +13101,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka3.1.jpg
-  startAngle: 200
+  startAngle: -20
 --- !u!1 &2279733724220350403
 GameObject:
   m_ObjectHideFlags: 0
@@ -14931,7 +14948,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka1.jpg
-  startAngle: 200
+  startAngle: 60
 --- !u!1 &2639372206546110184
 GameObject:
   m_ObjectHideFlags: 0
@@ -23448,7 +23465,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka12.jpg
-  startAngle: 200
+  startAngle: 360
 --- !u!1 &3609731603333339317
 GameObject:
   m_ObjectHideFlags: 0
@@ -33305,7 +33322,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka3.2.jpg
-  startAngle: 200
+  startAngle: 70
 --- !u!1 &5662442583032858398
 GameObject:
   m_ObjectHideFlags: 0
@@ -33664,7 +33681,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka7.jpg
-  startAngle: 200
+  startAngle: 300
 --- !u!1 &5719592196407376150
 GameObject:
   m_ObjectHideFlags: 0
@@ -41076,7 +41093,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka5.jpg
-  startAngle: 200
+  startAngle: 300
 --- !u!1 &7580134205567665291
 GameObject:
   m_ObjectHideFlags: 0
@@ -44608,7 +44625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka4.jpg
-  startAngle: 200
+  startAngle: 300
 --- !u!1 &8297030491867515536
 GameObject:
   m_ObjectHideFlags: 0
@@ -45281,7 +45298,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka3.jpg
-  startAngle: 200
+  startAngle: 50
 --- !u!1 &8460629749484947402
 GameObject:
   m_ObjectHideFlags: 0
@@ -47748,7 +47765,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   videoCaption: metka14.jpg
-  startAngle: 200
+  startAngle: 0
 --- !u!1 &8885349666965506294
 GameObject:
   m_ObjectHideFlags: 0

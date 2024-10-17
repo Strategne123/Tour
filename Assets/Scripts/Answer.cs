@@ -12,7 +12,7 @@ public class Answer : MonoBehaviour
     //[SerializeField] private string answerText;
     [SerializeField] private GameObject answerObject;
     [SerializeField] public AnswerType answerType;
-    [SerializeField] private int numNextVideo;
+    [SerializeField] public int numNextVideo;
 
     [HideInInspector] public Question parentQuestion;
     public bool isCorrect;
