@@ -35,7 +35,7 @@ namespace Vrs.Internal
 		private void Init()
 		{ 
 			zone = FindObjectOfType<Zones>();
-       /* textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
+        textMesh = answerBackground.GetComponentInChildren<TextMeshProUGUI>();
 			//SetInitialTransparency();
 			if (zone.currentMode == Mode.Exam)
 			{
@@ -58,7 +58,7 @@ namespace Vrs.Internal
                 Color originalColor = answerBackground.color;
                 targetColor = new Color(originalColor.r, originalColor.g, originalColor.b, 0.78f);
                 answerBackground.color = targetColor;
-            }*/
+            }
 		}
 
 		private void SetInitialTransparency()
@@ -73,8 +73,8 @@ namespace Vrs.Internal
 		}
 		public void SetGazedAt(bool gazedAt)
 		{
-            if (!zone.hasStudyRegime)
-                return;
+			if (!zone.hasStudyRegime)
+				gazedAt = true;
             if (mGazeAt != gazedAt)
 			{
 				mGazeAt = gazedAt;
